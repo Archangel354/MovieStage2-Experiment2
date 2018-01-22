@@ -104,6 +104,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
                 } else if (selected.contains("Personal Favorites")){
                     firstTimeRunFlag = false;
+
+
                     favoriteCursorAdapter.isEmpty();
                     movieGridView.setAdapter(mAdapter);
                     mAdapter.notifyDataSetChanged();
