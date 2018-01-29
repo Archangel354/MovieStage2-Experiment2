@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,47 +10,39 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <ImageButton
                 android:id="@+id/imgbtnFavorite"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:srcCompat="@android:drawable/btn_star_big_off" />
+                app:srcCompat="@android:drawable/btn_star" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+            <Button
+                android:id="@+id/btnTrailer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:text="Play trailer"/>
 
-                <Button
-                    android:id="@+id/btnTrailer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:text="@string/play_trailer" />
-
-                <ImageView
-                    android:id="@+id/imgPoster"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:baselineAligned="false"
-                    android:contentDescription="@string/todo"
-                    android:theme="@style/MovieStyle"
-                    app:srcCompat="@mipmap/ic_launcher" />
+            <ImageView
+                android:id="@+id/imgPoster"
+                android:layout_width="@dimen/posterHeight"
+                android:layout_height="@dimen/posterWidth"
+                android:layout_weight="1"
+                android:theme="@style/MovieStyle"
+                app:srcCompat="@mipmap/ic_launcher"/>
 
 
-            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -65,7 +58,7 @@
                 android:layout_weight="1.60"
                 android:text="@string/movieTitle"
                 android:textAlignment="viewEnd"
-                android:theme="@style/MovieStyle" />
+                android:theme="@style/MovieStyle"/>
 
             <TextView
                 android:id="@+id/txtTitle"
@@ -73,8 +66,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:hint="@string/show_title_here"
-                android:theme="@style/MovieStyle" />
+                android:hint="show title here"
+                android:theme="@style/MovieStyle"/>
         </LinearLayout>
 
         <LinearLayout
@@ -88,9 +81,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_weight="1"
-                android:text="@string/release_date"
+                android:text="Release Date:"
                 android:textAlignment="viewEnd"
-                android:theme="@style/MovieStyle" />
+                android:theme="@style/MovieStyle"
+                />
 
             <TextView
                 android:id="@+id/txtReleaseDate"
@@ -98,8 +92,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:hint="@string/show_date_here"
-                android:theme="@style/MovieStyle" />
+                android:hint="show date here"
+                android:theme="@style/MovieStyle"/>
         </LinearLayout>
 
         <LinearLayout
@@ -113,9 +107,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_weight="1"
-                android:text="@string/vote_average"
+                android:text="Vote Average:"
                 android:textAlignment="viewEnd"
-                android:theme="@style/MovieStyle" />
+                android:theme="@style/MovieStyle"/>
 
             <TextView
                 android:id="@+id/txtVoteAverage"
@@ -123,24 +117,25 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:hint="@string/show_vote_here"
-                android:theme="@style/MovieStyle" />
+                android:hint="show vote here"
+                android:theme="@style/MovieStyle"/>
         </LinearLayout>
 
         <TextView
             android:id="@+id/txtSynopsisLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/synopsis"
+            android:text="Synopsis"
             android:textAlignment="center"
-            android:theme="@style/MovieStyle" />
+            android:theme="@style/MovieStyle"
+            />
 
         <TextView
             android:id="@+id/txtSynopsis"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/show_synopsis_here"
-            android:theme="@style/MovieStyle" />
+            android:hint="show synopsis here"
+            android:theme="@style/MovieStyle"/>
 
     </LinearLayout>
 </ScrollView>
