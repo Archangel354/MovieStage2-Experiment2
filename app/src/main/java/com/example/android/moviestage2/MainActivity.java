@@ -104,12 +104,15 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
                 } else if (selected.contains("Personal Favorites")){
                     firstTimeRunFlag = false;
+                    Intent favoriteIntent = new Intent(MainActivity.this, FavoritesActivity.class);
+
+                    startActivity(favoriteIntent);
 
 
-                    favoriteCursorAdapter.isEmpty();
-                    movieGridView.setAdapter(mAdapter);
-                    mAdapter.notifyDataSetChanged();
-                    getLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, MainActivity.this);
+//                    favoriteCursorAdapter.isEmpty();
+//                    movieGridView.setAdapter(mAdapter);
+//                    mAdapter.notifyDataSetChanged();
+//                    getLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, MainActivity.this);
                 } else {
                     Toast.makeText(MainActivity.this,"No spinner choice executed", Toast.LENGTH_SHORT).show();
                 }
