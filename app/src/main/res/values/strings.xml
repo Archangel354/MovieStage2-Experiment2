@@ -16,6 +16,8 @@
     <string name="synopsis">Synopsis</string>
     <string name="show_synopsis_here">show synopsis here</string>
     <string name="todo">TODO</string>
+    <string name="action_insert_dummy_data">Insert dummy data</string>
+    <string name="action_delete_all_entries">delete all data</string>
 
     <string-array name="movie_choices">
         <item>Most Popular</item>
