@@ -29,9 +29,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private MovieAdapter mAdapter;
     private ArrayList arrayList;
 
-    /** Adapter for the gridview of personal favorite movies */
-    private FavoriteCursorAdapter favoriteCursorAdapter;
-    private ArrayList favoritesList;
+
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -46,7 +44,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     // Find a reference to the {@link GridView} in the layout
     public GridView movieGridView;
-    public GridView favoriteGridView;
     private String urlImageBaseString = "https://image.tmdb.org/t/p/w185/";
 
     @Override
@@ -54,20 +51,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         movieGridView = (GridView) findViewById(R.id.movieGrid);
-        favoriteGridView = (GridView) findViewById(R.id.movieGrid);
-// Find and set empty view on the GridView, so that it only shows when the grid has 0 movies.
-        View emptyView = findViewById(R.id.empty_view);
-        favoriteGridView.setEmptyView(emptyView);
 
         // Create a new adapter that takes an empty list of movies as input
         mAdapter = new MovieAdapter(this, new ArrayList<MovieList>());
-        // Set the adapter on the {@link ListView}
-        // so the list can be populated in the user interface
+        // Set the adapter on the {@link GridView} so the list can be populated in the user interface
         movieGridView.setAdapter(mAdapter);
-
-// Nullpointer exception 11-5-17        favoriteGridView.setAdapter(favoriteCursorAdapter);
-        favoriteCursorAdapter = new FavoriteCursorAdapter(this, null);
-        favoriteGridView.setAdapter(favoriteCursorAdapter);
 
         Spinner mSpinner = (Spinner) findViewById(R.id.spnPopOrRatedOrFavorite);
 
@@ -105,14 +93,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 } else if (selected.contains("Personal Favorites")){
                     firstTimeRunFlag = false;
                     Intent favoriteIntent = new Intent(MainActivity.this, FavoritesActivity.class);
-
                     startActivity(favoriteIntent);
-
-
-//                    favoriteCursorAdapter.isEmpty();
-//                    movieGridView.setAdapter(mAdapter);
-//                    mAdapter.notifyDataSetChanged();
-//                    getLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, MainActivity.this);
                 } else {
                     Toast.makeText(MainActivity.this,"No spinner choice executed", Toast.LENGTH_SHORT).show();
                 }
@@ -145,12 +126,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         // Create a new loader for the given URL
         mAdapter.clear();
         mAdapter.notifyDataSetChanged();
-        Log.i("ONCREATELOADER... ", "urlPosterString: " + urlPosterString);
-
-            return new MovieListLoader(this, urlPosterString);
-        }
-
-
+        Log.i("ONCREATELOADER... ","urlPosterString: " + urlPosterString);
+        return new MovieListLoader(this, urlPosterString);
+    }
 
     @Override
     public void onLoadFinished(Loader<List<MovieList>> loader, List<MovieList> movies) {
@@ -192,4 +170,3 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         } else {}
     }
 }
-
