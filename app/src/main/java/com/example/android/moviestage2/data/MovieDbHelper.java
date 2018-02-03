@@ -30,7 +30,7 @@ public class MovieDbHelper extends SQLiteOpenHelper {
 
         // Create a String that contains the SQL statement to create the pets table
         String SQL_CREATE_MOVIES_TABLE =  "CREATE TABLE " + MovieContract.MovieEntry.TABLE_NAME + " ("
-                + MovieContract.MovieEntry.MY_PRODUCT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + MovieContract.MovieEntry.MY_MOVIE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + MovieContract.MovieEntry.COLUMN_MOVIE_TITLE + " TEXT NOT NULL, "
                 + MovieContract.MovieEntry.COLUMN_MOVIE_RELEASE_DATE + " TEXT NOT NULL, "
                 + MovieContract.MovieEntry.COLUMN_MOVIE_POSTER_IMAGE + " TEXT NOT NULL, "
