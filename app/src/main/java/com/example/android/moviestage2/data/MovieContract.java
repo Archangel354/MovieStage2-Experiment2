@@ -22,7 +22,7 @@ public  class MovieContract {
      * content authority is the package name for the app, which is guaranteed to be unique on the
      * device.
      */
-    public static final String CONTENT_AUTHORITY = "com.example.android.moviesstage1";
+    public static final String CONTENT_AUTHORITY = "com.example.android.moviesstage2";
 
     /**
      * Use CONTENT_AUTHORITY to create the base of all URI's which apps will use to contact
@@ -35,7 +35,7 @@ public  class MovieContract {
      * For instance, content://com.example.android.pets/moviesstage1/ is a valid path for
      * looking at movie data. */
 
-    public static final String PATH_MOVIES = "moviesstage1";
+    public static final String PATH_MOVIES = "moviesstage2";
 
     /**
      * Inner class that defines constant values for the moview database table.
@@ -57,7 +57,7 @@ public  class MovieContract {
         /**
          * Name of database table for inventory
          */
-        public final static String TABLE_NAME = "moviesstage1";
+        public final static String TABLE_NAME = "moviesstage2";
 
 
         public final static String MY_PRODUCT_ID = BaseColumns._ID;
