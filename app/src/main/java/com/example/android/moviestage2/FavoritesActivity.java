@@ -2,6 +2,7 @@ package com.example.android.moviestage2;
 
 import android.app.LoaderManager;
 import android.content.ContentValues;
+import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
@@ -112,17 +113,36 @@ public class FavoritesActivity extends AppCompatActivity implements LoaderManage
     }
 
     @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return null;
+    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
+        // Define a projection that specifies the columns from the table we care about.
+        String[] projection = {
+                MovieContract.MovieEntry.MY_MOVIE_ID,
+                MovieContract.MovieEntry.COLUMN_MOVIE_TITLE,
+
+        };
+        // This loader will execute the ContentProvider's query method on a background thread
+        return new CursorLoader(this,   // Parent activity context
+                MovieContract.MovieEntry.CONTENT_URI,   // Provider content URI to query
+                projection,             // Columns to include in the resulting Cursor
+                null,                   // No selection clause
+                null,                   // No selection arguments
+                null);                  // Default sort order
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
 
+        // Update {@link PetCursorAdapter} with this new cursor containing updated product data
+        favoriteCursorAdapter.swapCursor(data);
+
+
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
+
+        // Callback called when the data needs to be deleted
+        favoriteCursorAdapter.swapCursor(null);
 
     }
 }
