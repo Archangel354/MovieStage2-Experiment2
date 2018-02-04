@@ -31,12 +31,12 @@ public class MovieDbHelper extends SQLiteOpenHelper {
         // Create a String that contains the SQL statement to create the pets table
         String SQL_CREATE_MOVIES_TABLE =  "CREATE TABLE " + MovieContract.MovieEntry.TABLE_NAME + " ("
                 + MovieContract.MovieEntry.MY_MOVIE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + MovieContract.MovieEntry.COLUMN_MOVIE_TITLE + " TEXT NOT NULL, "
-                + MovieContract.MovieEntry.COLUMN_MOVIE_RELEASE_DATE + " TEXT NOT NULL, "
-                + MovieContract.MovieEntry.COLUMN_MOVIE_POSTER_IMAGE + " TEXT NOT NULL, "
-                + MovieContract.MovieEntry.COLUMN_MOVIE_VOTE_AVERAGE + " TEXT NOT NULL, "
-                + MovieContract.MovieEntry.COLUMN_MOVIE_SYNOPSIS + " TEXT NOT NULL, "
-                + MovieContract.MovieEntry.COLUMN_MOVIE_ID + " TEXT NOT NULL );";
+                + MovieContract.MovieEntry.COLUMN_MOVIE_TITLE + " TEXT, "
+                + MovieContract.MovieEntry.COLUMN_MOVIE_RELEASE_DATE + " TEXT, "
+                + MovieContract.MovieEntry.COLUMN_MOVIE_POSTER_IMAGE + " TEXT, "
+                + MovieContract.MovieEntry.COLUMN_MOVIE_VOTE_AVERAGE + " TEXT, "
+                + MovieContract.MovieEntry.COLUMN_MOVIE_SYNOPSIS + " TEXT, "
+                + MovieContract.MovieEntry.COLUMN_MOVIE_ID + " TEXT );";
 
         // Execute the SQL statement
         db.execSQL(SQL_CREATE_MOVIES_TABLE);

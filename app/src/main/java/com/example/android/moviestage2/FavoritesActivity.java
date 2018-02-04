@@ -97,6 +97,8 @@ public class FavoritesActivity extends AppCompatActivity implements LoaderManage
         // and hammer's attributes are the values.
         ContentValues values = new ContentValues();
         values.put(MovieContract.MovieEntry.COLUMN_MOVIE_TITLE, "hammer");
+        //values.put(MovieContract.MovieEntry.COLUMN_MOVIE_RELEASE_DATE, "2-4-2018");
+
         //values.put(ProductEntry.COLUMN_PRODUCT_QUANTITY, "10");
         // values.put(ProductEntry.COLUMN_PRODUCT_PRICE, "555.99");
         //values.put(ProductEntry.COLUMN_PRODUCT_VENDOR, "Home Depot");
