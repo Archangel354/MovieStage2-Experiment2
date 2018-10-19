@@ -27,9 +27,12 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+//import android.support.v4.app.ShareCompat;
 
 
-public class DetailActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<VideoList>>{
+
+//public class DetailActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<VideoList>>{
+   public class DetailActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<VideoList>>{
 
     private static final String MOVIES_SHARE_HASHTAG = " #MoviesStage1App";
     private String mMovies;
