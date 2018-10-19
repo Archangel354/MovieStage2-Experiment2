@@ -4,6 +4,7 @@ package com.example.android.moviestage2.data;
  * Created by Owner on 10/14/2017.
  */
 
+import android.arch.persistence.room.Entity;
 import android.content.ContentResolver;
 import android.net.Uri;
 import android.provider.BaseColumns;
@@ -41,6 +42,8 @@ public  class MovieContract {
      * Inner class that defines constant values for the moview database table.
      * Each entry in the table represents a single movie.
      */
+    // Added Room database annotation Entity
+    @Entity
     public static final class MovieEntry implements BaseColumns {
 
         /**
@@ -74,5 +77,7 @@ public  class MovieContract {
         public final static String COLUMN_MOVIE_SYNOPSIS ="synopsis";
         public final static String COLUMN_MOVIE_ID ="movieID";
 
+        public MovieEntry() {
+        }
     }
 }
