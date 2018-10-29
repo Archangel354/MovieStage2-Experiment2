@@ -19,6 +19,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.example.android.moviestage2.data.MovieContract.MovieEntry;
 import com.squareup.picasso.Picasso;
@@ -42,6 +44,7 @@ import java.util.List;
     private TextView mPosterDisplay;
     private Context context;
     private Button btnTrailer;
+    private ToggleButton toggleFavorite;
     private TextView mMovieIDDisplay;
     private final Activity mActivity = this;
     private static final int VIDEOLIST_LOADER_ID = 2;
@@ -86,6 +89,7 @@ import java.util.List;
         urlTrailerString = MOVIEPREFIX + mMovieID + MOVIESUFFIX;
 
         btnTrailer = (Button) findViewById(R.id.btnTrailer);
+        toggleFavorite = findViewById(R.id.toggleFavorite);
         //imgbtnFavorite = (ImageButton) findViewById(R.id.imgbtnFavorite);
 
         // Create a 2nd adapter that takes an empty list of trailers as input
@@ -116,6 +120,20 @@ import java.util.List;
                 vAdapter.clear();
                 vAdapter.notifyDataSetChanged();
                 getLoaderManager().restartLoader(VIDEOLIST_LOADER_ID, null, DetailActivity.this);
+            }
+        });
+
+        toggleFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(toggleFavorite.isChecked()){
+                    Toast.makeText(DetailActivity.this,"My favorites selected", Toast.LENGTH_SHORT).show();
+
+                }
+                else {
+                    Toast.makeText(DetailActivity.this,"My favorites deselected", Toast.LENGTH_SHORT).show();
+
+                }
             }
         });
 
