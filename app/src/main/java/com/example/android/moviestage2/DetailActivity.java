@@ -19,7 +19,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.android.moviestage2.data.MovieContract.MovieEntry;
 import com.squareup.picasso.Picasso;
@@ -87,7 +86,7 @@ import java.util.List;
         urlTrailerString = MOVIEPREFIX + mMovieID + MOVIESUFFIX;
 
         btnTrailer = (Button) findViewById(R.id.btnTrailer);
-        imgbtnFavorite = (ImageButton) findViewById(R.id.imgbtnFavorite);
+        //imgbtnFavorite = (ImageButton) findViewById(R.id.imgbtnFavorite);
 
         // Create a 2nd adapter that takes an empty list of trailers as input
         vAdapter = new VideoAdapter(DetailActivity.this, new ArrayList<VideoList>());
@@ -120,14 +119,23 @@ import java.util.List;
             }
         });
 
-        imgbtnFavorite.setOnClickListener(new View.OnClickListener() {
+     /*   imgbtnFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
+                imgbtnFavorite.setSelected(!imgbtnFavorite.isPressed());
+
+                if (imgbtnFavorite.isPressed()) {
+                    imgbtnFavorite.setImageResource(R.drawable.goldstar);
+
+                }
+                else {
+                    imgbtnFavorite.setImageResource(R.drawable.star);
+                }
                 Toast.makeText(DetailActivity.this,"Movie title is: " + mTitle, Toast.LENGTH_SHORT).show();
                 // Save product to database
                 saveProduct();
             }
-        });
+        }); */
     }
 
 
