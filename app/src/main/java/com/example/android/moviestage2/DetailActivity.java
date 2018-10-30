@@ -127,7 +127,7 @@ import java.util.List;
             @Override
             public void onClick(View view) {
                 if(toggleFavorite.isChecked()){
-                    Toast.makeText(DetailActivity.this,"My favorites selected", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DetailActivity.this,"The movie title is: " + mTitle, Toast.LENGTH_SHORT).show();
 
                 }
                 else {
