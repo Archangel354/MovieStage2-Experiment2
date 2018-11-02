@@ -49,6 +49,7 @@ public class MovieAdapter extends ArrayAdapter<MovieList> {
         if (convertView == null) {
             //convertView = LayoutInflater.from(getContext()).inflate(R.layout.movie_list_items, parent, false);
             convertView = inflater.inflate(R.layout.movie_list_items, parent, false);
+
         }
 
         // Get the MovieRecord jpg object located at this "position" in the list
