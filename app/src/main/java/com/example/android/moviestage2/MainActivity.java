@@ -8,10 +8,13 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.GridLayout;
 import android.widget.GridView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -28,6 +31,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     /** Adapter for the gridview of movies */
     private MovieAdapter mAdapter;
     private ArrayList arrayList;
+
+    // Adding in RecyclerView stuff, I sure hope this works!
+    RecyclerView mRecyclerView;
 
 
 
@@ -50,7 +56,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        movieGridView = (GridView) findViewById(R.id.movieGrid);
+        // Going to recycler view instead of just gridView movieGridView = (GridView) findViewById(R.id.movieGrid);
+
+        // Going to RecyclerView
+        mRecyclerView = findViewById(R.id.rvMovies);
+        GridLayoutManager mGridLayoutManager = new GridLayoutManager(MainActivity.this, 2);
+        mRecyclerView.setLayoutManager(mGridLayoutManager);
+
+
 
         // Create a new adapter that takes an empty list of movies as input
         mAdapter = new MovieAdapter(this, new ArrayList<MovieList>());
