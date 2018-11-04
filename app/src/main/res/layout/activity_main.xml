@@ -50,18 +50,10 @@
         android:textAlignment="center"
         ></Spinner>
 
-    <GridView
-        android:id="@+id/movieGrid"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvMain"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:numColumns="auto_fit"
-        android:stretchMode="columnWidth"
-        android:gravity="center"
-        android:horizontalSpacing="0dp"
-        android:verticalSpacing="0dp"
-        android:descendantFocusability="beforeDescendants"
-        android:layout_below="@id/spnPopOrRatedOrFavorite"
-        />
+        android:layout_height="wrap_content" />
 
 
 </RelativeLayout>
