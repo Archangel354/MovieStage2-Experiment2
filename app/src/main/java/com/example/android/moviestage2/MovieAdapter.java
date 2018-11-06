@@ -24,6 +24,8 @@ public  class MoviesAdapter extends RecyclerView.Adapter<MainActivity.MovieViewH
     private List<MovieList> mMovieList;
     private LayoutInflater mInflater;
     private Context mContext;
+    private String urlImageBaseString = "https://image.tmdb.org/t/p/w185/";
+    private String completeUrlString = "";
 
     public MoviesAdapter(Context context)
     {
@@ -44,12 +46,14 @@ public  class MoviesAdapter extends RecyclerView.Adapter<MainActivity.MovieViewH
     public void onBindViewHolder(MainActivity.MovieViewHolder holder, int position)
     {
         MovieList movie = mMovieList.get(position);
+        ImageView imageView = (ImageView) convertView.findViewById(R.id.imgPosterPath);
 
         // This is how we use Picasso to load images from the internet.
-        Picasso.with(mContext)
-                .load(movie.getPoster())
-                .placeholder(R.color.colorAccent)
-                .into(holder.imageView);
+        Picasso
+                .with(mContext)
+            .load(completeUrlString)
+            .fit()
+            .into(imageView);
     }
 
     @Override
