@@ -7,6 +7,7 @@ package com.example.android.moviestage2;
 import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,70 +19,50 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MovieAdapter extends ArrayAdapter<MovieList> {
+public  class MoviesAdapter extends RecyclerView.Adapter<MainActivity.MovieViewHolder>
+{
+    private List<MovieList> mMovieList;
+    private LayoutInflater mInflater;
+    private Context mContext;
 
-    private Context context;
-    private LayoutInflater inflater;
-    private String urlImageBaseString = "https://image.tmdb.org/t/p/w185/";
-    private String completeUrlString = "";
-    private List<MovieList> imageUrls = new ArrayList<>(); // so far so good 9/25/17
-
-
-    public MovieAdapter(Activity context, ArrayList<MovieList> movieListRecords) {
-        super(context,R.layout.movie_list_items,  movieListRecords);
-
-        this.context = context;
-        this.imageUrls = movieListRecords;
-        inflater = LayoutInflater.from(context);
+    public MoviesAdapter(Context context)
+    {
+        this.mContext = context;
+        this.mInflater = LayoutInflater.from(context);
+        this.mMovieList = new ArrayList<>();
     }
 
-    // so far so good 9/25/17
-    public void UpdateMovies(List<MovieList> newList){
-        this.imageUrls = newList;
+    @Override
+    public MainActivity.MovieViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
+    {
+        View view = mInflater.inflate(R.layout.movie_list_items, parent, false);
+        MainActivity.MovieViewHolder viewHolder = new MainActivity.MovieViewHolder(view);
+        return viewHolder;
+    }
+
+    @Override
+    public void onBindViewHolder(MainActivity.MovieViewHolder holder, int position)
+    {
+        MovieList movie = mMovieList.get(position);
+
+        // This is how we use Picasso to load images from the internet.
+        Picasso.with(mContext)
+                .load(movie.getPoster())
+                .placeholder(R.color.colorAccent)
+                .into(holder.imageView);
+    }
+
+    @Override
+    public int getItemCount()
+    {
+        return (mMovieList == null) ? 0 : mMovieList.size();
+    }
+
+    public void setMovieList(List<MovieList> movieList)
+    {
+        this.mMovieList.clear();
+        this.mMovieList.addAll(movieList);
+        // The adapter needs to know that the data has changed. If we don't call this, app will crash.
         notifyDataSetChanged();
     }
-
-    @NonNull
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        // Check if the existing view is being reused, otherwise inflate the view
-        //View listItemView = convertView;
-        if (convertView == null) {
-            //convertView = LayoutInflater.from(getContext()).inflate(R.layout.movie_list_items, parent, false);
-            convertView = inflater.inflate(R.layout.movie_list_items, parent, false);
-        }
-
-        // Get the MovieRecord jpg object located at this "position" in the list
-        MovieList currentMovie = getItem(position);
-
-        TextView txtPosterView = (TextView) convertView.findViewById(R.id.txtPoster);
-        ImageView imageView = (ImageView) convertView.findViewById(R.id.imgPosterPath);
-        TextView txtTitleView = (TextView) convertView.findViewById(R.id.txtMovieTitle);
-        imageView.setAdjustViewBounds(true);
-
-        // Find the TextView in the movie_list_items.xml layout with the ID txtPosterView
-        // Get the jpg string from the current MovieRecord object and
-        // set this text on the title TextView
-        // and also get the title of the movie.
-        txtPosterView.setText(String.valueOf(currentMovie.getmPosterPath()));
-        txtTitleView.setText(String.valueOf(currentMovie.getmMovieTitle()));
-
-        completeUrlString = txtPosterView.getText().toString();
-        Log.i("LOG.MovieAdapter","The completeUrlString is: " + completeUrlString);
-
-        Picasso
-                .with(context)
-                .load(completeUrlString)
-                .fit()
-                .into(imageView);
-
-        return convertView;
-    }
-
-    @Override
-    public void clear() {
-        super.clear();
-    }
-
-
 }

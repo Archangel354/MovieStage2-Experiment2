@@ -8,11 +8,13 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -28,8 +30,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     /** Adapter for the gridview of movies */
     private MovieAdapter mAdapter;
     private ArrayList arrayList;
-
-
+    private RecyclerView mRecyclerView;
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -43,19 +44,23 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public final static String VIDEOURL ="https://www.youtube.com/watch?v=gCcx85zbxz4";
 
     // Find a reference to the {@link GridView} in the layout
-    public GridView movieGridView;
+    // 11-6-18 public GridView movieGridView;
+    public RecyclerView movieGridView;
     private String urlImageBaseString = "https://image.tmdb.org/t/p/w185/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        movieGridView = (GridView) findViewById(R.id.movieGrid);
+        movieGridView =  findViewById(R.id.recyclerView);
+
+        // New declaration for recyclerView
+        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
         // Create a new adapter that takes an empty list of movies as input
         mAdapter = new MovieAdapter(this, new ArrayList<MovieList>());
         // Set the adapter on the {@link GridView} so the list can be populated in the user interface
-        movieGridView.setAdapter(mAdapter);
+        // 11-6-18 movieGridView.setAdapter(mAdapter);
 
         Spinner mSpinner = (Spinner) findViewById(R.id.spnPopOrRatedOrFavorite);
 
@@ -78,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 if ( selected.contains("Most Popular")){
                     urlPosterString = POPULARSTRING;
                     mAdapter.clear();
-                    movieGridView.setAdapter(mAdapter);
+                    // 11-6-18 movieGridView.setAdapter(mAdapter);
                     mAdapter.notifyDataSetChanged();
                     getLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, MainActivity.this);
 
@@ -86,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     firstTimeRunFlag = false;
                     urlPosterString = TOPRATEDSTRING;
                     mAdapter.clear();
-                    movieGridView.setAdapter(mAdapter);
+                    // 11-6-18 movieGridView.setAdapter(mAdapter);
                     mAdapter.notifyDataSetChanged();
                     getLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, MainActivity.this);
 
@@ -95,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     //Intent favoriteIntent = new Intent(MainActivity.this, FavoritesActivity.class);
                     //startActivity(favoriteIntent);
                     mAdapter.clear();
-                    movieGridView.setAdapter(mAdapter);
+                    // 11-6-18  movieGridView.setAdapter(mAdapter);
                     mAdapter.notifyDataSetChanged();
                    // getLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, MainActivity.this);
                 } else {
@@ -108,21 +113,21 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         });
 
         // Setup the setOnItemClickListener when a movie image is clicked
-        movieGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent mIntent = new Intent(MainActivity.this, DetailActivity.class);
-                Bundle mBundle = new Bundle();
-                mBundle.putString("MBUNDLE_TITLE", movies.get(position).getmMovieTitle());
-                mBundle.putString("MBUNDLE_DATE", movies.get(position).getmReleaseDate());
-                mBundle.putString("MBUNDLE_VOTE", movies.get(position).getmVoteAverage());
-                mBundle.putString("MBUNDLE_SYNOPSIS", movies.get(position).getmSynopsis());
-                mBundle.putString("MBUNDLE_POSTER", movies.get(position).getmPosterPath());
-                mBundle.putString("MBUNDLE_MOVIEID", movies.get(position).getmMovieID());
-                mIntent.putExtras(mBundle);
-                startActivity(mIntent);
-            }
-        });
+//        movieGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Intent mIntent = new Intent(MainActivity.this, DetailActivity.class);
+//                Bundle mBundle = new Bundle();
+//                mBundle.putString("MBUNDLE_TITLE", movies.get(position).getmMovieTitle());
+//                mBundle.putString("MBUNDLE_DATE", movies.get(position).getmReleaseDate());
+//                mBundle.putString("MBUNDLE_VOTE", movies.get(position).getmVoteAverage());
+//                mBundle.putString("MBUNDLE_SYNOPSIS", movies.get(position).getmSynopsis());
+//                mBundle.putString("MBUNDLE_POSTER", movies.get(position).getmPosterPath());
+//                mBundle.putString("MBUNDLE_MOVIEID", movies.get(position).getmMovieID());
+//                mIntent.putExtras(mBundle);
+//                startActivity(mIntent);
+//            }
+//        });
     }
 
     @Override
@@ -172,5 +177,15 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             // because this activity implements the LoaderCallbacks interface).
             loaderManager.initLoader(MOVIELIST_LOADER_ID, null, this);
         } else {}
+    }
+
+    public static class MovieViewHolder extends RecyclerView.ViewHolder
+    {
+        public ImageView imageView;
+        public MovieViewHolder(View itemView)
+        {
+            super(itemView);
+            imageView = (ImageView) itemView.findViewById(R.id.imgPosterPath);
+        }
     }
 }
