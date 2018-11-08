@@ -20,6 +20,8 @@ import java.util.List;
 
 public class MovieAdapter extends ArrayAdapter<MovieList> {
 
+    
+
     private Context context;
     private LayoutInflater inflater;
     private String urlImageBaseString = "https://image.tmdb.org/t/p/w185/";
