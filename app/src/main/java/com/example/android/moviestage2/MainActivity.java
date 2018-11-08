@@ -58,8 +58,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         // Create a new adapter that takes an empty list of movies as input
         mAdapter = new MovieAdapter(this);
+        mRecyclerView.setAdapter(mAdapter);
+
+        List<MovieList> movies = new ArrayList<>();
         // Set the adapter on the {@link GridView} so the list can be populated in the user interface
-        movieGridView.setAdapter(mAdapter);
+        // movieGridView.setAdapter(mAdapter);
 
         Spinner mSpinner = (Spinner) findViewById(R.id.spnPopOrRatedOrFavorite);
 
