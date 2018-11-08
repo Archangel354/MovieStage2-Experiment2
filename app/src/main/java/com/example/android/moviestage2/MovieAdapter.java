@@ -19,7 +19,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-public  class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder>
+public  class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder>
 {
     private List<MovieList> mMovieList;
     private LayoutInflater mInflater;
@@ -75,6 +75,8 @@ public  class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder>
             imageView = (ImageView) itemView.findViewById(R.id.imgPosterPath);
         }
     }
+
+
 }
 
 

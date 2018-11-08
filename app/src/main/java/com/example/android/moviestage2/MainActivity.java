@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         mAdapter = new MovieAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
 
-        List<MovieList> movies = new ArrayList<>();
+        final List<MovieList> movies = new ArrayList<>();
         // Set the adapter on the {@link GridView} so the list can be populated in the user interface
         // movieGridView.setAdapter(mAdapter);
 
@@ -84,16 +84,16 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
                 if ( selected.contains("Most Popular")){
                     urlPosterString = POPULARSTRING;
-                    mAdapter.clear();
-                    movieGridView.setAdapter(mAdapter);
+                   // mAdapter.clear();
+                   // movieGridView.setAdapter(mAdapter);
                     mAdapter.notifyDataSetChanged();
                     getLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, MainActivity.this);
 
                 } else if (selected.contains("Highest Rated")){
                     firstTimeRunFlag = false;
                     urlPosterString = TOPRATEDSTRING;
-                    mAdapter.clear();
-                    movieGridView.setAdapter(mAdapter);
+                   //mAdapter.clear();
+                  // movieGridView.setAdapter(mAdapter);
                     mAdapter.notifyDataSetChanged();
                     getLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, MainActivity.this);
 
@@ -101,8 +101,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     firstTimeRunFlag = false;
                     //Intent favoriteIntent = new Intent(MainActivity.this, FavoritesActivity.class);
                     //startActivity(favoriteIntent);
-                    mAdapter.clear();
-                    movieGridView.setAdapter(mAdapter);
+                   // mAdapter.clear();
+                  //  movieGridView.setAdapter(mAdapter);
                     mAdapter.notifyDataSetChanged();
                    // getLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, MainActivity.this);
                 } else {
@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public Loader<List<MovieList>> onCreateLoader(int id, Bundle args) {
         // Create a new loader for the given URL
-        mAdapter.clear();
+        //mAdapter.clear();
         mAdapter.notifyDataSetChanged();
         Log.i("ONCREATELOADER... ","urlPosterString: " + urlPosterString);
         return new MovieListLoader(this, urlPosterString);
@@ -144,22 +144,22 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onLoadFinished(Loader<List<MovieList>> loader, List<MovieList> movies) {
         // Clear the adapter of previous movie data
-        mAdapter.clear();
+        //mAdapter.clear();
         // If there is a valid list of movies, then add them to the adapter's
         // data set. This will trigger the ListView to update.
         if (movies != null && !movies.isEmpty()) {
-            mAdapter.clear();
+            //mAdapter.clear();
             mAdapter.notifyDataSetChanged();
-            mAdapter.UpdateMovies(movies);
+            //mAdapter.UpdateMovies(movies);
             Log.i("MainActivity", "ArrayList movies is" + movies);
-            mAdapter.addAll(movies);
+           //mAdapter.addAll(movies);
         }
     }
 
     @Override
     public void onLoaderReset(Loader<List<MovieList>> loader) {
         // Loader reset, so we can clear out our existing data.
-        mAdapter.clear();
+        //mAdapter.clear();
     }
 
     public void connectAndLoadMovies(){
