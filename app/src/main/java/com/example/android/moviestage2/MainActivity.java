@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     urlPosterString = POPULARSTRING;
                     // REcyclerViews stuff  mAdapter.clear();
                     mRecyclerView.setAdapter(sAdapter);
-                    mAdapter.notifyDataSetChanged();
+                    sAdapter.notifyDataSetChanged();
                     getLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, MainActivity.this);
 
                 } else if (selected.contains("Highest Rated")){
@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     urlPosterString = TOPRATEDSTRING;
                     // REcyclerViews stuff mAdapter.clear();
                     mRecyclerView.setAdapter(sAdapter);
-                    mAdapter.notifyDataSetChanged();
+                    sAdapter.notifyDataSetChanged();
                     getLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, MainActivity.this);
 
                 } else if (selected.contains("Personal Favorites")){
@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     //startActivity(favoriteIntent);
                     // REcyclerViews stuff mAdapter.clear();
                     mRecyclerView.setAdapter(sAdapter);
-                    mAdapter.notifyDataSetChanged();
+                    sAdapter.notifyDataSetChanged();
                    // getLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, MainActivity.this);
                 } else {
                     Toast.makeText(MainActivity.this,"No spinner choice executed", Toast.LENGTH_SHORT).show();
@@ -126,28 +126,30 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         });
 
         // Setup the setOnItemClickListener when a movie image is clicked
-        movieGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent mIntent = new Intent(MainActivity.this, DetailActivity.class);
-                Bundle mBundle = new Bundle();
-                mBundle.putString("MBUNDLE_TITLE", movies.get(position).getmMovieTitle());
-                mBundle.putString("MBUNDLE_DATE", movies.get(position).getmReleaseDate());
-                mBundle.putString("MBUNDLE_VOTE", movies.get(position).getmVoteAverage());
-                mBundle.putString("MBUNDLE_SYNOPSIS", movies.get(position).getmSynopsis());
-                mBundle.putString("MBUNDLE_POSTER", movies.get(position).getmPosterPath());
-                mBundle.putString("MBUNDLE_MOVIEID", movies.get(position).getmMovieID());
-                mIntent.putExtras(mBundle);
-                startActivity(mIntent);
-            }
-        });
+//        movieGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Intent mIntent = new Intent(MainActivity.this, DetailActivity.class);
+//                Bundle mBundle = new Bundle();
+//                mBundle.putString("MBUNDLE_TITLE", movies.get(position).getmMovieTitle());
+//                mBundle.putString("MBUNDLE_DATE", movies.get(position).getmReleaseDate());
+//                mBundle.putString("MBUNDLE_VOTE", movies.get(position).getmVoteAverage());
+//                mBundle.putString("MBUNDLE_SYNOPSIS", movies.get(position).getmSynopsis());
+//                mBundle.putString("MBUNDLE_POSTER", movies.get(position).getmPosterPath());
+//                mBundle.putString("MBUNDLE_MOVIEID", movies.get(position).getmMovieID());
+//                mIntent.putExtras(mBundle);
+//                startActivity(mIntent);
+//            }
+//        });
+
+
     }
 
     @Override
     public Loader<List<MovieList>> onCreateLoader(int id, Bundle args) {
         // Create a new loader for the given URL
-        mAdapter.clear();
-        mAdapter.notifyDataSetChanged();
+        //sAdapter.clear();
+        sAdapter.notifyDataSetChanged();
         Log.i("ONCREATELOADER... ","urlPosterString: " + urlPosterString);
         return new MovieListLoader(this, urlPosterString);
     }
@@ -155,11 +157,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onLoadFinished(Loader<List<MovieList>> loader, List<MovieList> movies) {
         // Clear the adapter of previous movie data
-        mAdapter.clear();
+        // mAdapter.clear();
         // If there is a valid list of books, then add them to the adapter's
         // data set. This will trigger the ListView to update.
         if (movies != null && !movies.isEmpty()) {
-            mAdapter.clear();
+            //mAdapter.clear();
             mAdapter.notifyDataSetChanged();
             mAdapter.UpdateMovies(movies);
             mAdapter.addAll(movies);
@@ -249,5 +251,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             // The adapter needs to know that the data has changed. If we don't call this, app will crash.
             notifyDataSetChanged();
         }
+
+
     }
 }
