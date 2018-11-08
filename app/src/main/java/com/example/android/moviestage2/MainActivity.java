@@ -8,6 +8,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -28,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     /** Adapter for the gridview of movies */
     private MovieAdapter mAdapter;
     private ArrayList arrayList;
-
+    private RecyclerView mRecyclerView;
 
 
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -50,10 +52,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        movieGridView = (GridView) findViewById(R.id.movieGrid);
+        // 11-8-18 movieGridView = (GridView) findViewById(R.id.movieGrid);
+        mRecyclerView = findViewById(R.id.recyclerView);
+        mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
         // Create a new adapter that takes an empty list of movies as input
-        mAdapter = new MovieAdapter(this, new ArrayList<MovieList>());
+        mAdapter = new MovieAdapter(this);
         // Set the adapter on the {@link GridView} so the list can be populated in the user interface
         movieGridView.setAdapter(mAdapter);
 
