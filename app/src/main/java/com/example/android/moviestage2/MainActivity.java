@@ -8,6 +8,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     // New recyclerView stuff
     private RecyclerView mRecyclerView;
+    private MoviesAdapter sAdapter;
 
 
 
@@ -64,11 +66,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         // New RecyclerView stuff
         //movieGridView = (GridView) findViewById(R.id.movieGrid);
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        sAdapter = new MoviesAdapter(this);
+        mRecyclerView.setAdapter(sAdapter);
 
         // Create a new adapter that takes an empty list of movies as input
-        mAdapter = new MovieAdapter(this, new ArrayList<MovieList>());
+        // REcyclerViews stuff mAdapter = new MovieAdapter(this, new ArrayList<MovieList>());
         // Set the adapter on the {@link GridView} so the list can be populated in the user interface
-        movieGridView.setAdapter(mAdapter);
+        // REcyclerViews stuff movieGridView.setAdapter(mAdapter);
 
         Spinner mSpinner = (Spinner) findViewById(R.id.spnPopOrRatedOrFavorite);
 
@@ -90,16 +95,16 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
                 if ( selected.contains("Most Popular")){
                     urlPosterString = POPULARSTRING;
-                    mAdapter.clear();
-                    movieGridView.setAdapter(mAdapter);
+                    // REcyclerViews stuff  mAdapter.clear();
+                    mRecyclerView.setAdapter(sAdapter);
                     mAdapter.notifyDataSetChanged();
                     getLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, MainActivity.this);
 
                 } else if (selected.contains("Highest Rated")){
                     firstTimeRunFlag = false;
                     urlPosterString = TOPRATEDSTRING;
-                    mAdapter.clear();
-                    movieGridView.setAdapter(mAdapter);
+                    // REcyclerViews stuff mAdapter.clear();
+                    mRecyclerView.setAdapter(sAdapter);
                     mAdapter.notifyDataSetChanged();
                     getLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, MainActivity.this);
 
@@ -107,8 +112,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     firstTimeRunFlag = false;
                     //Intent favoriteIntent = new Intent(MainActivity.this, FavoritesActivity.class);
                     //startActivity(favoriteIntent);
-                    mAdapter.clear();
-                    movieGridView.setAdapter(mAdapter);
+                    // REcyclerViews stuff mAdapter.clear();
+                    mRecyclerView.setAdapter(sAdapter);
                     mAdapter.notifyDataSetChanged();
                    // getLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, MainActivity.this);
                 } else {
@@ -196,6 +201,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             imageView = (ImageView) itemView.findViewById(R.id.imgPosterPath);
         }
     }
+
 
     public static class MoviesAdapter extends RecyclerView.Adapter<MovieViewHolder>
     {
