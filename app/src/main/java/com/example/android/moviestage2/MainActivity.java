@@ -162,16 +162,16 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         // data set. This will trigger the ListView to update.
         if (movies != null && !movies.isEmpty()) {
             //mAdapter.clear();
-            mAdapter.notifyDataSetChanged();
-            mAdapter.UpdateMovies(movies);
-            mAdapter.addAll(movies);
+            sAdapter.notifyDataSetChanged();
+            sAdapter.UpdateMovies(movies);
+            // 11-9-18 mAdapter.addAll(movies);
         }
     }
 
     @Override
     public void onLoaderReset(Loader<List<MovieList>> loader) {
         // Loader reset, so we can clear out our existing data.
-        mAdapter.clear();
+        // 11-9-18 sAdapter.clear();
     }
 
     public void connectAndLoadMovies(){
@@ -210,6 +210,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         private List<MovieList> mMovieList;
         private LayoutInflater mInflater;
         private Context mContext;
+        private List<MovieList> imageUrls = new ArrayList<>(); // I will see if this works 11-9-2018
+
 
         public MoviesAdapter(Context context)
         {
@@ -249,6 +251,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             this.mMovieList.clear();
             this.mMovieList.addAll(movieList);
             // The adapter needs to know that the data has changed. If we don't call this, app will crash.
+            notifyDataSetChanged();
+        }
+
+        // so far so good 9/25/17
+        public void UpdateMovies(List<MovieList> newList){
+            this.imageUrls = newList;
             notifyDataSetChanged();
         }
 
