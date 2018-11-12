@@ -161,40 +161,5 @@ import java.util.List;
 
     @Override
     public void onLoaderReset(Loader<List<VideoList>> loader) {    }
-
-    /**
-     * Once user clicks on star, saves all the particular movie info into database.
-     */
-    private void saveProduct() {
-        // Read from input fields
-        // Use trim to eliminate leading or trailing white space
-        String titleString = mMovieDisplay.getText().toString().trim();
-        String dateString = mDateDisplay.getText().toString().trim();
-        String voteString = mVoteDisplay.getText().toString().trim();
-        String synopsisString = mSynopsisDisplay.getText().toString().trim();
-//        String posterString = mPosterDisplay.getText().toString().trim();
-//        String movieIDString = mMovieIDDisplay.getText().toString().trim();
-
-
-        // Check if this is supposed to be a new favorite moview
-        // and check if all the fields in the editor are blank
-        if (
-                TextUtils.isEmpty(titleString) && TextUtils.isEmpty(dateString) &&
-                TextUtils.isEmpty(voteString)  && TextUtils.isEmpty(synopsisString)) {
-            // Since no fields were modified, we can return early without creating a new favorite movie.
-            // No need to create ContentValues and no need to do any ContentProvider operations.
-            return;
-        }
-
-        // Create a ContentValues object where column names are the keys,
-        // and the favorite movie attributes from the editor are the values.
-        ContentValues values = new ContentValues();
-        values.put(MovieEntry.COLUMN_MOVIE_TITLE, titleString);
-        values.put(MovieEntry.COLUMN_MOVIE_RELEASE_DATE, dateString);
-        values.put(MovieEntry.COLUMN_MOVIE_VOTE_AVERAGE, voteString);
-        values.put(MovieEntry.COLUMN_MOVIE_SYNOPSIS, synopsisString);
-       // values.put(MovieEntry.COLUMN_MOVIE_POSTER_IMAGE, posterString);
-        //values.put(MovieEntry.COLUMN_MOVIE_ID, movieIDString);
-    }
 }
 
