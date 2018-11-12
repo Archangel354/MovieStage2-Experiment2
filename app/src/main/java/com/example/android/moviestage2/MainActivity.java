@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
         // Create a new adapter that takes an empty list of movies as input
-        mAdapter = new MovieAdapter(this, new ArrayList<MovieList>());
+        mAdapter = new MovieAdapter(this);
         // Set the adapter on the {@link GridView} so the list can be populated in the user interface
         // 11-6-18 movieGridView.setAdapter(mAdapter);
 
@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
                 if ( selected.contains("Most Popular")){
                     urlPosterString = POPULARSTRING;
-                    mAdapter.clear();
+                    //mAdapter.clear();
                     // 11-6-18 movieGridView.setAdapter(mAdapter);
                     mAdapter.notifyDataSetChanged();
                     getLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, MainActivity.this);
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 } else if (selected.contains("Highest Rated")){
                     firstTimeRunFlag = false;
                     urlPosterString = TOPRATEDSTRING;
-                    mAdapter.clear();
+                   // mAdapter.clear();
                     // 11-6-18 movieGridView.setAdapter(mAdapter);
                     mAdapter.notifyDataSetChanged();
                     getLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, MainActivity.this);
@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     firstTimeRunFlag = false;
                     //Intent favoriteIntent = new Intent(MainActivity.this, FavoritesActivity.class);
                     //startActivity(favoriteIntent);
-                    mAdapter.clear();
+                    //mAdapter.clear();
                     // 11-6-18  movieGridView.setAdapter(mAdapter);
                     mAdapter.notifyDataSetChanged();
                    // getLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, MainActivity.this);
@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public Loader<List<MovieList>> onCreateLoader(int id, Bundle args) {
         // Create a new loader for the given URL
-        mAdapter.clear();
+       // mAdapter.clear();
         mAdapter.notifyDataSetChanged();
         Log.i("ONCREATELOADER... ","urlPosterString: " + urlPosterString);
         return new MovieListLoader(this, urlPosterString);
@@ -142,21 +142,21 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onLoadFinished(Loader<List<MovieList>> loader, List<MovieList> movies) {
         // Clear the adapter of previous movie data
-        mAdapter.clear();
+        //mAdapter.clear();
         // If there is a valid list of books, then add them to the adapter's
         // data set. This will trigger the ListView to update.
         if (movies != null && !movies.isEmpty()) {
-            mAdapter.clear();
+            //mAdapter.clear();
             mAdapter.notifyDataSetChanged();
-            mAdapter.UpdateMovies(movies);
-            mAdapter.addAll(movies);
+           //??????? mAdapter.UpdateMovies(movies);
+           //????? mAdapter.addAll(movies);
         }
     }
 
     @Override
     public void onLoaderReset(Loader<List<MovieList>> loader) {
         // Loader reset, so we can clear out our existing data.
-        mAdapter.clear();
+       // mAdapter.clear();
     }
 
     public void connectAndLoadMovies(){
@@ -179,13 +179,5 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         } else {}
     }
 
-    public static class MovieViewHolder extends RecyclerView.ViewHolder
-    {
-        public ImageView imageView;
-        public MovieViewHolder(View itemView)
-        {
-            super(itemView);
-            imageView = (ImageView) itemView.findViewById(R.id.imgPosterPath);
-        }
-    }
+
 }

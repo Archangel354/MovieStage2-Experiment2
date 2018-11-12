@@ -19,7 +19,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-public  class MoviesAdapter extends RecyclerView.Adapter<MainActivity.MovieViewHolder>
+public class MovieAdapter extends RecyclerView.Adapter
 {
     private List<MovieList> mMovieList;
     private LayoutInflater mInflater;
@@ -27,40 +27,43 @@ public  class MoviesAdapter extends RecyclerView.Adapter<MainActivity.MovieViewH
     private String urlImageBaseString = "https://image.tmdb.org/t/p/w185/";
     private String completeUrlString = "";
 
-    public MoviesAdapter(Context context)
+    public MovieAdapter(Context context)
     {
         this.mContext = context;
         this.mInflater = LayoutInflater.from(context);
         this.mMovieList = new ArrayList<>();
     }
 
+    public static class MovieViewHolder extends RecyclerView.ViewHolder
+    {
+        public ImageView imageView;
+        public MovieViewHolder(View itemView)
+        {
+            super(itemView);
+            imageView = (ImageView) itemView.findViewById(R.id.imgPosterPath);
+        }
+    }
+
     @Override
-    public MainActivity.MovieViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
+    public MovieViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
         View view = mInflater.inflate(R.layout.movie_list_items, parent, false);
-        MainActivity.MovieViewHolder viewHolder = new MainActivity.MovieViewHolder(view);
+        MovieViewHolder viewHolder = new MovieViewHolder(view);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(MainActivity.MovieViewHolder holder, int position)
-    {
-        MovieList movie = mMovieList.get(position);
-        ImageView imageView = (ImageView) convertView.findViewById(R.id.imgPosterPath);
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-        // This is how we use Picasso to load images from the internet.
-        Picasso
-                .with(mContext)
-            .load(completeUrlString)
-            .fit()
-            .into(imageView);
     }
+
 
     @Override
     public int getItemCount()
     {
         return (mMovieList == null) ? 0 : mMovieList.size();
     }
+
 
     public void setMovieList(List<MovieList> movieList)
     {
