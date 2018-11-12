@@ -39,6 +39,7 @@ public class MovieListLoader extends AsyncTaskLoader<List<MovieList>> {
         // Perform the network request, parse the response, and extract a list of movies along with
         // the associated movie data i.e. title, posterpath, synopsis, etc.. .
         List<MovieList> movies = Utils.fetchMovieData(mUrl);
+
         return movies;
     }
 }

@@ -86,6 +86,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     // 11-6-18 movieGridView.setAdapter(mAdapter);
                     mAdapter.notifyDataSetChanged();
                     getLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, MainActivity.this);
+                    Log.i("DBG1SPNNER LSTENER... ","POPULARSTRING");
+
 
                 } else if (selected.contains("Highest Rated")){
                     firstTimeRunFlag = false;
@@ -94,6 +96,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     // 11-6-18 movieGridView.setAdapter(mAdapter);
                     mAdapter.notifyDataSetChanged();
                     getLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, MainActivity.this);
+                    Log.i("DBG1 SPNNER LSTENER... ","TOPRATEDSTRING");
+
 
                 } else if (selected.contains("Personal Favorites")){
                     firstTimeRunFlag = false;
@@ -103,6 +107,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     // 11-6-18  movieGridView.setAdapter(mAdapter);
                     mAdapter.notifyDataSetChanged();
                    // getLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, MainActivity.this);
+                    Log.i("DBG1 SPNNER LSTENER... ","Personal Favorites");
+
                 } else {
                     Toast.makeText(MainActivity.this,"No spinner choice executed", Toast.LENGTH_SHORT).show();
                 }
@@ -111,23 +117,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             @Override
             public void onNothingSelected(AdapterView<?> parent) {    }
         });
-
-        // Setup the setOnItemClickListener when a movie image is clicked
-//        movieGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Intent mIntent = new Intent(MainActivity.this, DetailActivity.class);
-//                Bundle mBundle = new Bundle();
-//                mBundle.putString("MBUNDLE_TITLE", movies.get(position).getmMovieTitle());
-//                mBundle.putString("MBUNDLE_DATE", movies.get(position).getmReleaseDate());
-//                mBundle.putString("MBUNDLE_VOTE", movies.get(position).getmVoteAverage());
-//                mBundle.putString("MBUNDLE_SYNOPSIS", movies.get(position).getmSynopsis());
-//                mBundle.putString("MBUNDLE_POSTER", movies.get(position).getmPosterPath());
-//                mBundle.putString("MBUNDLE_MOVIEID", movies.get(position).getmMovieID());
-//                mIntent.putExtras(mBundle);
-//                startActivity(mIntent);
-//            }
-//        });
     }
 
     @Override
@@ -135,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         // Create a new loader for the given URL
        // mAdapter.clear();
         mAdapter.notifyDataSetChanged();
-        Log.i("ONCREATELOADER... ","urlPosterString: " + urlPosterString);
+        Log.i("DBG1 ONCREATELOADER... ","urlPosterString: " + urlPosterString);
         return new MovieListLoader(this, urlPosterString);
     }
 

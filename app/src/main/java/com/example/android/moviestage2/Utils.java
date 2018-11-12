@@ -48,6 +48,7 @@ public final class Utils {
 
         // Extract relevant fields from the JSON response and create an {@link List} object
         List movies = extractFeatureFromJson(jsonResponse);
+        Log.i("DBG1 fetchMovieData... ","movies: " + movies);
 
         // Return the {@link List}
         return movies;
