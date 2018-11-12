@@ -19,19 +19,19 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MovieAdapter extends RecyclerView.Adapter
+public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder>
 {
-    private List<MovieList> mMovieList;
+    private ArrayList<MovieList> mMovieList = new ArrayList<>();
     private LayoutInflater mInflater;
     private Context mContext;
     private String urlImageBaseString = "https://image.tmdb.org/t/p/w185/";
     private String completeUrlString = "";
 
-    public MovieAdapter(Context context)
+    public MovieAdapter(ArrayList<MovieList> mMovieList)
     {
-        this.mContext = context;
-        this.mInflater = LayoutInflater.from(context);
-        this.mMovieList = new ArrayList<>();
+        //this.mContext = context;
+        //this.mInflater = LayoutInflater.from(context);
+        this.mMovieList = mMovieList;
     }
 
     public static class MovieViewHolder extends RecyclerView.ViewHolder
@@ -49,11 +49,12 @@ public class MovieAdapter extends RecyclerView.Adapter
     {
         View view = mInflater.inflate(R.layout.movie_list_items, parent, false);
         MovieViewHolder viewHolder = new MovieViewHolder(view);
-        return viewHolder;
+        return new MovieViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(MovieViewHolder holder, int position) {
+        holder.imageView.
 
     }
 
@@ -61,6 +62,7 @@ public class MovieAdapter extends RecyclerView.Adapter
     @Override
     public int getItemCount()
     {
+
         return (mMovieList == null) ? 0 : mMovieList.size();
     }
 
