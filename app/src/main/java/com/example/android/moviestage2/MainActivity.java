@@ -8,6 +8,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -45,20 +46,25 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     // Find a reference to the {@link GridView} in the layout
     // 11-6-18 public GridView movieGridView;
-    public RecyclerView movieGridView;
+    public RecyclerView recyclerView;
+    private RecyclerView.LayoutManager layoutManager;
+
     private String urlImageBaseString = "https://image.tmdb.org/t/p/w185/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        movieGridView =  findViewById(R.id.recyclerView);
+        recyclerView =  findViewById(R.id.recyclerView);
 
         // New declaration for recyclerView
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        layoutManager = new GridLayoutManager(this, 2);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(layoutManager);
 
         // Create a new adapter that takes an empty list of movies as input
-        mAdapter = new MovieAdapter(this);
+        mAdapter = new MovieAdapter( new ArrayList<MovieList>());
         // Set the adapter on the {@link GridView} so the list can be populated in the user interface
         // 11-6-18 movieGridView.setAdapter(mAdapter);
 

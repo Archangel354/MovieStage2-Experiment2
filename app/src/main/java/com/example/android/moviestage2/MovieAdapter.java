@@ -5,6 +5,7 @@ package com.example.android.moviestage2;
  */
 
 import android.app.Activity;
+import android.app.LauncherActivity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -47,14 +48,26 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     @Override
     public MovieViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
-        View view = mInflater.inflate(R.layout.movie_list_items, parent, false);
+        //View view = mInflater.inflate(R.layout.movie_list_items, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.movie_list_items, parent, false);
+
         MovieViewHolder viewHolder = new MovieViewHolder(view);
         return new MovieViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(MovieViewHolder holder, int position) {
-        holder.imageView.
+        final MovieList listItem = mMovieList.get(position);
+
+        //final LauncherActivity.ListItem listItem = listitems.get(position);
+
+        //holder.imageView.getDrawable()
+
+        // View convertView
+        Picasso.with(mContext)
+                .load(listItem.getmPosterPath())
+                .into(holder.imageView);
+
 
     }
 
