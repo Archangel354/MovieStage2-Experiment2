@@ -56,17 +56,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         recyclerView =  findViewById(R.id.recyclerView);
-
-        // New declaration for recyclerView
-        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        layoutManager = new GridLayoutManager(this, 2);
+        int numberofColumns = 2;
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(layoutManager);
-
+        recyclerView.setLayoutManager(new GridLayoutManager(this, numberofColumns));
         // Create a new adapter that takes an empty list of movies as input
         mAdapter = new MovieAdapter( new ArrayList<MovieList>());
         // Set the adapter on the {@link GridView} so the list can be populated in the user interface
         // 11-6-18 movieGridView.setAdapter(mAdapter);
+        recyclerView.setAdapter(mAdapter);
 
         Spinner mSpinner = (Spinner) findViewById(R.id.spnPopOrRatedOrFavorite);
 
