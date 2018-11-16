@@ -31,15 +31,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     /** Adapter for the gridview of movies */
     private MovieAdapter mAdapter;
     private ArrayList arrayList;
-    private RecyclerView mRecyclerView;
-
     private static final String TAG = MainActivity.class.getSimpleName();
-
     public final static String POPULARSTRING = "https://api.themoviedb.org/3/movie/popular?api_key=02ff7187d940e5bd15cd5acd2b41b63e";
     public final static String TOPRATEDSTRING = "https://api.themoviedb.org/3/movie/top_rated?api_key=02ff7187d940e5bd15cd5acd2b41b63e";
     public String urlPosterString = POPULARSTRING;
     private boolean firstTimeRunFlag = true;
-
     public final static String TRAILERSTRING = "https://api.themoviedb.org/3/movie/335984/videos?api_key=02ff7187d940e5bd15cd5acd2b41b63e";
     public final static String VIDEOKEY ="dZOaI_Fn5o4";
     public final static String VIDEOURL ="https://www.youtube.com/watch?v=gCcx85zbxz4";
@@ -48,6 +44,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     // 11-6-18 public GridView movieGridView;
     public RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
+    int numberofColumns = 2;
+
 
     private String urlImageBaseString = "https://image.tmdb.org/t/p/w185/";
 
@@ -56,14 +54,15 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         recyclerView =  findViewById(R.id.recyclerView);
-        int numberofColumns = 2;
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(this, numberofColumns));
         // Create a new adapter that takes an empty list of movies as input
-        mAdapter = new MovieAdapter( new ArrayList<MovieList>());
+        mAdapter = new MovieAdapter( this, new ArrayList<MovieList>());
         // Set the adapter on the {@link GridView} so the list can be populated in the user interface
         // 11-6-18 movieGridView.setAdapter(mAdapter);
         recyclerView.setAdapter(mAdapter);
+
+
 
         Spinner mSpinner = (Spinner) findViewById(R.id.spnPopOrRatedOrFavorite);
 

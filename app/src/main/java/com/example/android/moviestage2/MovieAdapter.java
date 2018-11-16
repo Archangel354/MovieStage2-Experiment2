@@ -28,7 +28,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     private String urlImageBaseString = "https://image.tmdb.org/t/p/w185/";
     private String completeUrlString = "";
 
-    public MovieAdapter(ArrayList<MovieList> mMovieList)
+    public MovieAdapter(MainActivity mainActivity, ArrayList<MovieList> mMovieList)
     {
         //this.mContext = context;
         //this.mInflater = LayoutInflater.from(context);
