@@ -59,6 +59,7 @@
         android:layout_height="match_parent"
         android:scrollbars="vertical"
         tools:showIn="@layout/activity_main"
+        android:layout_below="@id/spnPopOrRatedOrFavorite"
         tools:context=".MainActivity"/>
 
 
