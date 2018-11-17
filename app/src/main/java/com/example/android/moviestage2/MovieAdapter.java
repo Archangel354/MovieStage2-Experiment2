@@ -58,6 +58,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     @Override
     public void onBindViewHolder(MovieViewHolder holder, int position) {
         final MovieList listItem = mMovieList.get(position);
+        setMovieList(mMovieList);
 
         //final LauncherActivity.ListItem listItem = listitems.get(position);
 
