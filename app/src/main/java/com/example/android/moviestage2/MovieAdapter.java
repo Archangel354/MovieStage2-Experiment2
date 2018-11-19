@@ -22,17 +22,22 @@ import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder>
 {
-    private ArrayList<MovieList> mMovieList = new ArrayList<>();
+    ArrayList<MovieList> mMovieList = new ArrayList<>();
     private LayoutInflater mInflater;
     private Context mContext;
     private String urlImageBaseString = "https://image.tmdb.org/t/p/w185/";
     private String completeUrlString = "";
+    private int[] mPlaceList;
 
-    public MovieAdapter(MainActivity mainActivity, ArrayList<MovieList> mMovieList)
+   // Trying someting 11-18-18  public MovieAdapter(MainActivity mainActivity, ArrayList<MovieList> mMovieList)
+    public MovieAdapter(Context mContext,int[] mPlaceList)
+
     {
-        //this.mContext = context;
+        this.mContext = mContext;
         //this.mInflater = LayoutInflater.from(context);
-        this.mMovieList = mMovieList;
+        // 11-18-18 this.mMovieList = mMovieList;
+        this.mPlaceList = mPlaceList;
+
     }
 
     public static class MovieViewHolder extends RecyclerView.ViewHolder
@@ -51,24 +56,26 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         //View view = mInflater.inflate(R.layout.movie_list_items, parent, false);
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.movie_list_items, parent, false);
 
-        MovieViewHolder viewHolder = new MovieViewHolder(view);
+        // 11-18-18 MovieViewHolder viewHolder = new MovieViewHolder(view);
         return new MovieViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(MovieViewHolder holder, int position) {
-        final MovieList listItem = mMovieList.get(position);
-        setMovieList(mMovieList);
+    public void onBindViewHolder( final MovieViewHolder holder, int position) {
+        holder.mPlace.setImageResource(mPlaceList[position]);
 
-        //final LauncherActivity.ListItem listItem = listitems.get(position);
-
-        //holder.imageView.getDrawable()
-
-        // View convertView
-        Picasso.with(mContext)
-                .load(listItem.getmPosterPath())
-                .into(holder.imageView);
-
+//        final MovieList listItem = mMovieList.get(position);
+//        setMovieList(mMovieList);
+//
+//        //final LauncherActivity.ListItem listItem = listitems.get(position);
+//
+//        //holder.imageView.getDrawable()
+//
+//        // View convertView
+//        Picasso.with(mContext)
+//                .load(listItem.getmPosterPath())
+//                .into(holder.imageView);
+//
 
     }
 

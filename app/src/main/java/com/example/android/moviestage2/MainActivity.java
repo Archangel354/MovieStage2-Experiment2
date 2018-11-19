@@ -56,8 +56,18 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         recyclerView =  findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(this, numberofColumns));
+
+
+        int[] mPlaceList = new int[]{R.drawable.image_1, R.drawable.image_2, R.drawable.image_3,
+                R.drawable.image_4, R.drawable.image_5, R.drawable.image_6, R.drawable.image_7,
+                R.drawable.image_8, R.drawable.image_9, R.drawable.image_10, R.drawable.image_11,
+                R.drawable.image_12, R.drawable.image_13, R.drawable.image_14};
+
+
         // Create a new adapter that takes an empty list of movies as input
-        mAdapter = new MovieAdapter( this, new ArrayList<MovieList>());
+        // 11-18-18 mAdapter = new MovieAdapter( this, new ArrayList<MovieList>());
+        mAdapter = new MovieAdapter( this, mPlaceList);
+
         // Set the adapter on the {@link GridView} so the list can be populated in the user interface
         // 11-6-18 movieGridView.setAdapter(mAdapter);
         recyclerView.setAdapter(mAdapter);
