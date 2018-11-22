@@ -77,6 +77,8 @@ public class MovieAdapter extends ArrayAdapter<MovieList> {
                 .fit()
                 .into(imageView);
 
+        Log.i("LOG getView ","position: " + position);
+
         return convertView;
     }
 
