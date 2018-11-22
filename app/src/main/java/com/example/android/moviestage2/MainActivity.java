@@ -228,8 +228,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         {
             this.mContext = context;
             this.mInflater = LayoutInflater.from(context);
-            this.mMovieList = new ArrayList<>();
-            Log.i("LOG MoviesAdapter","The context is: " + context);
+            this.mMovieList = movieListRecords;
+            Log.i("LOG MoviesAdapter","The mMovieList is: " + mMovieList);
 
         }
 
