@@ -81,6 +81,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     movieGridView.setAdapter(mAdapter);
                     mAdapter.notifyDataSetChanged();
                     getLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, MainActivity.this);
+                    Log.i("LOG onItemSelected... ","POPULARSTRING: " + urlPosterString);
+
 
                 } else if (selected.contains("Highest Rated")){
                     firstTimeRunFlag = false;
@@ -89,6 +91,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     movieGridView.setAdapter(mAdapter);
                     mAdapter.notifyDataSetChanged();
                     getLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, MainActivity.this);
+                    Log.i("LOG onItemSelected... ","Highest Rated: " + urlPosterString);
+
 
                 } else if (selected.contains("Personal Favorites")){
                     firstTimeRunFlag = false;
@@ -97,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     mAdapter.clear();
                     movieGridView.setAdapter(mAdapter);
                     mAdapter.notifyDataSetChanged();
-                   // getLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, MainActivity.this);
+                   getLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, MainActivity.this);
                 } else {
                     Toast.makeText(MainActivity.this,"No spinner choice executed", Toast.LENGTH_SHORT).show();
                 }
