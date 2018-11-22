@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         Log.i("LOG before new MvieAdpr","Most Popular: " + urlPosterString);
 
-        sAdapter = new MoviesAdapter(this);
+        sAdapter = new MoviesAdapter(this, new ArrayList<MovieList>());
         mRecyclerView.setAdapter(sAdapter);
 
         // Create a new adapter that takes an empty list of movies as input
@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         // Create a new loader for the given URL
         //sAdapter.clear();
         sAdapter.notifyDataSetChanged();
-        Log.i("ONCREATELOADER... ","urlPosterString: " + urlPosterString);
+        Log.i("LOG ONCREATELOADER... ","urlPosterString: " + urlPosterString);
         return new MovieListLoader(this, urlPosterString);
     }
 
@@ -221,11 +221,16 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         private List<MovieList> imageUrls = new ArrayList<>(); // I will see if this works 11-9-2018
 
 
-        public MoviesAdapter(Context context)
+
+
+
+        public MoviesAdapter(Context context, ArrayList<MovieList> movieListRecords)
         {
             this.mContext = context;
             this.mInflater = LayoutInflater.from(context);
             this.mMovieList = new ArrayList<>();
+            Log.i("LOG MoviesAdapter","The context is: " + context);
+
         }
 
         @Override
@@ -233,6 +238,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         {
             View view = mInflater.inflate(R.layout.movie_list_items, parent, false);
             MovieViewHolder viewHolder = new MovieViewHolder(view);
+            Log.i("LOG onCreateViewHolder","The viewHolder is: " + viewHolder);
+
             return viewHolder;
         }
 
@@ -246,6 +253,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     .load(movie.getmPosterPath())
                     .placeholder(R.color.colorAccent)
                     .into(holder.imageView);
+            Log.i("LOG onBindViewHolder","The imageView is: " + holder.imageView);
+
         }
 
         @Override
