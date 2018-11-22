@@ -67,6 +67,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         //movieGridView = (GridView) findViewById(R.id.movieGrid);
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        Log.i("LOG before new MvieAdpr","Most Popular: " + urlPosterString);
+
         sAdapter = new MoviesAdapter(this);
         mRecyclerView.setAdapter(sAdapter);
 
@@ -99,6 +101,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     mRecyclerView.setAdapter(sAdapter);
                     sAdapter.notifyDataSetChanged();
                     getLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, MainActivity.this);
+                    Log.i("LOG onItemSelected... ","Most Popular: " + urlPosterString);
+
 
                 } else if (selected.contains("Highest Rated")){
                     firstTimeRunFlag = false;
@@ -107,6 +111,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     mRecyclerView.setAdapter(sAdapter);
                     sAdapter.notifyDataSetChanged();
                     getLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, MainActivity.this);
+                    Log.i("LOG onItemSelected... ","Highest Rated: " + urlPosterString);
+
 
                 } else if (selected.contains("Personal Favorites")){
                     firstTimeRunFlag = false;
