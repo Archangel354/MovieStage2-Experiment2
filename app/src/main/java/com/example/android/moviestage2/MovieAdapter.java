@@ -74,6 +74,7 @@ public class MovieAdapter extends ArrayAdapter<MovieList> {
                 .load(completeUrlString)
                 .fit()
                 .into(imageView);
+        Log.i("LOG getView ","completeUrlString: " + completeUrlString);
 
         return convertView;
     }

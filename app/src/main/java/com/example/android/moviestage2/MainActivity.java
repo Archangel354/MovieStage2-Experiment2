@@ -145,6 +145,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             mAdapter.notifyDataSetChanged();
             mAdapter.UpdateMovies(movies);
             mAdapter.addAll(movies);
+            Log.i("LOG onLoadFinished ","movies: " + movies);
+
         }
     }
 
