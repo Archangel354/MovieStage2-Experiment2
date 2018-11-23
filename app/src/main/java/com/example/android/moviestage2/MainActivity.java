@@ -98,27 +98,29 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 if ( selected.contains("Most Popular")){
                     urlPosterString = POPULARSTRING;
                     // REcyclerViews stuff  mAdapter.clear();
-                    mRecyclerView.setAdapter(sAdapter);
-                    sAdapter.notifyDataSetChanged();
+
                     getLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, MainActivity.this);
                     Log.i("LOG onItemSelected... ","Most Popular: " + urlPosterString);
+                    Log.i("LOG onItemSelected ","movies size: " + movies.size());
+                    sAdapter.notifyDataSetChanged();
+                    mRecyclerView.setAdapter(sAdapter);
+
 
 
                 } else if (selected.contains("Highest Rated")){
                     firstTimeRunFlag = false;
                     urlPosterString = TOPRATEDSTRING;
-                    // REcyclerViews stuff mAdapter.clear();
-                    mRecyclerView.setAdapter(sAdapter);
-                    sAdapter.notifyDataSetChanged();
+
                     getLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, MainActivity.this);
                     Log.i("LOG onItemSelected... ","Highest Rated: " + urlPosterString);
+                    Log.i("LOG onItemSelected ","movies size: " + movies.size());
+                    sAdapter.notifyDataSetChanged();
+                    mRecyclerView.setAdapter(sAdapter);
+
 
 
                 } else if (selected.contains("Personal Favorites")){
                     firstTimeRunFlag = false;
-                    //Intent favoriteIntent = new Intent(MainActivity.this, FavoritesActivity.class);
-                    //startActivity(favoriteIntent);
-                    // REcyclerViews stuff mAdapter.clear();
                     mRecyclerView.setAdapter(sAdapter);
                     sAdapter.notifyDataSetChanged();
                    // getLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, MainActivity.this);
@@ -171,7 +173,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             sAdapter.notifyDataSetChanged();
             sAdapter.UpdateMovies(movies);
             // 11-9-18 mAdapter.addAll(movies);
-            Log.i("LOG onLoadFinished ","movies: " + movies);
+            Log.i("LOG onLoadFinished ","movies size: " + movies.size());
 
         }
     }

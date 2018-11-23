@@ -24,6 +24,29 @@ public class MovieList {
         mMovieID = MovieID;
     }
 
+    public void setmPosterPath(String mPosterPath) {
+        this.mPosterPath = mPosterPath;
+    }
+
+    public void setmMovieTitle(String mMovieTitle) {
+        this.mMovieTitle = mMovieTitle;
+    }
+
+    public void setmReleaseDate(String mReleaseDate) {
+        this.mReleaseDate = mReleaseDate;
+    }
+
+    public void setmVoteAverage(String mVoteAverage) {
+        this.mVoteAverage = mVoteAverage;
+    }
+
+    public void setmSynopsis(String mSynopsis) {
+        this.mSynopsis = mSynopsis;
+    }
+
+    public void setmMovieID(String mMovieID) {
+        this.mMovieID = mMovieID;
+    }
 
     public String getmPosterPath() {
         return mPosterPath;
