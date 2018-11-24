@@ -112,6 +112,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                         e.printStackTrace();
                     }
                     Log.i("LOG onItemSelected ","movies: " + movies);
+                    sAdapter = new MoviesAdapter(this, movies);
 
                 } else if (selected.contains("Highest Rated")){
                     firstTimeRunFlag = false;
@@ -229,7 +230,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     {
         private List<MovieList> mMovieList;
         private LayoutInflater mInflater;
-        private Context mContext;
+        private AdapterView.OnItemSelectedListener mContext;
+        private Context nContext;
+
         private List<MovieList> imageUrls = new ArrayList<>(); // I will see if this works 11-9-2018
 
 
@@ -238,14 +241,20 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         public MoviesAdapter(Context context, ArrayList<MovieList> movieListRecords)
         {
-            this.mContext = context;
+            this.nContext = context;
             this.mInflater = LayoutInflater.from(context);
             this.mMovieList = movieListRecords;
             Log.i("LOG MoviesAdapter","The mMovieList is: " + mMovieList);
             Log.i("LOG MoviesAdapter","movies: " + movies);
+        }
 
-
-
+        public MoviesAdapter(AdapterView.OnItemSelectedListener context, ArrayList<MovieList> movieListRecords)
+        {
+            this.mContext = (AdapterView.OnItemSelectedListener) context;
+            this.mInflater = LayoutInflater.from((Context) context);
+            this.mMovieList = movieListRecords;
+            Log.i("LOG MoviesAdapter","The mMovieList is: " + mMovieList);
+            Log.i("LOG MoviesAdapter","movies: " + movies);
         }
 
         @Override
@@ -264,7 +273,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             MovieList movie = mMovieList.get(position);
 
             // This is how we use Picasso to load images from the internet.
-            Picasso.with(mContext)
+            Picasso.with(nContext)
                     .load(movie.getmPosterPath())
                     .placeholder(R.color.colorAccent)
                     .into(holder.imageView);
