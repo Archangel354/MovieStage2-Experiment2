@@ -90,6 +90,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         getLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, this);
         connectAndLoadMovies();
 
+        Log.i("LOG onCreate... ","movies: " + movies);
+
+
         mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -101,9 +104,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
                     getLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, MainActivity.this);
                     Log.i("LOG onItemSelected... ","Most Popular: " + urlPosterString);
-                    Log.i("LOG onItemSelected ","movies size: " + movies.size());
                     sAdapter.notifyDataSetChanged();
                     mRecyclerView.setAdapter(sAdapter);
+                    Log.i("LOG onItemSelected ","movies: " + movies);
+
 
 
 
@@ -113,9 +117,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
                     getLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, MainActivity.this);
                     Log.i("LOG onItemSelected... ","Highest Rated: " + urlPosterString);
-                    Log.i("LOG onItemSelected ","movies size: " + movies.size());
                     sAdapter.notifyDataSetChanged();
                     mRecyclerView.setAdapter(sAdapter);
+                    Log.i("LOG onItemSelected ","movies: " + movies);
+
 
 
 
@@ -174,6 +179,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             sAdapter.UpdateMovies(movies);
             // 11-9-18 mAdapter.addAll(movies);
             Log.i("LOG onLoadFinished ","movies size: " + movies.size());
+            Log.i("LOG onLoadFinished... ","movies: " + movies);
+
 
         }
     }
@@ -232,6 +239,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             this.mInflater = LayoutInflater.from(context);
             this.mMovieList = movieListRecords;
             Log.i("LOG MoviesAdapter","The mMovieList is: " + mMovieList);
+            Log.i("LOG MoviesAdapter","movies: " + movies);
+
+
 
         }
 
