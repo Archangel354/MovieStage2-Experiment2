@@ -106,10 +106,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     Log.i("LOG onItemSelected... ","Most Popular: " + urlPosterString);
                     sAdapter.notifyDataSetChanged();
                     mRecyclerView.setAdapter(sAdapter);
+                    try {
+                        Thread.sleep(400);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     Log.i("LOG onItemSelected ","movies: " + movies);
-
-
-
 
                 } else if (selected.contains("Highest Rated")){
                     firstTimeRunFlag = false;
@@ -119,10 +121,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     Log.i("LOG onItemSelected... ","Highest Rated: " + urlPosterString);
                     sAdapter.notifyDataSetChanged();
                     mRecyclerView.setAdapter(sAdapter);
+                    try {
+                        Thread.sleep(400);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     Log.i("LOG onItemSelected ","movies: " + movies);
-
-
-
 
                 } else if (selected.contains("Personal Favorites")){
                     firstTimeRunFlag = false;
@@ -180,7 +184,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             // 11-9-18 mAdapter.addAll(movies);
             Log.i("LOG onLoadFinished ","movies size: " + movies.size());
             Log.i("LOG onLoadFinished... ","movies: " + movies);
-
 
         }
     }
