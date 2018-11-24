@@ -27,9 +27,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     /** Adapter for the gridview of movies */
     private MovieAdapter mAdapter;
-    private ArrayList arrayList;
-
-
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
