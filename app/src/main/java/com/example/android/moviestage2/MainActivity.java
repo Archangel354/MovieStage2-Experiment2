@@ -78,7 +78,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     movieGridView.setAdapter(mAdapter);
                     mAdapter.notifyDataSetChanged();
                     getLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, MainActivity.this);
+
                     Log.i("LOG onItemSelected... ","POPULARSTRING: " + urlPosterString);
+                    Log.i("LOG onItemSelected... ","movies: " + movies);
+
 
 
                 } else if (selected.contains("Highest Rated")){
@@ -89,6 +92,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     mAdapter.notifyDataSetChanged();
                     getLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, MainActivity.this);
                     Log.i("LOG onItemSelected... ","Highest Rated: " + urlPosterString);
+                    Log.i("LOG onItemSelected... ","movies: " + movies);
+
 
 
                 } else if (selected.contains("Personal Favorites")){

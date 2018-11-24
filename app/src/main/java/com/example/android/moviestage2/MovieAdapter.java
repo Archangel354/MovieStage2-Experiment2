@@ -76,7 +76,7 @@ public class MovieAdapter extends ArrayAdapter<MovieList> {
                 .load(completeUrlString)
                 .fit()
                 .into(imageView);
-        Log.i("LOG.MovieAdapter","after Picasso in getView: " + completeUrlString);
+        //Log.i("LOG.MovieAdapter","after Picasso in getView: " + completeUrlString);
 
         return convertView;
     }

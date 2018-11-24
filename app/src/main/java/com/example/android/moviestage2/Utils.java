@@ -163,8 +163,8 @@ public final class Utils {
                 String voteString = currentMovie.getString("vote_average");
                 String synopsisString = currentMovie.getString("overview");
                 String movieIDString = currentMovie.getString("id");
-                Log.i("UTILS","The posterUrlString is: " + posterUrlString);
-                Log.i("UTILS","The titleString is: " + titleString);
+                Log.i("LOG UTILS","The posterUrlString is: " + posterUrlString);
+                Log.i("LOG UTILS","The titleString is: " + titleString);
 
                 MovieList mMovieList = new MovieList(posterUrlString, titleString, dateString, voteString, synopsisString, movieIDString);
                 movies.add(mMovieList);
