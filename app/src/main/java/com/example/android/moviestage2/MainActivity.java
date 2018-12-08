@@ -39,10 +39,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     // New recyclerView stuff
     private RecyclerView mRecyclerView;
     private MoviesAdapter sAdapter;
-
-
-
-
     private static final String TAG = MainActivity.class.getSimpleName();
 
     public final static String POPULARSTRING = "https://api.themoviedb.org/3/movie/popular?api_key=02ff7187d940e5bd15cd5acd2b41b63e";
@@ -50,36 +46,24 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public String urlPosterString = POPULARSTRING;
     private boolean firstTimeRunFlag = true;
 
-    public final static String TRAILERSTRING = "https://api.themoviedb.org/3/movie/335984/videos?api_key=02ff7187d940e5bd15cd5acd2b41b63e";
-    public final static String VIDEOKEY ="dZOaI_Fn5o4";
-    public final static String VIDEOURL ="https://www.youtube.com/watch?v=gCcx85zbxz4";
-
-    // Find a reference to the {@link GridView} in the layout
-    public GridView movieGridView;
-    private String urlImageBaseString = "https://image.tmdb.org/t/p/w185/";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // New RecyclerView stuff
-        //movieGridView = (GridView) findViewById(R.id.movieGrid);
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         Log.i("LOG before new MvieAdpr","Most Popular: " + urlPosterString);
+
+
 
         sAdapter = new MoviesAdapter(this, new ArrayList<MovieList>());
         mRecyclerView.setAdapter(sAdapter);
 
-        // Create a new adapter that takes an empty list of movies as input
-        // REcyclerViews stuff mAdapter = new MovieAdapter(this, new ArrayList<MovieList>());
-        // Set the adapter on the {@link GridView} so the list can be populated in the user interface
-        // REcyclerViews stuff movieGridView.setAdapter(mAdapter);
-
         Spinner mSpinner = (Spinner) findViewById(R.id.spnPopOrRatedOrFavorite);
 
-        // Create an ArrayAdapter using the string array and a default spinner layout
+        // For the spinner, Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> spinAdapter = ArrayAdapter.createFromResource(this,
                 R.array.movie_choices, android.R.layout.simple_spinner_item);
 
