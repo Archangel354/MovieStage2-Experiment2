@@ -20,13 +20,14 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.android.moviestage2.MainActivity.movies;
+
 public final class Utils {
 
     /** Tag for the log messages */
     public static final String LOG_TAG = Utils.class.getSimpleName();
 
-    // Create an empty ArrayList that we can start adding movies to
-    static ArrayList<MovieList> movies = new ArrayList<>();
+
 
     /**
      * Query the iMdb dataset and return an {@link List} object to represent a single movie.

@@ -19,7 +19,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.android.moviestage2.Utils.movies;
+//import static com.example.android.moviestage2.Utils.movies;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<MovieList>> {
 
@@ -42,6 +42,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     // Find a reference to the {@link GridView} in the layout
     public GridView movieGridView;
     private String urlImageBaseString = "https://image.tmdb.org/t/p/w185/";
+
+    // Create an empty ArrayList that we can start adding movies to
+    public static ArrayList<MovieList> movies;
+
+    static {
+        movies = new ArrayList<>();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
