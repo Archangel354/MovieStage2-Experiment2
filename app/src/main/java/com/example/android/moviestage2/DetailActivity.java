@@ -49,7 +49,6 @@ import java.util.List;
 
     /** Adapter for the list of trailers */
     private VideoAdapter vAdapter;
-
     public final static String VIDEOSTRING = "https://api.themoviedb.org/3/movie/335984/videos?api_key=02ff7187d940e5bd15cd5acd2b41b63e";
     public String urlTrailerString = VIDEOSTRING;
 
@@ -165,7 +164,7 @@ import java.util.List;
     /**
      * Once user clicks on star, saves all the particular movie info into database.
      */
-    private void saveProduct() {
+    private void saveMovie() {
         // Read from input fields
         // Use trim to eliminate leading or trailing white space
         String titleString = mMovieDisplay.getText().toString().trim();
