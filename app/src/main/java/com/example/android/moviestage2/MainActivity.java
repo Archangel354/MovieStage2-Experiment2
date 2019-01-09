@@ -8,6 +8,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -40,19 +41,19 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public final static String VIDEOURL ="https://www.youtube.com/watch?v=gCcx85zbxz4";
 
     // Find a reference to the {@link GridView} in the layout
-    public GridView movieGridView;
+    private RecyclerView mRecyclerView;
     private String urlImageBaseString = "https://image.tmdb.org/t/p/w185/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        movieGridView = (GridView) findViewById(R.id.movieGrid);
+        mRecyclerView =  findViewById(R.id.recycler_view);
 
         // Create a new adapter that takes an empty list of movies as input
         mAdapter = new MovieAdapter(this, new ArrayList<MovieList>());
         // Set the adapter on the {@link GridView} so the list can be populated in the user interface
-        movieGridView.setAdapter(mAdapter);
+        mRecyclerView.setAdapter(mAdapter);
 
         Spinner mSpinner = (Spinner) findViewById(R.id.spnPopOrRatedOrFavorite);
 
