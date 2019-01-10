@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private static final int MOVIELIST_LOADER_ID = 1;
 
     /** Adapter for the gridview of movies */
-    private MovieAdapter mAdapter;
+    private MoviesAdapter mAdapter;
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -43,6 +43,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     // Find a reference to the {@link GridView} in the layout
     private RecyclerView mRecyclerView;
     private String urlImageBaseString = "https://image.tmdb.org/t/p/w185/";
+    private ArrayList<MovieList> mMovieList;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         mRecyclerView =  findViewById(R.id.recycler_view);
 
         // Create a new adapter that takes an empty list of movies as input
-        mAdapter = new MovieAdapter(this, new ArrayList<MovieList>());
+        mAdapter = new MoviesAdapter(MainActivity.this, mMovieList);
         // Set the adapter on the {@link GridView} so the list can be populated in the user interface
         mRecyclerView.setAdapter(mAdapter);
 
@@ -75,8 +77,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
                 if ( selected.contains("Most Popular")){
                     urlPosterString = POPULARSTRING;
-                    mAdapter.clear();
-                    movieGridView.setAdapter(mAdapter);
+                    //mAdapter.clear();
+                    mRecyclerView.setAdapter(mAdapter);
                     mAdapter.notifyDataSetChanged();
                     getLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, MainActivity.this);
 
@@ -88,12 +90,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 } else if (selected.contains("Highest Rated")){
                     firstTimeRunFlag = false;
                     urlPosterString = TOPRATEDSTRING;
-                    mAdapter.clear();
-                    movieGridView.setAdapter(mAdapter);
+                    //mAdapter.clear();
+                    mRecyclerView.setAdapter(mAdapter);
                     mAdapter.notifyDataSetChanged();
                     getLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, MainActivity.this);
                     Log.i("LOG onItemSelected... ","Highest Rated: " + urlPosterString);
-                    Log.i("LOG onItemSelected... ","movies: " + movies);
+//                    Log.i("LOG onItemSelected... ","movies: " + movies);
 
 
 
@@ -101,8 +103,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     firstTimeRunFlag = false;
                     //Intent favoriteIntent = new Intent(MainActivity.this, FavoritesActivity.class);
                     //startActivity(favoriteIntent);
-                    mAdapter.clear();
-                    movieGridView.setAdapter(mAdapter);
+                    //mAdapter.clear();
+                    mRecyclerView.setAdapter(mAdapter);
                     mAdapter.notifyDataSetChanged();
                    getLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, MainActivity.this);
                 } else {
@@ -115,27 +117,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         });
 
         // Setup the setOnItemClickListener when a movie image is clicked
-        movieGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent mIntent = new Intent(MainActivity.this, DetailActivity.class);
-                Bundle mBundle = new Bundle();
-                mBundle.putString("MBUNDLE_TITLE", movies.get(position).getmMovieTitle());
-                mBundle.putString("MBUNDLE_DATE", movies.get(position).getmReleaseDate());
-                mBundle.putString("MBUNDLE_VOTE", movies.get(position).getmVoteAverage());
-                mBundle.putString("MBUNDLE_SYNOPSIS", movies.get(position).getmSynopsis());
-                mBundle.putString("MBUNDLE_POSTER", movies.get(position).getmPosterPath());
-                mBundle.putString("MBUNDLE_MOVIEID", movies.get(position).getmMovieID());
-                mIntent.putExtras(mBundle);
-                startActivity(mIntent);
-            }
-        });
+//        mAdapter.setOnItemClickListener((MoviesAdapter.OnItemClickListener) MainActivity.this);
     }
 
     @Override
     public Loader<List<MovieList>> onCreateLoader(int id, Bundle args) {
         // Create a new loader for the given URL
-        mAdapter.clear();
+        //mAdapter.clear();
         mAdapter.notifyDataSetChanged();
         Log.i("ONCREATELOADER... ","urlPosterString: " + urlPosterString);
         return new MovieListLoader(this, urlPosterString);
@@ -144,14 +132,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onLoadFinished(Loader<List<MovieList>> loader, List<MovieList> movies) {
         // Clear the adapter of previous movie data
-        mAdapter.clear();
+        //mAdapter.clear();
         // If there is a valid list of books, then add them to the adapter's
         // data set. This will trigger the ListView to update.
         if (movies != null && !movies.isEmpty()) {
-            mAdapter.clear();
+            //mAdapter.clear();
             mAdapter.notifyDataSetChanged();
-            mAdapter.UpdateMovies(movies);
-            mAdapter.addAll(movies);
+            //mAdapter.UpdateMovies(movies);
+            //mAdapter.addAll(movies);
             Log.i("LOG onLoadFinished ","movies: " + movies);
 
         }
@@ -160,7 +148,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onLoaderReset(Loader<List<MovieList>> loader) {
         // Loader reset, so we can clear out our existing data.
-        mAdapter.clear();
+        //mAdapter.clear();
     }
 
     public void connectAndLoadMovies(){
