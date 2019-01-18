@@ -12,8 +12,11 @@ import java.util.List;
 import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.util.Log;
+import android.view.View;
 
 import java.util.List;
+
+import static com.example.android.moviestage2.MoviesAdapter.mMovieList;
 
 public class MovieListLoader extends AsyncTaskLoader<List<MovieList>> {
 
@@ -25,9 +28,16 @@ public class MovieListLoader extends AsyncTaskLoader<List<MovieList>> {
         mUrl = url;
     }
 
+
+
     @Override
     protected void onStartLoading() {
-        forceLoad();
+        if (mMovieList != null) {
+            deliverResult(mMovieList);
+        } else {
+
+            forceLoad();
+        }
     }
 
     @Override

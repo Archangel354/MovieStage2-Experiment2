@@ -22,7 +22,7 @@ import java.util.List;
 
 import static com.example.android.moviestage2.Utils.movies;
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<MovieList>> {
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<MovieList>>, MoviesAdapter.OnItemClickListener {
 
     private static final int MOVIELIST_LOADER_ID = 1;
 
@@ -127,6 +127,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         mAdapter.notifyDataSetChanged();
         Log.i("ONCREATELOADER... ","urlPosterString: " + urlPosterString);
         return new MovieListLoader(this, urlPosterString);
+
     }
 
     @Override
@@ -135,11 +136,15 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         //mAdapter.clear();
         // If there is a valid list of books, then add them to the adapter's
         // data set. This will trigger the ListView to update.
+        mAdapter.setMovieData(movies);
         if (movies != null && !movies.isEmpty()) {
             //mAdapter.clear();
             mAdapter.notifyDataSetChanged();
+            mRecyclerView.setVisibility(View.VISIBLE);
+
             //mAdapter.UpdateMovies(movies);
             //mAdapter.addAll(movies);
+
             Log.i("LOG onLoadFinished ","movies: " + movies);
 
         }
@@ -169,5 +174,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             // because this activity implements the LoaderCallbacks interface).
             loaderManager.initLoader(MOVIELIST_LOADER_ID, null, this);
         } else {}
+    }
+
+    @Override
+    public void onItemClick(int position) {
+
     }
 }

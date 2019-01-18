@@ -18,7 +18,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
 
     private Context mContext;
     private List<MovieList> imageUrls = new ArrayList<>(); // so far so good 9/25/17
-    private ArrayList<MovieList> mMovieList;
+    public static List<MovieList> mMovieList;
     private OnItemClickListener mListener;
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -54,6 +54,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
 
     @Override
     public int getItemCount() {
+        if (mMovieList == null) return 0;
         return mMovieList.size();
     }
 
@@ -79,5 +80,12 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
                 }
             });
         }
+
+
+    }
+
+    public void setMovieData(List<MovieList> movieData){
+        mMovieList = movieData;
+        notifyDataSetChanged();
     }
 }
