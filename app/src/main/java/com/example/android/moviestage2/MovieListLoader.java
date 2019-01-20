@@ -42,6 +42,8 @@ public class MovieListLoader extends AsyncTaskLoader<List<MovieList>> {
 
     @Override
     public List<MovieList> loadInBackground() {
+        Log.i("loadInBackground","mUrl is: " + mUrl);
+
         if (mUrl == null) {
             return null;
         }
