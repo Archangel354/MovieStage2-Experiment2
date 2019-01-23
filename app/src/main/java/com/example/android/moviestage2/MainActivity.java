@@ -159,6 +159,7 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
             @Override
             public List<MovieList> loadInBackground() {
                 Log.i("loadInBackground","mUrl is: " + mUrl);
+                mUrl = POPULARSTRING;
 
                 if (mUrl == null) {
                     Log.i("loadInBackground","mUrl is: " + mUrl);
