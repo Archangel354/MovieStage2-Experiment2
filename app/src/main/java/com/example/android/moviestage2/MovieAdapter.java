@@ -29,6 +29,8 @@ public class MovieAdapter extends ArrayAdapter<MovieList> {
 
     public MovieAdapter(Activity context, ArrayList<MovieList> movieListRecords) {
         super(context,R.layout.movie_list_items,  movieListRecords);
+        Log.i("LOG 6 MovieAdapter"," MovieAdapter constructor");
+
 
         this.context = context;
         this.imageUrls = movieListRecords;
@@ -37,6 +39,8 @@ public class MovieAdapter extends ArrayAdapter<MovieList> {
 
     // so far so good 9/25/17
     public void UpdateMovies(List<MovieList> newList){
+        Log.i("LOG 7 MovieAdapter"," UpdateMovies");
+
         this.imageUrls = newList;
         notifyDataSetChanged();
     }
@@ -44,6 +48,8 @@ public class MovieAdapter extends ArrayAdapter<MovieList> {
     @NonNull
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        Log.i("LOG 8 MovieAdapter"," getView");
+
         // Check if the existing view is being reused, otherwise inflate the view
         //View listItemView = convertView;
         if (convertView == null) {
@@ -83,6 +89,8 @@ public class MovieAdapter extends ArrayAdapter<MovieList> {
 
     @Override
     public void clear() {
+        Log.i("LOG 9 MovieAdapter"," clear");
+
         super.clear();
     }
 

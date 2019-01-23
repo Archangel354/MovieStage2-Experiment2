@@ -49,6 +49,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         setContentView(R.layout.activity_main);
         movieGridView = (GridView) findViewById(R.id.movieGrid);
 
+        Log.i("LOG 1 MainActivity"," onCreate method");
+
+
         // Create a new adapter that takes an empty list of movies as input
         mAdapter = new MovieAdapter(this, new ArrayList<MovieList>());
         // Set the adapter on the {@link GridView} so the list can be populated in the user interface
@@ -136,6 +139,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         // Create a new loader for the given URL
         mAdapter.clear();
         mAdapter.notifyDataSetChanged();
+        Log.i("LOG 2 MainActivity"," onCreateLoader");
+
         Log.i("ONCREATELOADER... ","urlPosterString: " + urlPosterString);
         return new MovieListLoader(this, urlPosterString);
     }
@@ -144,6 +149,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public void onLoadFinished(Loader<List<MovieList>> loader, List<MovieList> movies) {
         // Clear the adapter of previous movie data
         mAdapter.clear();
+        Log.i("LOG 3 MainActivity"," onLoadFinished");
+
         // If there is a valid list of books, then add them to the adapter's
         // data set. This will trigger the ListView to update.
         if (movies != null && !movies.isEmpty()) {
@@ -158,11 +165,15 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoaderReset(Loader<List<MovieList>> loader) {
+        Log.i("LOG 4 MainActivity"," onLoaderReset");
+
         // Loader reset, so we can clear out our existing data.
         mAdapter.clear();
     }
 
     public void connectAndLoadMovies(){
+        Log.i("LOG 5 MainActivity"," connectAndLoadMovies");
+
         // Get a reference to the ConnectivityManager to check state of network connectivity
         ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
