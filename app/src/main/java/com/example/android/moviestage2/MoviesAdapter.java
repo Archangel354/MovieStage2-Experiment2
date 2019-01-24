@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -29,6 +28,19 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
     private OnItemClickListener mListener;
     private static final String TAG = "RecyclerViewAdapter";
 
+    /*
+     * An on-click handler that we've defined to make it easy for an Activity to interface with
+     * our RecyclerView
+     */
+    final private MoviesAdapterOnClickHandler mClickHandler;
+
+    /**
+     * The interface that receives onClick messages.
+     */
+    public interface MoviesAdapterOnClickHandler {
+        void onClick(String weatherForDay);
+    }
+
 
     public void setOnItemClickListener(OnItemClickListener listener) {
         mListener = listener;
@@ -39,9 +51,10 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
     }
 
 
-    public MoviesAdapter(Context context, ArrayList<MovieList> movieList) {
+    public MoviesAdapter(Context context, ArrayList<MovieList> movieList, MoviesAdapterOnClickHandler mClickHandler) {
         mContext = context;
         mMovieList = movieList;
+        this.mClickHandler = mClickHandler;
     }
 
     @Override

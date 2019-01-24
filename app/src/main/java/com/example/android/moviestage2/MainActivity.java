@@ -3,7 +3,6 @@ package com.example.android.moviestage2;
 import android.app.LoaderManager;
 import android.content.Context;
 
-import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
@@ -13,19 +12,13 @@ import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.AsyncTaskLoader;
 
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.GridView;
 import android.widget.Spinner;
 import android.widget.Toast;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
         mRecyclerView =  findViewById(R.id.recycler_view);
 
         // Create a new adapter that takes an empty list of movies as input
-        mAdapter = new MoviesAdapter(MainActivity.this, mMovieList);
+        mAdapter = new MoviesAdapter(MainActivity.this, mMovieList, mClickHandler);
         mRecyclerView.setHasFixedSize(true);
         // Set the adapter on the {@link GridView} so the list can be populated in the user interface
         mRecyclerView.setAdapter(mAdapter);
@@ -105,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
 
 
                     mRecyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
-                    mAdapter = new MoviesAdapter(MainActivity.this, new ArrayList<MovieList>());
+                    mAdapter = new MoviesAdapter(MainActivity.this, new ArrayList<MovieList>(), mClickHandler);
                     mRecyclerView.setAdapter(mAdapter);
 
                     Log.i("LOG onItemSelected... ","POPULARSTRING: " + urlPosterString);
@@ -116,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
                 } else if (selected.contains("Highest Rated")){
                     firstTimeRunFlag = false;
                     urlPosterString = TOPRATEDSTRING;
-                    mAdapter = new MoviesAdapter(MainActivity.this, new ArrayList<MovieList>());
+                    mAdapter = new MoviesAdapter(MainActivity.this, new ArrayList<MovieList>(), mClickHandler);
                     mRecyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
                     mRecyclerView.setAdapter(mAdapter);
                     Log.i("LOG onItemSelected... ","Highest Rated: " + urlPosterString);
@@ -126,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
 
                 } else if (selected.contains("Personal Favorites")){
                     firstTimeRunFlag = false;
-                    mAdapter = new MoviesAdapter(MainActivity.this, new ArrayList<MovieList>());
+                    mAdapter = new MoviesAdapter(MainActivity.this, new ArrayList<MovieList>(), mClickHandler);
                     mRecyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
                     mRecyclerView.setAdapter(mAdapter);
                 } else {
