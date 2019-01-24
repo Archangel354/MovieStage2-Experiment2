@@ -3,6 +3,7 @@ package com.example.android.moviestage2;
 import android.app.LoaderManager;
 import android.content.Context;
 
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
@@ -65,8 +66,10 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
 
         // Create a new adapter that takes an empty list of movies as input
         mAdapter = new MoviesAdapter(MainActivity.this, mMovieList);
+        mRecyclerView.setHasFixedSize(true);
         // Set the adapter on the {@link GridView} so the list can be populated in the user interface
         mRecyclerView.setAdapter(mAdapter);
+        mAdapter.setOnItemClickListener(MainActivity.this);
 
         Spinner mSpinner = (Spinner) findViewById(R.id.spnPopOrRatedOrFavorite);
 
@@ -98,8 +101,11 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
 
                 if ( selected.contains("Most Popular")){
                     urlPosterString = POPULARSTRING;
-                    mAdapter = new MoviesAdapter(MainActivity.this, new ArrayList<MovieList>());
+                    mRecyclerView.setHasFixedSize(true);
+
+
                     mRecyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
+                    mAdapter = new MoviesAdapter(MainActivity.this, new ArrayList<MovieList>());
                     mRecyclerView.setAdapter(mAdapter);
 
                     Log.i("LOG onItemSelected... ","POPULARSTRING: " + urlPosterString);
@@ -133,8 +139,24 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
         });
 
         // Setup the setOnItemClickListener when a movie image is clicked
-//        mAdapter.setOnItemClickListener((MoviesAdapter.OnItemClickListener) MainActivity.this);
+//        mRecyclerView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Intent mIntent = new Intent(MainActivity.this, DetailActivity.class);
+//                Bundle mBundle = new Bundle();
+//                mBundle.putString("MBUNDLE_TITLE", movies.get(position).getmMovieTitle());
+//                mBundle.putString("MBUNDLE_DATE", movies.get(position).getmReleaseDate());
+//                mBundle.putString("MBUNDLE_VOTE", movies.get(position).getmVoteAverage());
+//                mBundle.putString("MBUNDLE_SYNOPSIS", movies.get(position).getmSynopsis());
+//                mBundle.putString("MBUNDLE_POSTER", movies.get(position).getmPosterPath());
+//                mBundle.putString("MBUNDLE_MOVIEID", movies.get(position).getmMovieID());
+//                mIntent.putExtras(mBundle);
+//                startActivity(mIntent);
+//            }
+//        });
     }
+
+
 
     @Override
     public Loader<List<MovieList>> onCreateLoader(int id, final Bundle args) {
