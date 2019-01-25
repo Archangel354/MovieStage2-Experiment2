@@ -3,6 +3,7 @@ package com.example.android.moviestage2;
 import android.app.LoaderManager;
 import android.content.Context;
 
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
@@ -58,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
         mRecyclerView =  findViewById(R.id.recycler_view);
 
         // Create a new adapter that takes an empty list of movies as input
-        mAdapter = new MoviesAdapter(MainActivity.this, mMovieList, mClickHandler);
+        mAdapter = new MoviesAdapter(MainActivity.this, mMovieList);
         mRecyclerView.setHasFixedSize(true);
         // Set the adapter on the {@link GridView} so the list can be populated in the user interface
         mRecyclerView.setAdapter(mAdapter);
@@ -98,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
 
 
                     mRecyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
-                    mAdapter = new MoviesAdapter(MainActivity.this, new ArrayList<MovieList>(), mClickHandler);
+                    mAdapter = new MoviesAdapter(MainActivity.this, new ArrayList<MovieList>());
                     mRecyclerView.setAdapter(mAdapter);
 
                     Log.i("LOG onItemSelected... ","POPULARSTRING: " + urlPosterString);
@@ -109,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
                 } else if (selected.contains("Highest Rated")){
                     firstTimeRunFlag = false;
                     urlPosterString = TOPRATEDSTRING;
-                    mAdapter = new MoviesAdapter(MainActivity.this, new ArrayList<MovieList>(), mClickHandler);
+                    mAdapter = new MoviesAdapter(MainActivity.this, new ArrayList<MovieList>());
                     mRecyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
                     mRecyclerView.setAdapter(mAdapter);
                     Log.i("LOG onItemSelected... ","Highest Rated: " + urlPosterString);
@@ -119,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
 
                 } else if (selected.contains("Personal Favorites")){
                     firstTimeRunFlag = false;
-                    mAdapter = new MoviesAdapter(MainActivity.this, new ArrayList<MovieList>(), mClickHandler);
+                    mAdapter = new MoviesAdapter(MainActivity.this, new ArrayList<MovieList>());
                     mRecyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
                     mRecyclerView.setAdapter(mAdapter);
                 } else {
@@ -154,9 +155,6 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
     @Override
     public Loader<List<MovieList>> onCreateLoader(int id, final Bundle args) {
         return  new AsyncTaskLoader<List<MovieList>>(this) {
-
-
-
             /* This List will hold and help cache our movie data */
             List<MovieList> mMovieList = null;
 
@@ -168,8 +166,6 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
                     forceLoad();
                 }
             }
-
-
 
             @Override
             public List<MovieList> loadInBackground() {
@@ -255,6 +251,24 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
 
     @Override
     public void onItemClick(int position) {
+        Log.d(TAG, "onClick: clicked on: " + mMovieList.get(position));
+        Log.i("LOG onItemClick... ","movies: " + movies);
+
+
+        Toast.makeText(this, (CharSequence) mMovieList.get(position), Toast.LENGTH_SHORT).show();;
+
+        Intent intent = new Intent(this, DetailActivity.class);
+        Bundle mBundle = new Bundle();
+        mBundle.putString("MBUNDLE_TITLE", movies.get(position).getmMovieTitle());
+        mBundle.putString("MBUNDLE_DATE", movies.get(position).getmReleaseDate());
+        mBundle.putString("MBUNDLE_VOTE", movies.get(position).getmVoteAverage());
+        mBundle.putString("MBUNDLE_SYNOPSIS", movies.get(position).getmSynopsis());
+        mBundle.putString("MBUNDLE_POSTER", movies.get(position).getmPosterPath());
+        mBundle.putString("MBUNDLE_MOVIEID", movies.get(position).getmMovieID());
+        intent.putExtras(mBundle);
+        startActivity(intent);
 
     }
+
+    
 }

@@ -1,8 +1,6 @@
 package com.example.android.moviestage2;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,36 +23,29 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
     private Context mContext;
     private List<MovieList> imageUrls = new ArrayList<>(); // so far so good 9/25/17
     public static List<MovieList> mMovieList;
-    private OnItemClickListener mListener;
     private static final String TAG = "RecyclerViewAdapter";
+    private OnItemClickListener mListener;
 
     /*
      * An on-click handler that we've defined to make it easy for an Activity to interface with
      * our RecyclerView
      */
-    final private MoviesAdapterOnClickHandler mClickHandler;
-
-    /**
-     * The interface that receives onClick messages.
-     */
-    public interface MoviesAdapterOnClickHandler {
-        void onClick(String weatherForDay);
-    }
-
-
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        mListener = listener;
-    }
 
     public interface OnItemClickListener {
         void onItemClick(int position);
     }
 
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        Log.i("LOG OnItemClickListener", "movies");
 
-    public MoviesAdapter(Context context, ArrayList<MovieList> movieList, MoviesAdapterOnClickHandler mClickHandler) {
+        mListener = listener;
+    }
+
+
+    public MoviesAdapter(Context context, ArrayList<MovieList> movieList) {
         mContext = context;
         mMovieList = movieList;
-        this.mClickHandler = mClickHandler;
+
     }
 
     @Override
@@ -72,36 +63,15 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
 
         holder.mTextViewCreator.setText(creatorName);
         Picasso.with(mContext).load(imageUrl).fit().centerInside().into(holder.mImageView);
-        holder.parentLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(TAG, "onClick: clicked on: " + mMovieList.get(position));
-
-                Toast.makeText(mContext, (CharSequence) mMovieList.get(position), Toast.LENGTH_SHORT).show();;
-
-                Intent intent = new Intent(mContext, DetailActivity.class);
-                Bundle mBundle = new Bundle();
-                mBundle.putString("MBUNDLE_TITLE", movies.get(position).getmMovieTitle());
-                mBundle.putString("MBUNDLE_DATE", movies.get(position).getmReleaseDate());
-                mBundle.putString("MBUNDLE_VOTE", movies.get(position).getmVoteAverage());
-                mBundle.putString("MBUNDLE_SYNOPSIS", movies.get(position).getmSynopsis());
-                mBundle.putString("MBUNDLE_POSTER", movies.get(position).getmPosterPath());
-                mBundle.putString("MBUNDLE_MOVIEID", movies.get(position).getmMovieID());
-                intent.putExtras(mBundle);
-                mContext.startActivity(intent);
-            }
-        });
-
-
     }
 
     @Override
     public int getItemCount() {
-        if (mMovieList == null) return 0;
+        //if (mMovieList == null) return 0;
         return mMovieList.size();
     }
 
-    public class MoviesViewHolder extends RecyclerView.ViewHolder {
+    public class MoviesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public ImageView mImageView;
         public TextView mTextViewCreator;
         RelativeLayout parentLayout;
@@ -126,10 +96,19 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
         }
 
 
+        @Override
+        public void onClick(View v) {
+            int adapterPosition = getAdapterPosition();
+
+
+
+        }
     }
 
     public void setMovieData(List<MovieList> movieData){
         mMovieList = movieData;
         notifyDataSetChanged();
     }
+
+
 }
