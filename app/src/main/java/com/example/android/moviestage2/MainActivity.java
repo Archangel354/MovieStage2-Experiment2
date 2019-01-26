@@ -86,7 +86,6 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
          */
         getSupportLoaderManager().initLoader(MOVIELIST_LOADER_ID, bundleForLoader, callbacks);
 
-        //connectAndLoadMovies();
 
         mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -212,9 +211,6 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
             //mAdapter.clear();
             mAdapter.notifyDataSetChanged();
             mRecyclerView.setVisibility(View.VISIBLE);
-
-            //mAdapter.UpdateMovies(movies);
-            //mAdapter.addAll(movies);
 
             Log.i("LOG onLoadFinished ","movies: " + movies);
 

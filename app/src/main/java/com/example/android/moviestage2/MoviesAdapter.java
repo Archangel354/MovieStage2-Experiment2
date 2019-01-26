@@ -36,8 +36,6 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
-        Log.i("LOG OnItemClickListener", "movies");
-
         mListener = listener;
     }
 
