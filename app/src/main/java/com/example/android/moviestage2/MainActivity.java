@@ -123,6 +123,8 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
                     mAdapter = new MoviesAdapter(MainActivity.this, new ArrayList<MovieList>());
                     mRecyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
                     mRecyclerView.setAdapter(mAdapter);
+                    Log.i("LOG onItemSelected... ","Personal Favorites: " + urlPosterString);
+
                 } else {
                     Toast.makeText(MainActivity.this,"No spinner choice executed", Toast.LENGTH_SHORT).show();
                 }
@@ -257,16 +259,16 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
 
         Toast.makeText(this, (CharSequence) mMovieList.get(position), Toast.LENGTH_SHORT).show();;
 
-        Intent intent = new Intent(this, DetailActivity.class);
-        Bundle mBundle = new Bundle();
-        mBundle.putString("MBUNDLE_TITLE", movies.get(position).getmMovieTitle());
-        mBundle.putString("MBUNDLE_DATE", movies.get(position).getmReleaseDate());
-        mBundle.putString("MBUNDLE_VOTE", movies.get(position).getmVoteAverage());
-        mBundle.putString("MBUNDLE_SYNOPSIS", movies.get(position).getmSynopsis());
-        mBundle.putString("MBUNDLE_POSTER", movies.get(position).getmPosterPath());
-        mBundle.putString("MBUNDLE_MOVIEID", movies.get(position).getmMovieID());
-        intent.putExtras(mBundle);
-        startActivity(intent);
+//        Intent intent = new Intent(this, DetailActivity.class);
+//        Bundle mBundle = new Bundle();
+//        mBundle.putString("MBUNDLE_TITLE", movies.get(position).getmMovieTitle());
+//        mBundle.putString("MBUNDLE_DATE", movies.get(position).getmReleaseDate());
+//        mBundle.putString("MBUNDLE_VOTE", movies.get(position).getmVoteAverage());
+//        mBundle.putString("MBUNDLE_SYNOPSIS", movies.get(position).getmSynopsis());
+//        mBundle.putString("MBUNDLE_POSTER", movies.get(position).getmPosterPath());
+//        mBundle.putString("MBUNDLE_MOVIEID", movies.get(position).getmMovieID());
+//        intent.putExtras(mBundle);
+//        startActivity(intent);
 
     }
 

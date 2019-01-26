@@ -71,7 +71,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
         return mMovieList.size();
     }
 
-    public class MoviesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class MoviesViewHolder extends RecyclerView.ViewHolder {
         public ImageView mImageView;
         public TextView mTextViewCreator;
         RelativeLayout parentLayout;
@@ -93,15 +93,6 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
                     }
                 }
             });
-        }
-
-
-        @Override
-        public void onClick(View v) {
-            int adapterPosition = getAdapterPosition();
-
-
-
         }
     }
 
