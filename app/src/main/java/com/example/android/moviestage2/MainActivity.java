@@ -100,6 +100,8 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
                     mRecyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
                     mAdapter = new MoviesAdapter(MainActivity.this, new ArrayList<MovieList>());
                     mRecyclerView.setAdapter(mAdapter);
+                    mAdapter.notifyDataSetChanged();
+                    getLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, (LoaderManager.LoaderCallbacks<Object>) MainActivity.this);
 
                     Log.i("LOG onItemSelected... ","POPULARSTRING: " + urlPosterString);
                     Log.i("LOG onItemSelected... ","movies: " + movies);
@@ -112,6 +114,8 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
                     mAdapter = new MoviesAdapter(MainActivity.this, new ArrayList<MovieList>());
                     mRecyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
                     mRecyclerView.setAdapter(mAdapter);
+                    mAdapter.notifyDataSetChanged();
+                    getLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, (LoaderManager.LoaderCallbacks<Object>) MainActivity.this);
                     Log.i("LOG onItemSelected... ","Highest Rated: " + urlPosterString);
 //                    Log.i("LOG onItemSelected... ","movies: " + movies);
 
@@ -171,7 +175,7 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
             @Override
             public List<MovieList> loadInBackground() {
                 Log.i("loadInBackground","mUrl is: " + mUrl);
-                mUrl = POPULARSTRING;
+               // mUrl = POPULARSTRING;
 
                 if (mUrl == null) {
                     Log.i("loadInBackground","mUrl is: " + mUrl);
