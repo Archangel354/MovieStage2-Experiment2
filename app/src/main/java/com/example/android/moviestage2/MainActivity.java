@@ -26,7 +26,7 @@ import java.util.List;
 
 import static com.example.android.moviestage2.Utils.movies;
 
-public class MainActivity extends AppCompatActivity implements LoaderCallbacks<List<MovieList>>, MoviesAdapter.OnItemClickListener {
+public class MainActivity extends AppCompatActivity implements LoaderCallbacks<List<MovieList>> {
 
     private static final int MOVIELIST_LOADER_ID = 1;
 
@@ -63,7 +63,6 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
         mRecyclerView.setHasFixedSize(true);
         // Set the adapter on the {@link GridView} so the list can be populated in the user interface
         mRecyclerView.setAdapter(mAdapter);
-        mAdapter.setOnItemClickListener(MainActivity.this);
 
         Spinner mSpinner = (Spinner) findViewById(R.id.spnPopOrRatedOrFavorite);
 
@@ -251,26 +250,7 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
         } else {}
     }
 
-    @Override
-    public void onItemClick(int position) {
-        Log.d(TAG, "onClick: clicked on: " + mMovieList.get(position));
-        Log.i("LOG onItemClick... ","movies: " + movies);
 
-
-        Toast.makeText(this, (CharSequence) mMovieList.get(position), Toast.LENGTH_SHORT).show();;
-
-//        Intent intent = new Intent(this, DetailActivity.class);
-//        Bundle mBundle = new Bundle();
-//        mBundle.putString("MBUNDLE_TITLE", movies.get(position).getmMovieTitle());
-//        mBundle.putString("MBUNDLE_DATE", movies.get(position).getmReleaseDate());
-//        mBundle.putString("MBUNDLE_VOTE", movies.get(position).getmVoteAverage());
-//        mBundle.putString("MBUNDLE_SYNOPSIS", movies.get(position).getmSynopsis());
-//        mBundle.putString("MBUNDLE_POSTER", movies.get(position).getmPosterPath());
-//        mBundle.putString("MBUNDLE_MOVIEID", movies.get(position).getmMovieID());
-//        intent.putExtras(mBundle);
-//        startActivity(intent);
-
-    }
 
     
 }

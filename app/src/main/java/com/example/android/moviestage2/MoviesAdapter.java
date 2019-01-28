@@ -20,50 +20,56 @@ import static com.example.android.moviestage2.Utils.movies;
 
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder> {
 
-    private Context mContext;
     private List<MovieList> imageUrls = new ArrayList<>(); // so far so good 9/25/17
     public static List<MovieList> mMovieList;
-    private static final String TAG = "RecyclerViewAdapter";
-    private OnItemClickListener mListener;
+    private static final String TAG = "MoviesAdapter";
+    private Context mContext;
 
-    /*
-     * An on-click handler that we've defined to make it easy for an Activity to interface with
-     * our RecyclerView
-     */
-
-    public interface OnItemClickListener {
-        void onItemClick(int position);
-    }
-
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        Log.i("LOG OnItemClickListener", "movies");
-
-        mListener = listener;
-    }
 
 
     public MoviesAdapter(Context context, ArrayList<MovieList> movieList) {
-        mContext = context;
         mMovieList = movieList;
-
+        mContext = context;
     }
 
     @Override
-    public MoviesAdapter.MoviesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MoviesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(mContext).inflate(R.layout.movie_list_items, parent, false);
         return new MoviesViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(MoviesAdapter.MoviesViewHolder holder, final int position) {
+    public void onBindViewHolder(MoviesViewHolder holder, final int position) {
+        Log.d(TAG, "onBindViewHolder: called.");
+
         final MovieList currentItem = mMovieList.get(position);
+        final String imageUrl = currentItem.getmPosterPath();
 
-        String imageUrl = currentItem.getmPosterPath();
-        String creatorName = currentItem.getmMovieTitle();
-
-        holder.mTextViewCreator.setText(creatorName);
         Picasso.with(mContext).load(imageUrl).fit().centerInside().into(holder.mImageView);
+
+        holder.parentLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Log.d(TAG, "onClick: clicked on: " + imageUrls.get(position));
+                //Toast.makeText(mContext, (CharSequence) imageUrls.get(position), Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "onClick", Toast.LENGTH_SHORT).show();
+
+
+
+            }
+        });
+
+
+        //String creatorName = currentItem.getmMovieTitle();
+
+       // holder.mTextViewCreator.setText(creatorName);
+
+
     }
+    /*
+     * An on-click handler that we've defined to make it easy for an Activity to interface with
+     * our RecyclerView
+     */
 
     @Override
     public int getItemCount() {
@@ -79,22 +85,14 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
         public MoviesViewHolder(View itemView) {
             super(itemView);
             mImageView = itemView.findViewById(R.id.imgPosterPath);
-            //ImageView imageView = (ImageView) itemView.findViewById(R.id.imgPosterPath);
             mTextViewCreator = itemView.findViewById(R.id.txtMovieTitle);
+            parentLayout = itemView.findViewById(R.id.mother_layout);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mListener != null) {
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            mListener.onItemClick(position);
-                        }
-                    }
-                }
-            });
+
         }
     }
+
+
 
     public void setMovieData(List<MovieList> movieData){
         mMovieList = movieData;
