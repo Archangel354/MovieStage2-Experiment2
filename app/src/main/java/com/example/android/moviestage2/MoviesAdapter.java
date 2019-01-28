@@ -1,6 +1,8 @@
 package com.example.android.moviestage2;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -41,7 +43,6 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
     @Override
     public void onBindViewHolder(MoviesViewHolder holder, final int position) {
         Log.d(TAG, "onBindViewHolder: called.");
-
         final MovieList currentItem = mMovieList.get(position);
         final String imageUrl = currentItem.getmPosterPath();
 
@@ -54,22 +55,20 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
                 //Toast.makeText(mContext, (CharSequence) imageUrls.get(position), Toast.LENGTH_SHORT).show();
                 Toast.makeText(mContext, "onClick", Toast.LENGTH_SHORT).show();
 
-
-
+                Intent mIntent = new Intent(mContext, DetailActivity.class);
+                Bundle mBundle = new Bundle();
+                mBundle.putString("MBUNDLE_TITLE", movies.get(position).getmMovieTitle());
+                mBundle.putString("MBUNDLE_DATE", movies.get(position).getmReleaseDate());
+                mBundle.putString("MBUNDLE_VOTE", movies.get(position).getmVoteAverage());
+                mBundle.putString("MBUNDLE_SYNOPSIS", movies.get(position).getmSynopsis());
+                mBundle.putString("MBUNDLE_POSTER", movies.get(position).getmPosterPath());
+                mBundle.putString("MBUNDLE_MOVIEID", movies.get(position).getmMovieID());
+                mIntent.putExtras(mBundle);
+                mContext.startActivity(mIntent);
             }
         });
-
-
-        //String creatorName = currentItem.getmMovieTitle();
-
-       // holder.mTextViewCreator.setText(creatorName);
-
-
     }
-    /*
-     * An on-click handler that we've defined to make it easy for an Activity to interface with
-     * our RecyclerView
-     */
+
 
     @Override
     public int getItemCount() {
@@ -87,12 +86,8 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
             mImageView = itemView.findViewById(R.id.imgPosterPath);
             mTextViewCreator = itemView.findViewById(R.id.txtMovieTitle);
             parentLayout = itemView.findViewById(R.id.mother_layout);
-
-
         }
     }
-
-
 
     public void setMovieData(List<MovieList> movieData){
         mMovieList = movieData;
