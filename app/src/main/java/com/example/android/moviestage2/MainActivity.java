@@ -3,7 +3,6 @@ package com.example.android.moviestage2;
 import android.app.LoaderManager;
 import android.content.Context;
 
-import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
@@ -26,7 +25,7 @@ import java.util.List;
 
 import static com.example.android.moviestage2.Utils.movies;
 
-public class MainActivity extends AppCompatActivity implements LoaderCallbacks<List<MovieList>> {
+public class MainActivity extends AppCompatActivity implements   LoaderCallbacks<List<MovieList>> {
 
     private static final int MOVIELIST_LOADER_ID = 1;
 
@@ -95,11 +94,11 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
                 if ( selected.contains("Most Popular")){
                     urlPosterString = POPULARSTRING;
                     mRecyclerView.setHasFixedSize(true);
-
-
                     mRecyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
                     mAdapter = new MoviesAdapter(MainActivity.this, new ArrayList<MovieList>());
                     mRecyclerView.setAdapter(mAdapter);
+                    getSupportLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, MainActivity.this);
+
 
                     Log.i("LOG onItemSelected... ","POPULARSTRING: " + urlPosterString);
                     Log.i("LOG onItemSelected... ","movies: " + movies);
@@ -107,21 +106,19 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
 
 
                 } else if (selected.contains("Highest Rated")){
-                    firstTimeRunFlag = false;
                     urlPosterString = TOPRATEDSTRING;
-                    mAdapter = new MoviesAdapter(MainActivity.this, new ArrayList<MovieList>());
+                    mRecyclerView.setHasFixedSize(true);
                     mRecyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
+                    mAdapter = new MoviesAdapter(MainActivity.this, new ArrayList<MovieList>());
                     mRecyclerView.setAdapter(mAdapter);
+                    getSupportLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, MainActivity.this);
                     Log.i("LOG onItemSelected... ","Highest Rated: " + urlPosterString);
 //                    Log.i("LOG onItemSelected... ","movies: " + movies);
 
 
 
                 } else if (selected.contains("Personal Favorites")){
-                    firstTimeRunFlag = false;
-                    mAdapter = new MoviesAdapter(MainActivity.this, new ArrayList<MovieList>());
-                    mRecyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
-                    mRecyclerView.setAdapter(mAdapter);
+
                     Log.i("LOG onItemSelected... ","Personal Favorites: " + urlPosterString);
 
                 } else {
@@ -132,26 +129,7 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
             @Override
             public void onNothingSelected(AdapterView<?> parent) {    }
         });
-
-        // Setup the setOnItemClickListener when a movie image is clicked
-//        mRecyclerView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Intent mIntent = new Intent(MainActivity.this, DetailActivity.class);
-//                Bundle mBundle = new Bundle();
-//                mBundle.putString("MBUNDLE_TITLE", movies.get(position).getmMovieTitle());
-//                mBundle.putString("MBUNDLE_DATE", movies.get(position).getmReleaseDate());
-//                mBundle.putString("MBUNDLE_VOTE", movies.get(position).getmVoteAverage());
-//                mBundle.putString("MBUNDLE_SYNOPSIS", movies.get(position).getmSynopsis());
-//                mBundle.putString("MBUNDLE_POSTER", movies.get(position).getmPosterPath());
-//                mBundle.putString("MBUNDLE_MOVIEID", movies.get(position).getmMovieID());
-//                mIntent.putExtras(mBundle);
-//                startActivity(mIntent);
-//            }
-//        });
     }
-
-
 
     @Override
     public Loader<List<MovieList>> onCreateLoader(int id, final Bundle args) {
@@ -171,12 +149,12 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
             @Override
             public List<MovieList> loadInBackground() {
                 Log.i("loadInBackground","mUrl is: " + mUrl);
-                mUrl = POPULARSTRING;
-
-                if (mUrl == null) {
-                    Log.i("loadInBackground","mUrl is: " + mUrl);
-                    return null;
-                }
+//                mUrl = POPULARSTRING;
+//
+//                if (mUrl == null) {
+//                    Log.i("loadInBackground","mUrl is: " + mUrl);
+//                    return null;
+//                }
 
 
                 // Perform the network request, parse the response, and extract a list of movies along with
@@ -199,6 +177,8 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
             }
         };
     }
+
+
 
     @Override
     public void onLoadFinished(Loader<List<MovieList>> loader, List<MovieList> movies) {
