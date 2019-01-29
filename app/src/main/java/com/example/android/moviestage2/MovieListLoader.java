@@ -25,19 +25,20 @@ public class MovieListLoader extends AsyncTaskLoader<List<MovieList>> {
 
     public MovieListLoader(Context context, String url) {
         super(context);
+        Log.i("LOG MovieListLoader","mUrl is: " + mUrl);
+        Log.i("LOG 10 MovieListLoader"," MovieListLoader constructor");
         mUrl = url;
+        Log.i("LOG MovieListLoader","mUrl is: " + mUrl);
+
     }
 
 
 
     @Override
     protected void onStartLoading() {
-        if (mMovieList != null) {
-            deliverResult(mMovieList);
-        } else {
+        Log.i("LOG 10 MovieListLoader"," onStartLoading");
 
-            forceLoad();
-        }
+        forceLoad();
     }
 
     @Override
@@ -51,7 +52,9 @@ public class MovieListLoader extends AsyncTaskLoader<List<MovieList>> {
         // Perform the network request, parse the response, and extract a list of movies along with
         // the associated movie data i.e. title, posterpath, synopsis, etc.. .
         List<MovieList> movies = Utils.fetchMovieData(mUrl);
-        Log.i("MOVIELISTLOADER","movies is: " + movies);
+        /*Log.i("MOVIELISTLOADER","movies is: " + movies);
+        Log.i("LOG loadInBackground","mUrl is: " + mUrl);*/
+
 
         return movies;
     }
