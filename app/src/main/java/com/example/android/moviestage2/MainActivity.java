@@ -134,22 +134,6 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
             public void onNothingSelected(AdapterView<?> parent) {    }
         });
 
-        // Setup the setOnItemClickListener when a movie image is clicked
-//        mRecyclerView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Intent mIntent = new Intent(MainActivity.this, DetailActivity.class);
-//                Bundle mBundle = new Bundle();
-//                mBundle.putString("MBUNDLE_TITLE", movies.get(position).getmMovieTitle());
-//                mBundle.putString("MBUNDLE_DATE", movies.get(position).getmReleaseDate());
-//                mBundle.putString("MBUNDLE_VOTE", movies.get(position).getmVoteAverage());
-//                mBundle.putString("MBUNDLE_SYNOPSIS", movies.get(position).getmSynopsis());
-//                mBundle.putString("MBUNDLE_POSTER", movies.get(position).getmPosterPath());
-//                mBundle.putString("MBUNDLE_MOVIEID", movies.get(position).getmMovieID());
-//                mIntent.putExtras(mBundle);
-//                startActivity(mIntent);
-//            }
-//        });
     }
 
 
