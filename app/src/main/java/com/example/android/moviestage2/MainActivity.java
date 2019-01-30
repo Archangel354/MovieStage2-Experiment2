@@ -2,21 +2,19 @@ package com.example.android.moviestage2;
 
 import android.app.LoaderManager;
 import android.content.Context;
-
+import android.content.Intent;
+import android.content.Loader;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v4.content.Loader;
-import android.support.v4.app.LoaderManager.LoaderCallbacks;
-import android.support.v4.content.AsyncTaskLoader;
-
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.GridView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -25,7 +23,7 @@ import java.util.List;
 
 import static com.example.android.moviestage2.Utils.movies;
 
-public class MainActivity extends AppCompatActivity implements   LoaderCallbacks<List<MovieList>> {
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<MovieList>> {
 
     private static final int MOVIELIST_LOADER_ID = 1;
 
@@ -73,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements   LoaderCallbacks
         spinAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinner.setAdapter(spinAdapter);
 
-        LoaderCallbacks<List<MovieList>> callbacks = MainActivity.this;
+        LoaderManager.LoaderCallbacks callbacks = MainActivity.this;
 
         Bundle bundleForLoader = null;
 
@@ -82,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements   LoaderCallbacks
          * created and (if the activity/fragment is currently started) starts the loader. Otherwise
          * the last created loader is re-used.
          */
-        getSupportLoaderManager().initLoader(MOVIELIST_LOADER_ID, bundleForLoader, callbacks);
+        getLoaderManager().initLoader(MOVIELIST_LOADER_ID, bundleForLoader, this);
 
         //connectAndLoadMovies();
 
@@ -97,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements   LoaderCallbacks
                     mRecyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
                     mAdapter = new MoviesAdapter(MainActivity.this, new ArrayList<MovieList>());
                     mRecyclerView.setAdapter(mAdapter);
-                    getSupportLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, MainActivity.this);
+                    getLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, MainActivity.this);
 
 
                     Log.i("LOG onItemSelected... ","POPULARSTRING: " + urlPosterString);
@@ -111,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements   LoaderCallbacks
                     mRecyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
                     mAdapter = new MoviesAdapter(MainActivity.this, new ArrayList<MovieList>());
                     mRecyclerView.setAdapter(mAdapter);
-                    getSupportLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, MainActivity.this);
+                    getLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, MainActivity.this);
                     Log.i("LOG onItemSelected... ","Highest Rated: " + urlPosterString);
 //                    Log.i("LOG onItemSelected... ","movies: " + movies);
 
