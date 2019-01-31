@@ -1,6 +1,7 @@
 package com.example.android.moviestage2;
 
 import android.app.LoaderManager;
+import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
@@ -46,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private String urlImageBaseString = "https://image.tmdb.org/t/p/w185/";
     private ArrayList<MovieList> mMovieList;
     /** Query URL */
-    private String mUrl;
+    public String mUrl;
 
 
     @Override
@@ -81,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
          * the last created loader is re-used.
          */
         getLoaderManager().initLoader(MOVIELIST_LOADER_ID, bundleForLoader, this);
+        connectAndLoadMovies();
 
         //connectAndLoadMovies();
 
@@ -146,18 +148,17 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
             @Override
             public List<MovieList> loadInBackground() {
-                Log.i("loadInBackground","mUrl is: " + mUrl);
-//                mUrl = POPULARSTRING;
-//
-//                if (mUrl == null) {
-//                    Log.i("loadInBackground","mUrl is: " + mUrl);
-//                    return null;
-//                }
+                Log.i("loadInBackground","urlPosterString is: " + urlPosterString);
+
+                if (mUrl == null) {
+                    Log.i("loadInBackground","urlPosterString is: " + urlPosterString);
+                    return null;
+                }
 
 
                 // Perform the network request, parse the response, and extract a list of movies along with
                 // the associated movie data i.e. title, posterpath, synopsis, etc.. .
-                List<MovieList> movies = Utils.fetchMovieData(mUrl);
+                List<MovieList> movies = Utils.fetchMovieData(urlPosterString);
                 Log.i("loadInBackground","movies is: " + movies);
                 return movies;
             }
@@ -217,14 +218,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             // Get a reference to the LoaderManager, in order to interact with loaders.
             LoaderManager loaderManager = getLoaderManager();
 
-            LoaderCallbacks<List<MovieList>> callbacks = MainActivity.this;
+            LoaderManager.LoaderCallbacks<List<MovieList>> callbacks = MainActivity.this;
 
             Bundle bundleForLoader = null;
 
             // Initialize the loader. Pass in the int ID constant defined above and pass in null for
             // the bundle. Pass in this activity for the LoaderCallbacks parameter (which is valid
             // because this activity implements the LoaderCallbacks interface).
-            getSupportLoaderManager().initLoader(MOVIELIST_LOADER_ID, bundleForLoader, callbacks);
+            getLoaderManager().initLoader(MOVIELIST_LOADER_ID, bundleForLoader, this);
         } else {}
     }
 
