@@ -1,6 +1,7 @@
 package com.example.android.moviestage2;
 
 import android.app.LoaderManager;
+import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
@@ -46,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private String urlImageBaseString = "https://image.tmdb.org/t/p/w185/";
     private ArrayList<MovieList> mMovieList;
     /** Query URL */
-    private String mUrl;
+    public String mUrl;
 
 
     @Override
@@ -90,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 String selected = parent.getItemAtPosition(position).toString();
 
                 if ( selected.contains("Most Popular")){
-                    urlPosterString = POPULARSTRING;
+                    mUrl = POPULARSTRING;
                     mRecyclerView.setHasFixedSize(true);
                     mRecyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
                     mAdapter = new MoviesAdapter(MainActivity.this, new ArrayList<MovieList>());
@@ -98,19 +99,19 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     getLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, MainActivity.this);
 
 
-                    Log.i("LOG onItemSelected... ","POPULARSTRING: " + urlPosterString);
+                    Log.i("LOG onItemSelected... ","POPULARSTRING: " + mUrl);
                     Log.i("LOG onItemSelected... ","movies: " + movies);
 
 
 
                 } else if (selected.contains("Highest Rated")){
-                    urlPosterString = TOPRATEDSTRING;
+                    mUrl = TOPRATEDSTRING;
                     mRecyclerView.setHasFixedSize(true);
                     mRecyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
                     mAdapter = new MoviesAdapter(MainActivity.this, new ArrayList<MovieList>());
                     mRecyclerView.setAdapter(mAdapter);
                     getLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, MainActivity.this);
-                    Log.i("LOG onItemSelected... ","Highest Rated: " + urlPosterString);
+                    Log.i("LOG onItemSelected... ","Highest Rated: " + mUrl);
 //                    Log.i("LOG onItemSelected... ","movies: " + movies);
 
 
@@ -217,14 +218,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             // Get a reference to the LoaderManager, in order to interact with loaders.
             LoaderManager loaderManager = getLoaderManager();
 
-            LoaderCallbacks<List<MovieList>> callbacks = MainActivity.this;
+            LoaderManager.LoaderCallbacks<List<MovieList>> callbacks = MainActivity.this;
 
             Bundle bundleForLoader = null;
 
             // Initialize the loader. Pass in the int ID constant defined above and pass in null for
             // the bundle. Pass in this activity for the LoaderCallbacks parameter (which is valid
             // because this activity implements the LoaderCallbacks interface).
-            getSupportLoaderManager().initLoader(MOVIELIST_LOADER_ID, bundleForLoader, callbacks);
+            getLoaderManager().initLoader(MOVIELIST_LOADER_ID, bundleForLoader, callbacks);
         } else {}
     }
 
