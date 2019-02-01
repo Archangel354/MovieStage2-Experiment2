@@ -27,8 +27,6 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
     private static final String TAG = "MoviesAdapter";
     private Context mContext;
 
-
-
     public MoviesAdapter(Context context, ArrayList<MovieList> movieList) {
         mMovieList = movieList;
         mContext = context;
@@ -45,16 +43,11 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
         Log.d(TAG, "onBindViewHolder: called.");
         final MovieList currentItem = mMovieList.get(position);
         final String imageUrl = currentItem.getmPosterPath();
-
         Picasso.with(mContext).load(imageUrl).fit().centerInside().into(holder.mImageView);
 
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Log.d(TAG, "onClick: clicked on: " + imageUrls.get(position));
-                //Toast.makeText(mContext, (CharSequence) imageUrls.get(position), Toast.LENGTH_SHORT).show();
-                Toast.makeText(mContext, "onClick", Toast.LENGTH_SHORT).show();
-
                 Intent mIntent = new Intent(mContext, DetailActivity.class);
                 Bundle mBundle = new Bundle();
                 mBundle.putString("MBUNDLE_TITLE", movies.get(position).getmMovieTitle());
