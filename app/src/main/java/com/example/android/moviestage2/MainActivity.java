@@ -3,7 +3,6 @@ package com.example.android.moviestage2;
 import android.app.LoaderManager;
 import android.content.AsyncTaskLoader;
 import android.content.Context;
-import android.content.Intent;
 import android.content.Loader;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -15,7 +14,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.GridView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -31,12 +29,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     /** Adapter for the gridview of movies */
     private MoviesAdapter mAdapter;
 
-    private static final String TAG = MainActivity.class.getSimpleName();
+    //private static final String TAG = MainActivity.class.getSimpleName();
 
     public final static String POPULARSTRING = "https://api.themoviedb.org/3/movie/popular?api_key=02ff7187d940e5bd15cd5acd2b41b63e";
     public final static String TOPRATEDSTRING = "https://api.themoviedb.org/3/movie/top_rated?api_key=02ff7187d940e5bd15cd5acd2b41b63e";
     public String urlPosterString = POPULARSTRING;
-    private boolean firstTimeRunFlag = true;
 
     public final static String TRAILERSTRING = "https://api.themoviedb.org/3/movie/335984/videos?api_key=02ff7187d940e5bd15cd5acd2b41b63e";
     public final static String VIDEOKEY ="dZOaI_Fn5o4";
@@ -44,7 +41,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     // Find a reference to the {@link GridView} in the layout
     private RecyclerView mRecyclerView;
-    private String urlImageBaseString = "https://image.tmdb.org/t/p/w185/";
     private ArrayList<MovieList> mMovieList;
     /** Query URL */
     public String mUrl;
