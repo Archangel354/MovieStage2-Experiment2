@@ -119,6 +119,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 } else if (selected.contains("Personal Favorites")){
 
                     Log.i("LOG onItemSelected... ","Personal Favorites: " + urlPosterString);
+                    mRecyclerView.setAdapter(null);
+
 
                 } else {
                     Toast.makeText(MainActivity.this,"No spinner choice executed", Toast.LENGTH_SHORT).show();
@@ -228,6 +230,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             getLoaderManager().initLoader(MOVIELIST_LOADER_ID, bundleForLoader, callbacks);
         } else {}
     }
+
+
 
 
 

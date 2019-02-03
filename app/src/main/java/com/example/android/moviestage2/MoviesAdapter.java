@@ -85,6 +85,18 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
     public void setMovieData(List<MovieList> movieData){
         mMovieList = movieData;
         notifyDataSetChanged();
+        
+    }
+
+    public final void clear() {
+        final int size = mMovieList.size();
+        if (size > 0) {
+            for (int i = 0; i < size; i++) {
+                mMovieList.remove(0);
+            }
+
+            notifyItemRangeRemoved(0, size);
+        }
     }
 
 
