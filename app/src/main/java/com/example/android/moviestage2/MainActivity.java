@@ -67,9 +67,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         // Specify the layout to use when the list of choices appears
         spinAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinner.setAdapter(spinAdapter);
-
-        LoaderManager.LoaderCallbacks callbacks = MainActivity.this;
-
         Bundle bundleForLoader = null;
 
         /*
@@ -78,8 +75,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
          * the last created loader is re-used.
          */
         getLoaderManager().initLoader(MOVIELIST_LOADER_ID, bundleForLoader, this);
-
-        //connectAndLoadMovies();
 
         mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -93,13 +88,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     mAdapter = new MoviesAdapter(MainActivity.this, new ArrayList<MovieList>());
                     mRecyclerView.setAdapter(mAdapter);
                     getLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, MainActivity.this);
-
-
                     Log.i("LOG onItemSelected... ","POPULARSTRING: " + mUrl);
-                    Log.i("LOG onItemSelected... ","movies: " + movies);
-
-
-
                 } else if (selected.contains("Highest Rated")){
                     mUrl = TOPRATEDSTRING;
                     mRecyclerView.setHasFixedSize(true);
@@ -108,15 +97,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     mRecyclerView.setAdapter(mAdapter);
                     getLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, MainActivity.this);
                     Log.i("LOG onItemSelected... ","Highest Rated: " + mUrl);
-//                    Log.i("LOG onItemSelected... ","movies: " + movies);
-
-
-
                 } else if (selected.contains("Personal Favorites")){
-
                     Log.i("LOG onItemSelected... ","Personal Favorites: " + urlPosterString);
                     mRecyclerView.setAdapter(null);
-
 
                 } else {
                     Toast.makeText(MainActivity.this,"No spinner choice executed", Toast.LENGTH_SHORT).show();
@@ -146,13 +129,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             @Override
             public List<MovieList> loadInBackground() {
                 Log.i("loadInBackground","mUrl is: " + mUrl);
-//                mUrl = POPULARSTRING;
-//
-//                if (mUrl == null) {
-//                    Log.i("loadInBackground","mUrl is: " + mUrl);
-//                    return null;
-//                }
-
 
                 // Perform the network request, parse the response, and extract a list of movies along with
                 // the associated movie data i.e. title, posterpath, synopsis, etc.. .
@@ -160,8 +136,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 Log.i("loadInBackground","movies is: " + movies);
                 return movies;
             }
-
-
 
             /**
              * Sends the result of the load to the registered listener.
@@ -175,8 +149,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         };
     }
 
-
-
     @Override
     public void onLoadFinished(Loader<List<MovieList>> loader, List<MovieList> movies) {
         // Clear the adapter of previous movie data
@@ -188,12 +160,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             //mAdapter.clear();
             mAdapter.notifyDataSetChanged();
             mRecyclerView.setVisibility(View.VISIBLE);
-
-            //mAdapter.UpdateMovies(movies);
-            //mAdapter.addAll(movies);
-
             Log.i("LOG onLoadFinished ","movies: " + movies);
-
         }
     }
 
@@ -202,34 +169,4 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         // Loader reset, so we can clear out our existing data.
         //mAdapter.clear();
     }
-
-    public void connectAndLoadMovies(){
-        // Get a reference to the ConnectivityManager to check state of network connectivity
-        ConnectivityManager connMgr = (ConnectivityManager)
-                getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        // Get details on the currently active default data network
-        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-
-        // If there is a network connection, fetch data
-        if (networkInfo != null && networkInfo.isConnected()) {
-            // Get a reference to the LoaderManager, in order to interact with loaders.
-            LoaderManager loaderManager = getLoaderManager();
-
-            LoaderManager.LoaderCallbacks<List<MovieList>> callbacks = MainActivity.this;
-
-            Bundle bundleForLoader = null;
-
-            // Initialize the loader. Pass in the int ID constant defined above and pass in null for
-            // the bundle. Pass in this activity for the LoaderCallbacks parameter (which is valid
-            // because this activity implements the LoaderCallbacks interface).
-            getLoaderManager().initLoader(MOVIELIST_LOADER_ID, bundleForLoader, callbacks);
-        } else {}
-    }
-
-
-
-
-
-    
 }

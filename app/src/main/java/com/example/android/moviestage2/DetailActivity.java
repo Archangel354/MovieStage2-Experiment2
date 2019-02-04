@@ -21,12 +21,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.example.android.moviestage2.RoomData.AddMovieActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
-//public class DetailActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<VideoList>>{
    public class DetailActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<VideoList>>{
 
     private static final String MOVIES_SHARE_HASHTAG = " #MoviesStage1App";
@@ -57,12 +57,12 @@ import java.util.List;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        mMovieDisplay = (TextView) findViewById(R.id.txtTitle);
-        mDateDisplay = (TextView) findViewById(R.id.txtReleaseDate);
-        mVoteDisplay = (TextView) findViewById(R.id.txtVoteAverage);
-        mSynopsisDisplay = (TextView) findViewById(R.id.txtSynopsis);
-        mPosterDisplay = (TextView) findViewById(R.id.txtPoster);
-        mMovieIDDisplay = (TextView) findViewById(R.id.txtMovieID);
+        mMovieDisplay =  findViewById(R.id.txtTitle);
+        mDateDisplay =  findViewById(R.id.txtReleaseDate);
+        mVoteDisplay =  findViewById(R.id.txtVoteAverage);
+        mSynopsisDisplay =  findViewById(R.id.txtSynopsis);
+        mPosterDisplay =  findViewById(R.id.txtPoster);
+        mMovieIDDisplay =  findViewById(R.id.txtMovieID);
 
         Intent intentThatStartedThisActivity = getIntent();
         Bundle mBundle = intentThatStartedThisActivity.getExtras();
@@ -79,13 +79,13 @@ import java.util.List;
 
         urlTrailerString = MOVIEPREFIX + mMovieID + MOVIESUFFIX;
 
-        btnTrailer = (Button) findViewById(R.id.btnTrailer);
+        btnTrailer = findViewById(R.id.btnTrailer);
         toggleFavorite = findViewById(R.id.toggleFavorite);
 
         // Create a 2nd adapter that takes an empty list of trailers as input
         vAdapter = new VideoAdapter(DetailActivity.this, new ArrayList<VideoList>());
 
-        ImageView imageView = (ImageView) findViewById(R.id.imgPoster);
+        ImageView imageView =  findViewById(R.id.imgPoster);
         imageView.setAdjustViewBounds(true);
 
         // Use the Picasso software tool to display URLs
@@ -116,7 +116,11 @@ import java.util.List;
             @Override
             public void onClick(View view) {
                 if(toggleFavorite.isChecked()){
-                    Toast.makeText(DetailActivity.this,"The movie title is: " + mTitle, Toast.LENGTH_SHORT).show();
+                    // Create a new intent to start an AddMovieActivity
+                    Intent addMovieIntent = new Intent(DetailActivity.this, AddMovieActivity.class);
+                    startActivity(addMovieIntent);
+                    Toast.makeText(DetailActivity.this,"The movie ID and title is: " + mMovieID+ mTitle, Toast.LENGTH_SHORT).show();
+
 
                 }
                 else {

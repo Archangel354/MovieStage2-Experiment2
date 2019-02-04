@@ -13,6 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".RoomData.AddMovieActivity"></activity>
         <activity
             android:name=".MainActivity"
             android:label="Movies Stage2">
@@ -32,7 +33,6 @@
                 tools:replace="android:value" />
         </activity>
         <activity android:name=".TrailerActivity" />
-
     </application>
 
 </manifest>
