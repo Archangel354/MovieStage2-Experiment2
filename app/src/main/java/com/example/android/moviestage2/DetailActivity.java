@@ -2,7 +2,6 @@ package com.example.android.moviestage2;
 
 import android.app.Activity;
 import android.app.LoaderManager;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
@@ -10,7 +9,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ShareCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,10 +19,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import com.example.android.moviestage2.RoomData.AddMovieActivity;
+import com.example.android.moviestage2.RoomData.MovieRecords;
+import com.example.android.moviestage2.RoomData.MoviesDatabase;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
    public class DetailActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<VideoList>>{
@@ -51,6 +51,9 @@ import java.util.List;
 
     public final static String VIDEOSTRING = "https://api.themoviedb.org/3/movie/335984/videos?api_key=02ff7187d940e5bd15cd5acd2b41b63e";
     public String urlTrailerString = VIDEOSTRING;
+
+       // Member variable for the MoviesDatabase
+       private MoviesDatabase mDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,12 +119,7 @@ import java.util.List;
             @Override
             public void onClick(View view) {
                 if(toggleFavorite.isChecked()){
-                    // Create a new intent to start an AddMovieActivity
-                    Intent addMovieIntent = new Intent(DetailActivity.this, AddMovieActivity.class);
-                    startActivity(addMovieIntent);
-                    Toast.makeText(DetailActivity.this,"The movie ID and title is: " + mMovieID+ mTitle, Toast.LENGTH_SHORT).show();
-
-
+                    onSaveButtonClicked();
                 }
                 else {
                     Toast.makeText(DetailActivity.this,"My favorites deselected", Toast.LENGTH_SHORT).show();
@@ -164,6 +162,30 @@ import java.util.List;
 
     @Override
     public void onLoaderReset(Loader<List<VideoList>> loader) {    }
+       /**
+        * onSaveButtonClicked is called when the "save" button is clicked.
+        * It retrieves user input and inserts that new item data into the underlying database.
+        */
+       public void onSaveButtonClicked() {
+           String movieid = mEditText.getText().toString();
+           int priority = getPriorityFromViews();
+           Date date = new Date();
+
+           final MovieRecords favorite = new MovieRecords(movieid, priority, date);
+           AppExecutors.getInstance().diskIO().execute(new Runnable() {
+               @Override
+               public void run() {
+                   if (mItemID == DEFAULT_ITEM_ID) {
+                       // insert new task
+                       mDb.movieDao().insertItem(favorite);
+                   } else {
+                       Toast.makeText(DetailActivity.this,"Movie already added to favorites", Toast.LENGTH_SHORT).show();
+
+                   }
+                   finish();
+               }
+           });
+       }
 
 }
 
