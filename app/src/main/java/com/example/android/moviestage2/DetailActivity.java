@@ -59,6 +59,11 @@ import java.util.List;
 
        private int mItemID = DEFAULT_ITEM_ID;
 
+       // Extra for the item ID to be received in the intent
+       public static final String EXTRA_ITEM_ID = "extraItemId";
+       // Extra for the item ID to be received after rotation
+       public static final String INSTANCE_ITEM_ID = "instanceItemId";
+
 
        @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +76,12 @@ import java.util.List;
         mSynopsisDisplay =  findViewById(R.id.txtSynopsis);
         mPosterDisplay =  findViewById(R.id.txtPoster);
         mMovieIDDisplay =  findViewById(R.id.txtMovieID);
+
+           mDb = MoviesDatabase.getInstance(getApplicationContext());
+
+           if (savedInstanceState != null && savedInstanceState.containsKey(INSTANCE_ITEM_ID)) {
+               mItemID = savedInstanceState.getInt(INSTANCE_ITEM_ID, DEFAULT_ITEM_ID);
+           }
 
         Intent intentThatStartedThisActivity = getIntent();
         final Bundle mBundle = intentThatStartedThisActivity.getExtras();
