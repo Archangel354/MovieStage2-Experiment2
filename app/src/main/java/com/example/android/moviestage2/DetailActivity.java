@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.example.android.moviestage2.RoomData.AppExecutors;
 import com.example.android.moviestage2.RoomData.MovieRecords;
 import com.example.android.moviestage2.RoomData.MoviesDatabase;
 import com.squareup.picasso.Picasso;
@@ -54,8 +55,12 @@ import java.util.List;
 
        // Member variable for the MoviesDatabase
        private MoviesDatabase mDb;
+       private static final int DEFAULT_ITEM_ID = -1;
 
-    @Override
+       private int mItemID = DEFAULT_ITEM_ID;
+
+
+       @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
@@ -68,7 +73,7 @@ import java.util.List;
         mMovieIDDisplay =  findViewById(R.id.txtMovieID);
 
         Intent intentThatStartedThisActivity = getIntent();
-        Bundle mBundle = intentThatStartedThisActivity.getExtras();
+        final Bundle mBundle = intentThatStartedThisActivity.getExtras();
         final String mTitle = mBundle.getString("MBUNDLE_TITLE");
         mMovieDisplay.setText(mTitle);
         String mDate = mBundle.getString("MBUNDLE_DATE");
@@ -119,7 +124,8 @@ import java.util.List;
             @Override
             public void onClick(View view) {
                 if(toggleFavorite.isChecked()){
-                    onSaveButtonClicked();
+
+                    onSaveButtonClicked(mBundle);
                 }
                 else {
                     Toast.makeText(DetailActivity.this,"My favorites deselected", Toast.LENGTH_SHORT).show();
@@ -163,21 +169,27 @@ import java.util.List;
     @Override
     public void onLoaderReset(Loader<List<VideoList>> loader) {    }
        /**
-        * onSaveButtonClicked is called when the "save" button is clicked.
+        * onSaveButtonClicked is called when the "star" button is clicked.
         * It retrieves user input and inserts that new item data into the underlying database.
         */
-       public void onSaveButtonClicked() {
-           String movieid = mEditText.getText().toString();
-           int priority = getPriorityFromViews();
-           Date date = new Date();
+       public void onSaveButtonClicked(Bundle bundle) {
+           String movieID = bundle.getString("MBUNDLE_MOVIEID");
+           String movieTitle = bundle.getString("MBUNDLE_TITLE");
+           String releasedate = bundle.getString("MBUNDLE_DATE");
+           String  voteaverage = bundle.getString("MBUNDLE_VOTE");
+           String  synopsis = bundle.getString("MBUNDLE_SYNOPSIS");
+           String  posterpath = bundle.getString("MBUNDLE_POSTER");
 
-           final MovieRecords favorite = new MovieRecords(movieid, priority, date);
+           Toast.makeText(DetailActivity.this,"star clicked " + movieID + " " + movieTitle, Toast.LENGTH_SHORT).show();
+
+           final MovieRecords favorite = new MovieRecords(movieID, movieTitle, releasedate, voteaverage, synopsis, posterpath);
+
            AppExecutors.getInstance().diskIO().execute(new Runnable() {
                @Override
-               public void run() {
+              public void run() {
                    if (mItemID == DEFAULT_ITEM_ID) {
                        // insert new task
-                       mDb.movieDao().insertItem(favorite);
+                      mDb.movieDao().insertItem(favorite);
                    } else {
                        Toast.makeText(DetailActivity.this,"Movie already added to favorites", Toast.LENGTH_SHORT).show();
 

@@ -9,7 +9,7 @@ public class MovieRecords {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
-    private int movieid;
+    private String movieid;
     private String movietitle;
     private String releasedate;
     private String voteaverage;
@@ -20,7 +20,7 @@ public class MovieRecords {
 
 
     @Ignore
-    public MovieRecords(int movieid, String movietitle, String releasedate, String voteaverage, String synopsis, String posterpath) {
+    public MovieRecords(String movieid, String movietitle, String releasedate, String voteaverage, String synopsis, String posterpath) {
         this.movieid = movieid;
         this.movietitle = movietitle;
         this.releasedate = releasedate;
@@ -29,7 +29,7 @@ public class MovieRecords {
         this.posterpath = posterpath;
     }
 
-    public MovieRecords(int id, int movieid, String movietitle, String releasedate, String voteaverage, String synopsis, String posterpath) {
+    public MovieRecords(int id, String movieid, String movietitle, String releasedate, String voteaverage, String synopsis, String posterpath) {
         this.id = id;
         this.movieid = movieid;
         this.movietitle = movietitle;
@@ -47,11 +47,11 @@ public class MovieRecords {
         this.id = id;
     }
 
-    public int getMovieid() {
+    public String getMovieid() {
         return movieid;
     }
 
-    public void setMovieid(int movieid) {
+    public void setMovieid(String movieid) {
         this.movieid = movieid;
     }
 
