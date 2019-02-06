@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.example.android.moviestage2.RoomData.MovieRecords;
 import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +23,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
 
     private List<MovieList> imageUrls = new ArrayList<>(); // so far so good 9/25/17
     public static List<MovieList> mMovieList;
+    private List<MovieRecords> mFavoritesList;
     private static final String TAG = "MoviesAdapter";
     private Context mContext;
 
@@ -83,6 +86,12 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
         mMovieList = movieData;
         notifyDataSetChanged();
         
+    }
+
+    public void setMovieFavorites(List<MovieRecords> movieData){
+        mFavoritesList = movieData;
+        notifyDataSetChanged();
+
     }
 
     public final void clear() {

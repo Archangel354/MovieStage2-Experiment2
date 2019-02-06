@@ -1,12 +1,15 @@
 package com.example.android.moviestage2;
 
 import android.app.LoaderManager;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.content.Loader;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,12 +20,19 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.android.moviestage2.RoomData.MainViewModel;
+import com.example.android.moviestage2.RoomData.MovieRecords;
+import com.example.android.moviestage2.RoomData.MoviesDatabase;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.android.moviestage2.Utils.movies;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<MovieList>> {
+
+    // Constant for logging
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     private static final int MOVIELIST_LOADER_ID = 1;
 
@@ -44,6 +54,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private ArrayList<MovieList> mMovieList;
     /** Query URL */
     public String mUrl;
+
+    private MoviesDatabase mDb;
+
 
 
     @Override
@@ -100,6 +113,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 } else if (selected.contains("Personal Favorites")){
                     Log.i("LOG onItemSelected... ","Personal Favorites: " + urlPosterString);
                     mRecyclerView.setAdapter(null);
+                    mDb = MoviesDatabase.getInstance(getApplicationContext());
+                    setupViewModel();
 
                 } else {
                     Toast.makeText(MainActivity.this,"No spinner choice executed", Toast.LENGTH_SHORT).show();
@@ -168,5 +183,16 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public void onLoaderReset(Loader<List<MovieList>> loader) {
         // Loader reset, so we can clear out our existing data.
         //mAdapter.clear();
+    }
+
+    private void setupViewModel() {
+        MainViewModel viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        viewModel.getItems().observe(this, new Observer<List<MovieRecords>>() {
+            @Override
+            public void onChanged(@Nullable List<MovieRecords> movieEntries) {
+                Log.d(TAG, "Updating list of items from LiveData in ViewModel");
+                mAdapter.setMovieFavorites(movieEntries);
+            }
+        });
     }
 }
