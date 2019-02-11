@@ -113,6 +113,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 } else if (selected.contains("Personal Favorites")){
                     Log.i("LOG onItemSelected... ","Personal Favorites: " + urlPosterString);
                     mRecyclerView.setAdapter(null);
+                    mRecyclerView.setHasFixedSize(true);
+                    mRecyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
+                    mAdapter = new MoviesAdapter(MainActivity.this, new ArrayList<MovieRecords>());
+                    mRecyclerView.setAdapter(mAdapter);
                     mDb = MoviesDatabase.getInstance(getApplicationContext());
                     setupViewModel();
 
@@ -182,7 +186,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onLoaderReset(Loader<List<MovieList>> loader) {
         // Loader reset, so we can clear out our existing data.
-        //mAdapter.clear();
+        mAdapter.clear();
     }
 
     private void setupViewModel() {

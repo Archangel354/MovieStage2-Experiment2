@@ -32,6 +32,11 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
         mContext = context;
     }
 
+    public MoviesAdapter(Context context, List<MovieRecords> movieList) {
+        mFavoritesList = movieList;
+        mContext = context;
+    }
+
     @Override
     public MoviesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(mContext).inflate(R.layout.movie_list_items, parent, false);

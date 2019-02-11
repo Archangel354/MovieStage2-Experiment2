@@ -15,12 +15,13 @@ public abstract class MoviesDatabase extends RoomDatabase {
     private static final String DATABASE_NAME = "favoritemovies";
     private static MoviesDatabase sInstance;
 
-    public static MoviesDatabase getInstance(Context context) {
+    public static synchronized MoviesDatabase getInstance(Context context) {
         if (sInstance == null) {
             synchronized (LOCK) {
                 Log.d(LOG_TAG, "Creating new database instance");
                 sInstance = Room.databaseBuilder(context.getApplicationContext(),
                         MoviesDatabase.class, MoviesDatabase.DATABASE_NAME)
+                        .fallbackToDestructiveMigration()
                         .build();
             }
         }

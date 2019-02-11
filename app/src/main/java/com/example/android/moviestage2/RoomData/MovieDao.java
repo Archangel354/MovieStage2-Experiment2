@@ -26,5 +26,5 @@ public interface MovieDao {
     void deleteItem(MovieRecords movieEntry);
 
     @Query("SELECT * FROM movierecords WHERE movieid = :id")
-    LiveData<MovieRecords> loadMovieById(int id);
+    LiveData<List<MovieRecords>> loadMovieById(int id);
 }
