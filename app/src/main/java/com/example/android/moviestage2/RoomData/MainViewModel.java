@@ -22,7 +22,7 @@ public class MainViewModel extends AndroidViewModel {
         favorites = database.movieDao().loadAllMovies();
     }
 
-    public LiveData<List<MovieRecords>> getItems() {
+    public LiveData<List<MovieRecords>> getFavorites() {
         return favorites;
     }
 

@@ -2,6 +2,7 @@ package com.example.android.moviestage2;
 
 import android.app.Activity;
 import android.app.LoaderManager;
+import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
@@ -208,6 +209,7 @@ import java.util.List;
                    finish();
                }
            });
+
        }
 
 }

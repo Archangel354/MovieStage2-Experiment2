@@ -102,6 +102,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     mRecyclerView.setAdapter(mAdapter);
                     getLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, MainActivity.this);
                     Log.i("LOG onItemSelected... ","POPULARSTRING: " + mUrl);
+
                 } else if (selected.contains("Highest Rated")){
                     mUrl = TOPRATEDSTRING;
                     mRecyclerView.setHasFixedSize(true);
@@ -110,12 +111,15 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     mRecyclerView.setAdapter(mAdapter);
                     getLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, MainActivity.this);
                     Log.i("LOG onItemSelected... ","Highest Rated: " + mUrl);
+
                 } else if (selected.contains("Personal Favorites")){
                     Log.i("LOG onItemSelected... ","Personal Favorites: " + urlPosterString);
                     mRecyclerView.setAdapter(null);
                     mRecyclerView.setHasFixedSize(true);
                     mRecyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
                     mAdapter = new MoviesAdapter(MainActivity.this, new ArrayList<MovieRecords>());
+                    Log.i("LOG Personal Favorites ","MovieRecords: ");
+
                     mRecyclerView.setAdapter(mAdapter);
                     mDb = MoviesDatabase.getInstance(getApplicationContext());
                     setupViewModel();
@@ -191,7 +195,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     private void setupViewModel() {
         MainViewModel viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
-        viewModel.getItems().observe(this, new Observer<List<MovieRecords>>() {
+        viewModel.getFavorites().observe(this, new Observer<List<MovieRecords>>() {
             @Override
             public void onChanged(@Nullable List<MovieRecords> movieEntries) {
                 Log.d(TAG, "Updating list of items from LiveData in ViewModel");
