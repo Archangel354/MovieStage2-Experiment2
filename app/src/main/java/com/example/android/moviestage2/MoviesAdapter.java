@@ -55,25 +55,37 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
     @Override
     public void onBindViewHolder(MoviesViewHolder holder, final int position) {
         Log.d(TAG, "onBindViewHolder: called.");
-        final MovieList currentItem = mMovieList.get(position);
-        final String imageUrl = currentItem.getmPosterPath();
-        Picasso.with(mContext).load(imageUrl).fit().centerInside().into(holder.mImageView);
 
-        holder.parentLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent mIntent = new Intent(mContext, DetailActivity.class);
-                Bundle mBundle = new Bundle();
-                mBundle.putString("MBUNDLE_TITLE", movies.get(position).getmMovieTitle());
-                mBundle.putString("MBUNDLE_DATE", movies.get(position).getmReleaseDate());
-                mBundle.putString("MBUNDLE_VOTE", movies.get(position).getmVoteAverage());
-                mBundle.putString("MBUNDLE_SYNOPSIS", movies.get(position).getmSynopsis());
-                mBundle.putString("MBUNDLE_POSTER", movies.get(position).getmPosterPath());
-                mBundle.putString("MBUNDLE_MOVIEID", movies.get(position).getmMovieID());
-                mIntent.putExtras(mBundle);
-                mContext.startActivity(mIntent);
-            }
-        });
+        if (spinnerSelection != FAVORITESTRING) {
+            final MovieList currentItem = mMovieList.get(position);
+            final String imageUrl = currentItem.getmPosterPath();
+            Picasso.with(mContext).load(imageUrl).fit().centerInside().into(holder.mImageView);
+
+            holder.parentLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent mIntent = new Intent(mContext, DetailActivity.class);
+                    Bundle mBundle = new Bundle();
+                    mBundle.putString("MBUNDLE_TITLE", movies.get(position).getmMovieTitle());
+                    mBundle.putString("MBUNDLE_DATE", movies.get(position).getmReleaseDate());
+                    mBundle.putString("MBUNDLE_VOTE", movies.get(position).getmVoteAverage());
+                    mBundle.putString("MBUNDLE_SYNOPSIS", movies.get(position).getmSynopsis());
+                    mBundle.putString("MBUNDLE_POSTER", movies.get(position).getmPosterPath());
+                    mBundle.putString("MBUNDLE_MOVIEID", movies.get(position).getmMovieID());
+                    mIntent.putExtras(mBundle);
+                    mContext.startActivity(mIntent);
+                }
+            });
+        }
+        else {
+            MovieRecords movieRecords = mFavoritesList.get(position);
+            String movieId = movieRecords.getMovieid();
+            String movietitle = movieRecords.getMovietitle();
+            String releasedate = movieRecords.getReleasedate();
+            String voteaverage = movieRecords.getVoteaverage();
+            String synopsis = movieRecords.getSynopsis();
+            String posterpath = movieRecords.getPosterpath();
+        }
     }
 
 
