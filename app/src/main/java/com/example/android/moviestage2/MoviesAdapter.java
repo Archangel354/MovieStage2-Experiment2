@@ -17,7 +17,9 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.android.moviestage2.MainActivity.FAVORITESTRING;
 import static com.example.android.moviestage2.Utils.movies;
+import static com.example.android.moviestage2.MainActivity.spinnerSelection;
 
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder> {
 
@@ -39,8 +41,15 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
 
     @Override
     public MoviesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(mContext).inflate(R.layout.movie_list_items, parent, false);
-        return new MoviesViewHolder(v);
+
+        if ( spinnerSelection != FAVORITESTRING) {
+            View v = LayoutInflater.from(mContext).inflate(R.layout.movie_list_items, parent, false);
+            return new MoviesViewHolder(v);
+        }
+        else {
+            View v = LayoutInflater.from(mContext).inflate(R.layout.favorite_list_items, parent, false);
+            return new MoviesViewHolder(v);
+        }
     }
 
     @Override

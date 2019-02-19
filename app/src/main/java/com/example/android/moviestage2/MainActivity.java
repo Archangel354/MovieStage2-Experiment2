@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public final static String POPULARSTRING = "https://api.themoviedb.org/3/movie/popular?api_key=02ff7187d940e5bd15cd5acd2b41b63e";
     public final static String TOPRATEDSTRING = "https://api.themoviedb.org/3/movie/top_rated?api_key=02ff7187d940e5bd15cd5acd2b41b63e";
     public String urlPosterString = POPULARSTRING;
+    public final static String FAVORITESTRING = "";
 
     public final static String TRAILERSTRING = "https://api.themoviedb.org/3/movie/335984/videos?api_key=02ff7187d940e5bd15cd5acd2b41b63e";
     public final static String VIDEOKEY ="dZOaI_Fn5o4";
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private ArrayList<MovieList> mMovieList;
     /** Query URL */
     public String mUrl;
+    public  static String spinnerSelection = POPULARSTRING;
 
     private MoviesDatabase mDb;
 
@@ -114,6 +116,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
                 } else if (selected.contains("Personal Favorites")){
                     Log.i("LOG onItemSelected... ","Personal Favorites: " + urlPosterString);
+                    spinnerSelection = FAVORITESTRING;
                     mRecyclerView.setAdapter(null);
                     mRecyclerView.setHasFixedSize(true);
                     mRecyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
