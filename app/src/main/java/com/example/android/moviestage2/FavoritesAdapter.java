@@ -43,8 +43,10 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
         return mFavoritesList.size();
     }
 
-    public class FavoritesViewHolder {
-        public FavoritesViewHolder(View v) {
+    public class FavoritesViewHolder  extends RecyclerView.ViewHolder{
+
+        public FavoritesViewHolder(View itemView) {
+            super(itemView);
         }
     }
 
