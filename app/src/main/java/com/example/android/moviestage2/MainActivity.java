@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     mRecyclerView.setAdapter(null);
                     mRecyclerView.setHasFixedSize(true);
                     mRecyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
-                    mAdapter = new MoviesAdapter(MainActivity.this, new ArrayList<MovieRecords>());
+                    mAdapter = new FavoritesAdapter(MainActivity.this,  new ArrayList<MovieRecords>() );
                     Log.i("LOG Personal Favorites ","MovieRecords: ");
 
                     mRecyclerView.setAdapter(mAdapter);

@@ -25,7 +25,6 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
 
     private List<MovieList> imageUrls = new ArrayList<>(); // so far so good 9/25/17
     public static List<MovieList> mMovieList;
-    private List<MovieRecords> mFavoritesList;
     private static final String TAG = "MoviesAdapter";
     private Context mContext;
 
@@ -34,29 +33,16 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
         mContext = context;
     }
 
-    public MoviesAdapter(Context context, List<MovieRecords> movieList) {
-        mFavoritesList = movieList;
-        mContext = context;
-    }
-
     @Override
     public MoviesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        if ( spinnerSelection != FAVORITESTRING) {
             View v = LayoutInflater.from(mContext).inflate(R.layout.movie_list_items, parent, false);
             return new MoviesViewHolder(v);
-        }
-        else {
-            View v = LayoutInflater.from(mContext).inflate(R.layout.favorite_list_items, parent, false);
-            return new MoviesViewHolder(v);
-        }
     }
 
     @Override
     public void onBindViewHolder(MoviesViewHolder holder, final int position) {
         Log.d(TAG, "onBindViewHolder: called.");
-
-        if (spinnerSelection != FAVORITESTRING) {
             final MovieList currentItem = mMovieList.get(position);
             final String imageUrl = currentItem.getmPosterPath();
             Picasso.with(mContext).load(imageUrl).fit().centerInside().into(holder.mImageView);
@@ -77,17 +63,6 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
                 }
             });
         }
-        else {
-            MovieRecords movieRecords = mFavoritesList.get(position);
-            String movieId = movieRecords.getMovieid();
-            String movietitle = movieRecords.getMovietitle();
-            String releasedate = movieRecords.getReleasedate();
-            String voteaverage = movieRecords.getVoteaverage();
-            String synopsis = movieRecords.getSynopsis();
-            String posterpath = movieRecords.getPosterpath();
-        }
-    }
-
 
     @Override
     public int getItemCount() {
@@ -111,13 +86,6 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
     public void setMovieData(List<MovieList> movieData){
         mMovieList = movieData;
         notifyDataSetChanged();
-        
-    }
-
-    public void setMovieFavorites(List<MovieRecords> movieData){
-        mFavoritesList = movieData;
-        notifyDataSetChanged();
-
     }
 
     public final void clear() {
@@ -126,10 +94,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
             for (int i = 0; i < size; i++) {
                 mMovieList.remove(0);
             }
-
             notifyItemRangeRemoved(0, size);
         }
     }
-
-
 }
