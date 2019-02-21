@@ -33,13 +33,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     // Constant for logging
     private static final String TAG = MainActivity.class.getSimpleName();
-
     private static final int MOVIELIST_LOADER_ID = 1;
 
-    /** Adapter for the gridview of movies */
+    /** Adapter for the gridview of movies from the JSON data */
     private MoviesAdapter mAdapter;
-
-    //private static final String TAG = MainActivity.class.getSimpleName();
+    /** Adapter for the gridview of personal favorite movies from the Room database */
+    private FavoritesAdapter dAdapter;
 
     public final static String POPULARSTRING = "https://api.themoviedb.org/3/movie/popular?api_key=02ff7187d940e5bd15cd5acd2b41b63e";
     public final static String TOPRATEDSTRING = "https://api.themoviedb.org/3/movie/top_rated?api_key=02ff7187d940e5bd15cd5acd2b41b63e";
@@ -116,11 +115,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
                 } else if (selected.contains("Personal Favorites")){
                     Log.i("LOG onItemSelected... ","Personal Favorites: " + urlPosterString);
+                    mAdapter.clear();
+                    dAdapter.clear();
                     spinnerSelection = FAVORITESTRING;
                     mRecyclerView.setAdapter(null);
                     mRecyclerView.setHasFixedSize(true);
                     mRecyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
-                    mAdapter = new FavoritesAdapter(MainActivity.this,  new ArrayList<MovieRecords>() );
+                    dAdapter = new FavoritesAdapter(MainActivity.this,  new ArrayList<MovieRecords>() );
                     Log.i("LOG Personal Favorites ","MovieRecords: ");
 
                     mRecyclerView.setAdapter(mAdapter);
@@ -202,7 +203,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             @Override
             public void onChanged(@Nullable List<MovieRecords> movieEntries) {
                 Log.d(TAG, "Updating list of items from LiveData in ViewModel");
-                mAdapter.setMovieFavorites(movieEntries);
+                dAdapter.setMovieFavorites(movieEntries);
             }
         });
     }

@@ -52,4 +52,14 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
         mFavoritesList = movieData;
         notifyDataSetChanged();
     }
+
+    public final void clear() {
+        final int size = mFavoritesList.size();
+        if (size > 0) {
+            for (int i = 0; i < size; i++) {
+                mFavoritesList.remove(0);
+            }
+            notifyItemRangeRemoved(0, size);
+        }
+    }
 }
