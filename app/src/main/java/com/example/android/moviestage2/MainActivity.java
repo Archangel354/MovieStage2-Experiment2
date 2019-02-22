@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     dAdapter = new FavoritesAdapter(MainActivity.this,  new ArrayList<MovieRecords>() );
                     Log.i("LOG Personal Favorites ","MovieRecords: ");
 
-                    mRecyclerView.setAdapter(mAdapter);
+                    mRecyclerView.setAdapter(dAdapter);
                     mDb = MoviesDatabase.getInstance(getApplicationContext());
                     setupViewModel();
 
