@@ -56,12 +56,19 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
     }
 
     public final void clear() {
+        if (mFavoritesList == null)
+        {
+            return;
+        }
         final int size = mFavoritesList.size();
         if (size > 0) {
             for (int i = 0; i < size; i++) {
                 mFavoritesList.remove(0);
             }
             notifyItemRangeRemoved(0, size);
+        }
+        else {
+            return;
         }
     }
 }
