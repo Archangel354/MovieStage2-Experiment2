@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.android.moviestage2.RoomData.MovieRecords;
 
@@ -14,10 +15,13 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
     private List<MovieRecords> mFavoritesList;
     private static final String TAG = "FavoritesAdapter";
     private Context mContext;
+    // Member variable to handle item clicks
+    //final private FavoriteClickListener mFavoriteClickListener;
 
     public FavoritesAdapter(Context context, List<MovieRecords> movieList) {
         mFavoritesList = movieList;
         mContext = context;
+        //mFavoriteClickListener = listener;
     }
 
     @Override
@@ -35,6 +39,9 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
         String synopsis = movieRecords.getSynopsis();
         String posterpath = movieRecords.getPosterpath();
 
+        //Set values
+        holder.favoriteIdView.setText(movieId);
+        holder.favoriteTitleView.setText(movietitle);
     }
 
     @Override
@@ -43,16 +50,33 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
         return mFavoritesList.size();
     }
 
-    public class FavoritesViewHolder  extends RecyclerView.ViewHolder{
+    public class FavoritesViewHolder  extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        public FavoritesViewHolder(View itemView) {
-            super(itemView);
+        // Variables for favorite movie ID and favorite movie title only.
+        TextView favoriteIdView;
+        TextView favoriteTitleView;
+
+        public FavoritesViewHolder(View favoriteView) {
+            super(favoriteView);
+            favoriteIdView = favoriteView.findViewById(R.id.txtMovieID);
+            favoriteTitleView = favoriteView.findViewById(R.id.txtMovieTitle);
+            favoriteView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            int elementId = mFavoritesList.get(getAdapterPosition()).getId();
+            //mFavoriteClickListener.onFavoriteClickListener(elementId);
         }
     }
 
     public void setMovieFavorites(List<MovieRecords> movieData){
         mFavoritesList = movieData;
         notifyDataSetChanged();
+    }
+
+    public interface FavoriteClickListener {
+        void onFavoriteClickListener(int itemId);
     }
 
     public final void clear() {

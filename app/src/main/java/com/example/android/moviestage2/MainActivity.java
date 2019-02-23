@@ -23,6 +23,8 @@ import android.widget.Toast;
 import com.example.android.moviestage2.RoomData.MainViewModel;
 import com.example.android.moviestage2.RoomData.MovieRecords;
 import com.example.android.moviestage2.RoomData.MoviesDatabase;
+import com.example.android.moviestage2.FavoritesAdapter;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -123,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     mRecyclerView.setAdapter(null);
                     mRecyclerView.setHasFixedSize(true);
                     mRecyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
-                    dAdapter = new FavoritesAdapter(MainActivity.this,  new ArrayList<MovieRecords>() );
+                    dAdapter = new FavoritesAdapter(MainActivity.this,  new ArrayList<MovieRecords>());
                     Log.i("LOG Personal Favorites ","MovieRecords: ");
 
                     mRecyclerView.setAdapter(dAdapter);
