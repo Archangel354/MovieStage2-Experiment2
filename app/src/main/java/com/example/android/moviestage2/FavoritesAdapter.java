@@ -95,4 +95,8 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
             return;
         }
     }
+
+    public List<MovieRecords> getFavorites() {
+        return mFavoritesList;
+    }
 }

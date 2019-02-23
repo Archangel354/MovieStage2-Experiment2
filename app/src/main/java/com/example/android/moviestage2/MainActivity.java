@@ -5,6 +5,7 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.AsyncTaskLoader;
 import android.content.Context;
+import android.content.Intent;
 import android.content.Loader;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -14,12 +15,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.android.moviestage2.RoomData.AppExecutors;
 import com.example.android.moviestage2.RoomData.MainViewModel;
 import com.example.android.moviestage2.RoomData.MovieRecords;
 import com.example.android.moviestage2.RoomData.MoviesDatabase;
@@ -211,4 +216,45 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             }
         });
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        /* Use AppCompatActivity's method getMenuInflater to get a handle on the menu inflater */
+        MenuInflater inflater = getMenuInflater();
+        /* Use the inflater's inflate method to inflate our menu layout to this menu */
+        inflater.inflate(R.menu.menu_favorites, menu);
+        /* Return true so that the menu is displayed in the Toolbar */
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected( MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_delete_all_entries) {
+
+
+            deleteAll();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
+
+    public void deleteAll(){
+
+                    AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                @Override
+                public void run() {
+                    //int position = viewHolder.getAdapterPosition();
+                    List<MovieRecords> favorites = dAdapter.getFavorites();
+                    mDb.movieDao().nukeFavorites();
+                }
+            });
+            Toast.makeText(MainActivity.this,"Favorites table nuked", Toast.LENGTH_SHORT).show();
+
+    }
+
+
 }
