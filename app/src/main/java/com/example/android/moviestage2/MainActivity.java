@@ -118,9 +118,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 } else if (selected.contains("Personal Favorites")){
                     Log.i("LOG onItemSelected... ","Personal Favorites: " + urlPosterString);
                     mAdapter.clear();
-                    if (dAdapter != null){
-                        dAdapter.clear();
-                    }
+                   // if (dAdapter != null){
+                   //     dAdapter.clear();
+                   // }
                     spinnerSelection = FAVORITESTRING;
                     mRecyclerView.setAdapter(null);
                     mRecyclerView.setHasFixedSize(true);
