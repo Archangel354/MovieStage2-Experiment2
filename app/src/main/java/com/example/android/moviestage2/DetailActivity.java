@@ -140,6 +140,7 @@ import java.util.List;
                     onSaveButtonClicked(mBundle);
                 }
                 else {
+
                     Toast.makeText(DetailActivity.this,"My favorites deselected", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -206,7 +207,7 @@ import java.util.List;
                        Toast.makeText(DetailActivity.this,"Movie already added to favorites", Toast.LENGTH_SHORT).show();
 
                    }
-                   finish();
+                   //finish();
                }
            });
 
