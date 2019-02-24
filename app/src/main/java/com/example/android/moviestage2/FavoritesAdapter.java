@@ -1,15 +1,20 @@
 package com.example.android.moviestage2;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.android.moviestage2.RoomData.MovieRecords;
 
 import java.util.List;
+
+import static com.example.android.moviestage2.Utils.movies;
 
 public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.FavoritesViewHolder> {
     private List<MovieRecords> mFavoritesList;
@@ -30,7 +35,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
         return new FavoritesViewHolder(v);    }
 
     @Override
-    public void onBindViewHolder(FavoritesViewHolder holder, int position) {
+    public void onBindViewHolder(FavoritesViewHolder holder, final int position) {
         MovieRecords movieRecords = mFavoritesList.get(position);
         String movieId = movieRecords.getMovieid();
         String movietitle = movieRecords.getMovietitle();
@@ -42,6 +47,23 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
         //Set values
         holder.favoriteIdView.setText(movieId);
         holder.favoriteTitleView.setText(movietitle);
+
+        holder.parentLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent mIntent = new Intent(mContext, DetailActivity.class);
+                Bundle mBundle = new Bundle();
+                mBundle.putString("MBUNDLE_TITLE", movies.get(position).getmMovieTitle());
+                mBundle.putString("MBUNDLE_DATE", movies.get(position).getmReleaseDate());
+                mBundle.putString("MBUNDLE_VOTE", movies.get(position).getmVoteAverage());
+                mBundle.putString("MBUNDLE_SYNOPSIS", movies.get(position).getmSynopsis());
+                mBundle.putString("MBUNDLE_POSTER", movies.get(position).getmPosterPath());
+                mBundle.putString("MBUNDLE_MOVIEID", movies.get(position).getmMovieID());
+                mIntent.putExtras(mBundle);
+                mContext.startActivity(mIntent);
+
+            }
+        });
     }
 
     @Override
@@ -50,23 +72,19 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
         return mFavoritesList.size();
     }
 
-    public class FavoritesViewHolder  extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class FavoritesViewHolder  extends RecyclerView.ViewHolder {
 
         // Variables for favorite movie ID and favorite movie title only.
         TextView favoriteIdView;
         TextView favoriteTitleView;
+        RelativeLayout parentLayout;
+
 
         public FavoritesViewHolder(View favoriteView) {
             super(favoriteView);
             favoriteIdView = favoriteView.findViewById(R.id.txtMovieID);
             favoriteTitleView = favoriteView.findViewById(R.id.txtMovieTitle);
-            favoriteView.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View view) {
-            int elementId = mFavoritesList.get(getAdapterPosition()).getId();
-            //mFavoriteClickListener.onFavoriteClickListener(elementId);
+            parentLayout = favoriteView.findViewById(R.id.father_layout);
         }
     }
 

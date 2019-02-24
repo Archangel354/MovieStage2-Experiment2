@@ -15,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -104,39 +105,58 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selected = parent.getItemAtPosition(position).toString();
 
-                if ( selected.contains("Most Popular")){
+                if (selected.contains("Most Popular")) {
                     mUrl = POPULARSTRING;
                     mRecyclerView.setHasFixedSize(true);
                     mRecyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
                     mAdapter = new MoviesAdapter(MainActivity.this, new ArrayList<MovieList>());
                     mRecyclerView.setAdapter(mAdapter);
                     getLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, MainActivity.this);
-                    Log.i("LOG onItemSelected... ","POPULARSTRING: " + mUrl);
+                    Log.i("LOG onItemSelected... ", "POPULARSTRING: " + mUrl);
 
-                } else if (selected.contains("Highest Rated")){
+                } else if (selected.contains("Highest Rated")) {
                     mUrl = TOPRATEDSTRING;
                     mRecyclerView.setHasFixedSize(true);
                     mRecyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
                     mAdapter = new MoviesAdapter(MainActivity.this, new ArrayList<MovieList>());
                     mRecyclerView.setAdapter(mAdapter);
                     getLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, MainActivity.this);
-                    Log.i("LOG onItemSelected... ","Highest Rated: " + mUrl);
+                    Log.i("LOG onItemSelected... ", "Highest Rated: " + mUrl);
 
-                } else if (selected.contains("Personal Favorites")){
-                    Log.i("LOG onItemSelected... ","Personal Favorites: " + urlPosterString);
+                } else if (selected.contains("Personal Favorites")) {
+                    Log.i("LOG onItemSelected... ", "Personal Favorites: " + urlPosterString);
                     mAdapter.clear();
                     spinnerSelection = FAVORITESTRING;
                     mRecyclerView.setAdapter(null);
                     mRecyclerView.setHasFixedSize(true);
                     mRecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-                    dAdapter = new FavoritesAdapter(MainActivity.this,  new ArrayList<MovieRecords>());
-                    Log.i("LOG Personal Favorites ","MovieRecords: ");
+                    dAdapter = new FavoritesAdapter(MainActivity.this, new ArrayList<MovieRecords>());
+                    Log.i("LOG Personal Favorites ", "MovieRecords: ");
                     mRecyclerView.setAdapter(dAdapter);
                     mDb = MoviesDatabase.getInstance(getApplicationContext());
                     setupViewModel();
 
-                } else {
-                    Toast.makeText(MainActivity.this,"No spinner choice executed", Toast.LENGTH_SHORT).show();
+                    new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+                        @Override
+                        public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                            return false;
+                        }
+
+                        // Called when a user swipes left or right on a ViewHolder
+                        @Override
+                        public void onSwiped(final RecyclerView.ViewHolder viewHolder, int direction) {
+                            // Here is where you'll implement swipe to delete
+                            AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                                @Override
+                                public void run() {
+                                    int position = viewHolder.getAdapterPosition();
+                                    List<MovieRecords> favorites = dAdapter.getFavorites();
+                                    mDb.movieDao().deleteItem(favorites.get(position));
+                                }
+                            });
+                        }
+                    }).attachToRecyclerView(mRecyclerView);
+
                 }
             }
 
