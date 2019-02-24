@@ -2,6 +2,9 @@
 <resources>
     <dimen name="posterWidth">200dp</dimen>
     <dimen name="posterHeight">200dp</dimen>
-    <dimen name="favoritesMargin">10dp</dimen>
+    <dimen name="favoritesPaddingLeft">10dp</dimen>
+
+
+    <dimen name="favoritesMargin">2dp</dimen>
 
 </resources>

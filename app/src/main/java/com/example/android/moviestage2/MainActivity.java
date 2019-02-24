@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
@@ -79,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         // Set the adapter on the {@link GridView} so the list can be populated in the user interface
         mRecyclerView.setAdapter(mAdapter);
 
-        Spinner mSpinner = (Spinner) findViewById(R.id.spnPopOrRatedOrFavorite);
+        Spinner mSpinner =  findViewById(R.id.spnPopOrRatedOrFavorite);
 
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> spinAdapter = ArrayAdapter.createFromResource(this,
@@ -123,16 +124,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 } else if (selected.contains("Personal Favorites")){
                     Log.i("LOG onItemSelected... ","Personal Favorites: " + urlPosterString);
                     mAdapter.clear();
-                   // if (dAdapter != null){
-                   //     dAdapter.clear();
-                   // }
                     spinnerSelection = FAVORITESTRING;
                     mRecyclerView.setAdapter(null);
                     mRecyclerView.setHasFixedSize(true);
-                    mRecyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
+                    mRecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
                     dAdapter = new FavoritesAdapter(MainActivity.this,  new ArrayList<MovieRecords>());
                     Log.i("LOG Personal Favorites ","MovieRecords: ");
-
                     mRecyclerView.setAdapter(dAdapter);
                     mDb = MoviesDatabase.getInstance(getApplicationContext());
                     setupViewModel();
@@ -207,13 +204,17 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     private void setupViewModel() {
+        final int[] favoritesSize = new int[1];
         MainViewModel viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         viewModel.getFavorites().observe(this, new Observer<List<MovieRecords>>() {
             @Override
             public void onChanged(@Nullable List<MovieRecords> movieEntries) {
                 Log.d(TAG, "Updating list of items from LiveData in ViewModel");
                 dAdapter.setMovieFavorites(movieEntries);
+                favoritesSize[0] = movieEntries.size();
             }
+
+
         });
     }
 

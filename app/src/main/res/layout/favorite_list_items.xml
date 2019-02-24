@@ -5,14 +5,14 @@
     android:layout_height="wrap_content"
     android:id="@+id/mother_layout"
     android:gravity="center"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     >
 
 
     <TextView
         android:id="@+id/txtMovieID"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_margin="@dimen/favoritesMargin"
         android:layout_marginStart="@dimen/favoritesMargin"
         android:layout_marginLeft="@dimen/favoritesMargin"
@@ -20,20 +20,28 @@
         android:layout_marginEnd="@dimen/favoritesMargin"
         android:layout_marginRight="@dimen/favoritesMargin"
         android:layout_marginBottom="@dimen/favoritesMargin"
+        android:gravity="center"
+        android:textSize="16dp"
+        android:background="@color/colorFavoriteList"
         android:hint="1111111111" />
 
     <TextView
         android:id="@+id/txtMovieTitle"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/txtMovieID"
-
+        android:layout_height="50dp"
+        android:layout_toRightOf="@id/txtMovieID"
+        android:layout_gravity="start"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/favoritesPaddingLeft"
         android:layout_marginStart="@dimen/favoritesMargin"
         android:layout_marginLeft="@dimen/favoritesMargin"
         android:layout_marginTop="@dimen/favoritesMargin"
         android:layout_marginEnd="@dimen/favoritesMargin"
         android:layout_marginRight="@dimen/favoritesMargin"
         android:layout_marginBottom="@dimen/favoritesMargin"
+        android:layout_alignParentRight="true"
+        android:textSize="16dp"
+        android:background="@color/colorFavoriteList"
         android:hint="Gone With The Wind" />
 
 
