@@ -22,6 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -212,6 +213,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 Log.d(TAG, "Updating list of items from LiveData in ViewModel");
                 dAdapter.setMovieFavorites(movieEntries);
                 favoritesSize[0] = movieEntries.size();
+                RelativeLayout mrelativelayout = findViewById(R.id.empty_view);
+                if (movieEntries.size() > 0) {
+                    mrelativelayout.setVisibility(View.GONE);
+                }
+                else {
+                    mrelativelayout.setVisibility(View.VISIBLE);
+
+                }
             }
 
 
