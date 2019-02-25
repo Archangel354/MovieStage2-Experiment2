@@ -183,7 +183,7 @@ import java.util.List;
     public void onLoaderReset(Loader<List<VideoList>> loader) {    }
        /**
         * onSaveButtonClicked is called when the "star" button is clicked.
-        * It retrieves user input and inserts that new item data into the underlying database.
+        * It retrieves user input and inserts that new item data into the movies database.
         */
        public void onSaveButtonClicked(Bundle bundle) {
            String movieID = bundle.getString("MBUNDLE_MOVIEID");
@@ -204,10 +204,9 @@ import java.util.List;
                        // insert new task
                       mDb.movieDao().insertItem(favorite);
                    } else {
-                       Toast.makeText(DetailActivity.this,"Movie already added to favorites", Toast.LENGTH_SHORT).show();
+                       //Toast.makeText(DetailActivity.this,"Movie already added to favorites", Toast.LENGTH_SHORT).show();
 
                    }
-                   //finish();
                }
            });
 
