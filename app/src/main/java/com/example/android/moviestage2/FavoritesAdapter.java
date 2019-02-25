@@ -37,12 +37,12 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
     @Override
     public void onBindViewHolder(FavoritesViewHolder holder, final int position) {
         MovieRecords movieRecords = mFavoritesList.get(position);
-        String movieId = movieRecords.getMovieid();
-        String movietitle = movieRecords.getMovietitle();
-        String releasedate = movieRecords.getReleasedate();
-        String voteaverage = movieRecords.getVoteaverage();
-        String synopsis = movieRecords.getSynopsis();
-        String posterpath = movieRecords.getPosterpath();
+        final String movieId = movieRecords.getMovieid();
+        final String movietitle = movieRecords.getMovietitle();
+        final String releasedate = movieRecords.getReleasedate();
+        final String voteaverage = movieRecords.getVoteaverage();
+        final String synopsis = movieRecords.getSynopsis();
+        final String posterpath = movieRecords.getPosterpath();
 
         //Set values
         holder.favoriteIdView.setText(movieId);
@@ -53,12 +53,12 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
             public void onClick(View v) {
                 Intent mIntent = new Intent(mContext, DetailActivity.class);
                 Bundle mBundle = new Bundle();
-                mBundle.putString("MBUNDLE_TITLE", movies.get(position).getmMovieTitle());
-                mBundle.putString("MBUNDLE_DATE", movies.get(position).getmReleaseDate());
-                mBundle.putString("MBUNDLE_VOTE", movies.get(position).getmVoteAverage());
-                mBundle.putString("MBUNDLE_SYNOPSIS", movies.get(position).getmSynopsis());
-                mBundle.putString("MBUNDLE_POSTER", movies.get(position).getmPosterPath());
-                mBundle.putString("MBUNDLE_MOVIEID", movies.get(position).getmMovieID());
+                mBundle.putString("MBUNDLE_TITLE", movietitle);
+                mBundle.putString("MBUNDLE_DATE", releasedate);
+                mBundle.putString("MBUNDLE_VOTE", voteaverage);
+                mBundle.putString("MBUNDLE_SYNOPSIS", synopsis);
+                mBundle.putString("MBUNDLE_POSTER", posterpath);
+                mBundle.putString("MBUNDLE_MOVIEID", movieId);
                 mIntent.putExtras(mBundle);
                 mContext.startActivity(mIntent);
 

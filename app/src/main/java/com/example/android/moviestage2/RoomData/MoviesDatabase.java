@@ -7,7 +7,7 @@ import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 import android.util.Log;
 
-@Database(entities = {MovieRecords.class}, version = 1, exportSchema = false)
+@Database(entities = {MovieRecords.class}, version = 3, exportSchema = false)
 public abstract class MoviesDatabase extends RoomDatabase {
 
     private static final String LOG_TAG = MoviesDatabase.class.getSimpleName();

@@ -2,12 +2,14 @@ package com.example.android.moviestage2.RoomData;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 
-@Entity(tableName = "movierecords")
+@Entity(tableName = "movierecords",indices =  @Index(value = {"movieid"}, unique = true))
 public class MovieRecords {
 
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey (autoGenerate = true)
     private int id;
     private String movieid;
     private String movietitle;

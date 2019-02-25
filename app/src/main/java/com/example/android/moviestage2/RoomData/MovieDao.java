@@ -16,7 +16,7 @@ public interface MovieDao {
     @Query("SELECT * FROM movierecords")
     LiveData<List<MovieRecords>> loadAllMovies();
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertItem(MovieRecords movieEntry);
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
