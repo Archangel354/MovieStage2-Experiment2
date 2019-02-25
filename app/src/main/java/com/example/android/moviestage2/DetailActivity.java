@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.example.android.moviestage2.Reviews.ReviewsActivity;
 import com.example.android.moviestage2.RoomData.AppExecutors;
 import com.example.android.moviestage2.RoomData.MovieRecords;
 import com.example.android.moviestage2.RoomData.MoviesDatabase;
@@ -40,6 +41,7 @@ import java.util.List;
     private TextView mPosterDisplay;
     private Context context;
     private Button btnTrailer;
+    private Button btnReviews;
     private ToggleButton toggleFavorite;
     private TextView mMovieIDDisplay;
     private final Activity mActivity = this;
@@ -101,8 +103,10 @@ import java.util.List;
 
         btnTrailer = findViewById(R.id.btnTrailer);
         toggleFavorite = findViewById(R.id.toggleFavorite);
+        btnReviews = findViewById(R.id.btnReviews);
 
-        // Create a 2nd adapter that takes an empty list of trailers as input
+
+           // Create a 2nd adapter that takes an empty list of trailers as input
         vAdapter = new VideoAdapter(DetailActivity.this, new ArrayList<VideoList>());
 
         ImageView imageView =  findViewById(R.id.imgPoster);
@@ -145,6 +149,17 @@ import java.util.List;
                 }
             }
         });
+
+        //  Set the onclick listener for the button that will display the movie reviews
+        btnReviews.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DetailActivity.this, ReviewsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
     }
 
     private Intent createShareForecastIntent() {
