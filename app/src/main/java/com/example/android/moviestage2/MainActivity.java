@@ -51,20 +51,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public String urlPosterString = POPULARSTRING;
     public final static String FAVORITESTRING = "";
 
-    public final static String TRAILERSTRING = "https://api.themoviedb.org/3/movie/335984/videos?api_key=02ff7187d940e5bd15cd5acd2b41b63e";
-    public final static String VIDEOKEY ="dZOaI_Fn5o4";
-    public final static String VIDEOURL ="https://www.youtube.com/watch?v=gCcx85zbxz4";
-
     // Find a reference to the {@link GridView} in the layout
     private RecyclerView mRecyclerView;
     private ArrayList<MovieList> mMovieList;
     /** Query URL */
     public String mUrl;
     public  static String spinnerSelection = POPULARSTRING;
-
     private MoviesDatabase mDb;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

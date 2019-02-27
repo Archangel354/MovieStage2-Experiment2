@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/review_layout"
+    android:gravity="center"
+    android:orientation="vertical"
+    >
+
+
+    <TextView
+        android:id="@+id/txtAuthor"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_margin="@dimen/favoritesMargin"
+        android:layout_marginStart="@dimen/favoritesMargin"
+        android:layout_marginLeft="@dimen/favoritesMargin"
+        android:layout_marginTop="@dimen/favoritesMargin"
+        android:layout_marginEnd="@dimen/favoritesMargin"
+        android:layout_marginRight="@dimen/favoritesMargin"
+        android:layout_marginBottom="@dimen/favoritesMargin"
+        android:gravity="center"
+        android:textSize="16dp"
+        android:background="@color/colorFavoriteList"
+        android:hint="James Pohl" />
+
+    <TextView
+        android:id="@+id/txtContent"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_toRightOf="@id/txtMovieID"
+        android:layout_gravity="start"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/favoritesPaddingLeft"
+        android:layout_marginStart="@dimen/favoritesMargin"
+        android:layout_marginLeft="@dimen/favoritesMargin"
+        android:layout_marginTop="@dimen/favoritesMargin"
+        android:layout_marginEnd="@dimen/favoritesMargin"
+        android:layout_marginRight="@dimen/favoritesMargin"
+        android:layout_marginBottom="@dimen/favoritesMargin"
+        android:layout_alignParentRight="true"
+        android:textSize="16dp"
+        android:background="@color/colorFavoriteList"
+        android:hint="four score and seven years ago..." />
+
+
+</RelativeLayout>

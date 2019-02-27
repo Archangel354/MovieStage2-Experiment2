@@ -1,15 +1,20 @@
 package com.example.android.moviestage2.Reviews;
 
+import android.app.LoaderManager;
 import android.content.Intent;
+import android.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.example.android.moviestage2.MovieList;
 import com.example.android.moviestage2.R;
 
+import java.util.List;
 
-public class ReviewsActivity extends AppCompatActivity {
+
+public class ReviewsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<ReviewList>> {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,5 +30,20 @@ public class ReviewsActivity extends AppCompatActivity {
 //            txtUrl.setText(reviewsUrlString);
 //            Log.i("LOG ReviewsActivity: " ,reviewsUrlString);
 //        }
+    }
+
+    @Override
+    public Loader<List<ReviewList>> onCreateLoader(int i, Bundle bundle) {
+        return null;
+    }
+
+    @Override
+    public void onLoadFinished(Loader<List<ReviewList>> loader, List<ReviewList> reviewLists) {
+
+    }
+
+    @Override
+    public void onLoaderReset(Loader<List<ReviewList>> loader) {
+
     }
 }
