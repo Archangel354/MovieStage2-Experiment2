@@ -5,8 +5,10 @@
     <string name="action_map">Map Location</string>
     <string name="error_message">An error has occcured.  Please try again by clicking REF...</string>
     <string name="movieTitle">Title:</string>
-    <string name="empty_view_title_text">The shelves are empty...</string>
-    <string name="empty_view_subtitle_text">Get started by adding a product</string>
+    <string name="empty_view_title_text">The movie shelves are empty...</string>
+    <string name="empty_view_subtitle_text">Get started by adding a movie</string>
+    <string name="empty_review_title_text">The review shelves are empty...</string>
+    <string name="empty_review_subtitle_text">Get started by adding a review</string>
     <string name="play_trailer">play</string>
     <string name="show_title_here">show title here</string>
     <string name="release_date">Release Date</string>
