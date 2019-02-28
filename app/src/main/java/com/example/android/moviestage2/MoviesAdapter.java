@@ -23,8 +23,7 @@ import static com.example.android.moviestage2.MainActivity.spinnerSelection;
 
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder> {
 
-    //private List<MovieList> imageUrls = new ArrayList<>(); // so far so good 9/25/17
-    public static List<MovieList> mMovieList;
+   public static List<MovieList> mMovieList;
     private static final String TAG = "MoviesAdapter";
     private Context mContext;
 
