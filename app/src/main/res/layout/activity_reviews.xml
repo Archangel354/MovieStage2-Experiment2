@@ -11,6 +11,12 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true">
 
+        <RelativeLayout
+            android:id="@+id/empty_review"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
+
         <ImageView
             android:id="@+id/empty_review_image"
             android:layout_width="wrap_content"
@@ -39,12 +45,14 @@
             android:paddingTop="8dp"
             android:text="@string/empty_review_subtitle_text"
             android:textAppearance="?android:textAppearanceSmall"
-            android:textColor="#A2AAB0" />
+            android:textColor="@color/subtitle_text_color" />
+        </RelativeLayout>
 
-    <android.support.v7.widget.RecyclerView
+
+        <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_reviewView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/empty_reviewSubtitle_text"
-        android:background="@android:color/darker_gray" />
+        android:layout_below="@id/empty_review"
+        android:background="@color/reviews_background_color" />
 </RelativeLayout>

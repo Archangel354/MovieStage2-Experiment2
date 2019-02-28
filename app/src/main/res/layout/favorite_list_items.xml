@@ -23,7 +23,7 @@
         android:gravity="center"
         android:textSize="16dp"
         android:background="@color/colorFavoriteList"
-        android:hint="1111111111" />
+        android:hint="@string/movieId_hint" />
 
     <TextView
         android:id="@+id/txtMovieTitle"
@@ -42,7 +42,7 @@
         android:layout_alignParentRight="true"
         android:textSize="16dp"
         android:background="@color/colorFavoriteList"
-        android:hint="Gone With The Wind" />
+        android:hint="@string/movieTitle_hint" />
 
 
 </RelativeLayout>

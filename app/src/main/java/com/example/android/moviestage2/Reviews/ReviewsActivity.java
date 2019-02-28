@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.android.moviestage2.MainActivity;
@@ -60,7 +61,6 @@ public class ReviewsActivity extends AppCompatActivity implements LoaderManager.
         getLoaderManager().restartLoader(REVIEWLIST_LOADER_ID, null, ReviewsActivity.this);
         Intent intent = getIntent();
         Bundle reviewsUrlBundle = intent.getExtras();
-//        TextView txtUrl = findViewById(R.id.txtMovieReviews);
 
         if (reviewsUrlBundle != null){
             rUrl = (String) reviewsUrlBundle.get("REVIEWSURL");
@@ -90,7 +90,13 @@ public class ReviewsActivity extends AppCompatActivity implements LoaderManager.
 
                 // Perform the network request, parse the response, and extract a list of movies along with
                 // the associated movie data i.e. title, posterpath, synopsis, etc.. .
-                List<ReviewList> reviews = ReviewUtils.fetchMovieData(rUrl);
+                List<ReviewList> reviews = ReviewUtils.fetchReviewData(rUrl);
+                RelativeLayout rRelativelayout = findViewById(R.id.empty_review);
+
+                if (reviews.size() > 0) {
+                    rRelativelayout.setVisibility(View.GONE);
+                }
+
                 Log.i("loadInBackground","reviews is: " + reviews);
                 return reviews;
             }
