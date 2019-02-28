@@ -2,7 +2,7 @@ package com.example.android.moviestage2;
 
 import android.app.Activity;
 import android.app.LoaderManager;
-import android.content.ContentValues;
+import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
@@ -10,7 +10,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ShareCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,13 +20,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import com.example.android.moviestage2.data.MovieContract.MovieEntry;
+import com.example.android.moviestage2.Reviews.ReviewsActivity;
+import com.example.android.moviestage2.RoomData.AppExecutors;
+import com.example.android.moviestage2.RoomData.MovieRecords;
+import com.example.android.moviestage2.RoomData.MoviesDatabase;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-//public class DetailActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<VideoList>>{
    public class DetailActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<VideoList>>{
 
     private static final String MOVIES_SHARE_HASHTAG = " #MoviesStage1App";
@@ -39,6 +41,7 @@ import java.util.List;
     private TextView mPosterDisplay;
     private Context context;
     private Button btnTrailer;
+    private Button btnReviews;
     private ToggleButton toggleFavorite;
     private TextView mMovieIDDisplay;
     private final Activity mActivity = this;
@@ -46,27 +49,49 @@ import java.util.List;
     private final static String TRAILERPREFIX = "https://www.youtube.com/watch?v=";
     private final static String MOVIEPREFIX = "https://api.themoviedb.org/3/movie/";
     private final static String MOVIESUFFIX = "/videos?api_key=02ff7187d940e5bd15cd5acd2b41b63e";
+    private final static String REVIEWSSUFFIX = "/reviews?api_key=02ff7187d940e5bd15cd5acd2b41b63e";
 
-    /** Adapter for the list of trailers */
+
+       /** Adapter for the list of trailers */
     private VideoAdapter vAdapter;
 
     public final static String VIDEOSTRING = "https://api.themoviedb.org/3/movie/335984/videos?api_key=02ff7187d940e5bd15cd5acd2b41b63e";
     public String urlTrailerString = VIDEOSTRING;
+    public String urlReviewsString = "1111";  // dummy value to debug Reviews code 2-26-19
 
-    @Override
+
+       // Member variable for the MoviesDatabase
+       private MoviesDatabase mDb;
+       private static final int DEFAULT_ITEM_ID = -1;
+
+       private int mItemID = DEFAULT_ITEM_ID;
+
+       // Extra for the item ID to be received in the intent
+       public static final String EXTRA_ITEM_ID = "extraItemId";
+       // Extra for the item ID to be received after rotation
+       public static final String INSTANCE_ITEM_ID = "instanceItemId";
+
+
+       @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        mMovieDisplay = (TextView) findViewById(R.id.txtTitle);
-        mDateDisplay = (TextView) findViewById(R.id.txtReleaseDate);
-        mVoteDisplay = (TextView) findViewById(R.id.txtVoteAverage);
-        mSynopsisDisplay = (TextView) findViewById(R.id.txtSynopsis);
-        mPosterDisplay = (TextView) findViewById(R.id.txtPoster);
-        mMovieIDDisplay = (TextView) findViewById(R.id.txtMovieID);
+        mMovieDisplay =  findViewById(R.id.txtTitle);
+        mDateDisplay =  findViewById(R.id.txtReleaseDate);
+        mVoteDisplay =  findViewById(R.id.txtVoteAverage);
+        mSynopsisDisplay =  findViewById(R.id.txtSynopsis);
+        mPosterDisplay =  findViewById(R.id.txtPoster);
+        mMovieIDDisplay =  findViewById(R.id.txtMovieID);
+
+           mDb = MoviesDatabase.getInstance(getApplicationContext());
+
+           if (savedInstanceState != null && savedInstanceState.containsKey(INSTANCE_ITEM_ID)) {
+               mItemID = savedInstanceState.getInt(INSTANCE_ITEM_ID, DEFAULT_ITEM_ID);
+           }
 
         Intent intentThatStartedThisActivity = getIntent();
-        Bundle mBundle = intentThatStartedThisActivity.getExtras();
+        final Bundle mBundle = intentThatStartedThisActivity.getExtras();
         final String mTitle = mBundle.getString("MBUNDLE_TITLE");
         mMovieDisplay.setText(mTitle);
         String mDate = mBundle.getString("MBUNDLE_DATE");
@@ -79,14 +104,18 @@ import java.util.List;
         final String mMovieID = mBundle.getString("MBUNDLE_MOVIEID");
 
         urlTrailerString = MOVIEPREFIX + mMovieID + MOVIESUFFIX;
+        urlReviewsString = MOVIEPREFIX + mMovieID + REVIEWSSUFFIX;
 
-        btnTrailer = (Button) findViewById(R.id.btnTrailer);
+
+        btnTrailer = findViewById(R.id.btnTrailer);
         toggleFavorite = findViewById(R.id.toggleFavorite);
+        btnReviews = findViewById(R.id.btnReviews);
 
-        // Create a 2nd adapter that takes an empty list of trailers as input
+
+           // Create a 2nd adapter that takes an empty list of trailers as input
         vAdapter = new VideoAdapter(DetailActivity.this, new ArrayList<VideoList>());
 
-        ImageView imageView = (ImageView) findViewById(R.id.imgPoster);
+        ImageView imageView =  findViewById(R.id.imgPoster);
         imageView.setAdjustViewBounds(true);
 
         // Use the Picasso software tool to display URLs
@@ -117,14 +146,27 @@ import java.util.List;
             @Override
             public void onClick(View view) {
                 if(toggleFavorite.isChecked()){
-                    Toast.makeText(DetailActivity.this,"The movie title is: " + mTitle, Toast.LENGTH_SHORT).show();
 
+                    onSaveButtonClicked(mBundle);
                 }
                 else {
+
                     Toast.makeText(DetailActivity.this,"My favorites deselected", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+
+        //  Set the onclick listener for the button that will display the movie reviews
+        btnReviews.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DetailActivity.this, ReviewsActivity.class);
+                intent.putExtra("REVIEWSURL",urlReviewsString);
+                startActivity(intent);
+            }
+        });
+
+
     }
 
     private Intent createShareForecastIntent() {
@@ -161,40 +203,36 @@ import java.util.List;
 
     @Override
     public void onLoaderReset(Loader<List<VideoList>> loader) {    }
+       /**
+        * onSaveButtonClicked is called when the "star" button is clicked.
+        * It retrieves user input and inserts that new item data into the movies database.
+        */
+       public void onSaveButtonClicked(Bundle bundle) {
+           String movieID = bundle.getString("MBUNDLE_MOVIEID");
+           String movieTitle = bundle.getString("MBUNDLE_TITLE");
+           String releasedate = bundle.getString("MBUNDLE_DATE");
+           String  voteaverage = bundle.getString("MBUNDLE_VOTE");
+           String  synopsis = bundle.getString("MBUNDLE_SYNOPSIS");
+           String  posterpath = bundle.getString("MBUNDLE_POSTER");
 
-    /**
-     * Once user clicks on star, saves all the particular movie info into database.
-     */
-    private void saveProduct() {
-        // Read from input fields
-        // Use trim to eliminate leading or trailing white space
-        String titleString = mMovieDisplay.getText().toString().trim();
-        String dateString = mDateDisplay.getText().toString().trim();
-        String voteString = mVoteDisplay.getText().toString().trim();
-        String synopsisString = mSynopsisDisplay.getText().toString().trim();
-//        String posterString = mPosterDisplay.getText().toString().trim();
-//        String movieIDString = mMovieIDDisplay.getText().toString().trim();
+           Toast.makeText(DetailActivity.this,"star clicked " + movieID + " " + movieTitle, Toast.LENGTH_SHORT).show();
 
+           final MovieRecords favorite = new MovieRecords(movieID, movieTitle, releasedate, voteaverage, synopsis, posterpath);
 
-        // Check if this is supposed to be a new favorite moview
-        // and check if all the fields in the editor are blank
-        if (
-                TextUtils.isEmpty(titleString) && TextUtils.isEmpty(dateString) &&
-                TextUtils.isEmpty(voteString)  && TextUtils.isEmpty(synopsisString)) {
-            // Since no fields were modified, we can return early without creating a new favorite movie.
-            // No need to create ContentValues and no need to do any ContentProvider operations.
-            return;
-        }
+           AppExecutors.getInstance().diskIO().execute(new Runnable() {
+               @Override
+              public void run() {
+                   if (mItemID == DEFAULT_ITEM_ID) {
+                       // insert new task
+                      mDb.movieDao().insertItem(favorite);
+                   } else {
+                       //Toast.makeText(DetailActivity.this,"Movie already added to favorites", Toast.LENGTH_SHORT).show();
 
-        // Create a ContentValues object where column names are the keys,
-        // and the favorite movie attributes from the editor are the values.
-        ContentValues values = new ContentValues();
-        values.put(MovieEntry.COLUMN_MOVIE_TITLE, titleString);
-        values.put(MovieEntry.COLUMN_MOVIE_RELEASE_DATE, dateString);
-        values.put(MovieEntry.COLUMN_MOVIE_VOTE_AVERAGE, voteString);
-        values.put(MovieEntry.COLUMN_MOVIE_SYNOPSIS, synopsisString);
-       // values.put(MovieEntry.COLUMN_MOVIE_POSTER_IMAGE, posterString);
-        //values.put(MovieEntry.COLUMN_MOVIE_ID, movieIDString);
-    }
+                   }
+               }
+           });
+
+       }
+
 }
 

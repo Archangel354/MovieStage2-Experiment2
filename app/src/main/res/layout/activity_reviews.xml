@@ -6,60 +6,53 @@
     android:layout_height="match_parent"
     tools:context="com.example.android.moviestage2.MainActivity">
 
-    <RelativeLayout
-        android:id="@+id/empty_view"
+        android:id="@+id/empty_reviewView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true">
 
+        <RelativeLayout
+            android:id="@+id/empty_review"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
+
         <ImageView
-            android:id="@+id/empty_shelter_image"
+            android:id="@+id/empty_review_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:src="@drawable/empty_store" />
 
         <TextView
-            android:id="@+id/empty_title_text"
+            android:id="@+id/empty_reviewTitle_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/empty_shelter_image"
+            android:layout_below="@+id/empty_review_image"
             android:layout_centerHorizontal="true"
             android:fontFamily="sans-serif-medium"
             android:paddingTop="16dp"
-            android:text="@string/empty_view_title_text"
+            android:text="@string/empty_review_title_text"
             android:textAppearance="?android:textAppearanceMedium" />
 
         <TextView
-            android:id="@+id/empty_subtitle_text"
+            android:id="@+id/empty_reviewSubtitle_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/empty_title_text"
+            android:layout_below="@+id/empty_reviewTitle_text"
             android:layout_centerHorizontal="true"
             android:fontFamily="sans-serif"
             android:paddingTop="8dp"
-            android:text="@string/empty_view_subtitle_text"
+            android:text="@string/empty_review_subtitle_text"
             android:textAppearance="?android:textAppearanceSmall"
             android:textColor="@color/subtitle_text_color" />
-    </RelativeLayout>
+        </RelativeLayout>
 
-    <Spinner
-        android:id="@+id/spnPopOrRatedOrFavorite"
+
+        <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_reviewView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
-        ></Spinner>
-
-    <GridView
-        android:id="@+id/favoritesGrid"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:numColumns="auto_fit"
-        android:stretchMode="columnWidth"
-        android:gravity="center"
-        android:horizontalSpacing="0dp"
-        android:verticalSpacing="0dp"
-        android:descendantFocusability="beforeDescendants"
-        android:layout_below="@id/spnPopOrRatedOrFavorite"
-        />
+        android:layout_below="@id/empty_review"
+        android:background="@color/reviews_background_color" />
 </RelativeLayout>

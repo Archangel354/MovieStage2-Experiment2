@@ -7,7 +7,7 @@ import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 import android.util.Log;
 
-@Database(entities = {MovieRecords.class}, version = 1, exportSchema = false)
+@Database(entities = {MovieRecords.class}, version = 3, exportSchema = false)
 public abstract class MoviesDatabase extends RoomDatabase {
 
     private static final String LOG_TAG = MoviesDatabase.class.getSimpleName();
@@ -15,12 +15,13 @@ public abstract class MoviesDatabase extends RoomDatabase {
     private static final String DATABASE_NAME = "favoritemovies";
     private static MoviesDatabase sInstance;
 
-    public static MoviesDatabase getInstance(Context context) {
+    public static synchronized MoviesDatabase getInstance(Context context) {
         if (sInstance == null) {
             synchronized (LOCK) {
                 Log.d(LOG_TAG, "Creating new database instance");
                 sInstance = Room.databaseBuilder(context.getApplicationContext(),
                         MoviesDatabase.class, MoviesDatabase.DATABASE_NAME)
+                        .fallbackToDestructiveMigration()
                         .build();
             }
         }

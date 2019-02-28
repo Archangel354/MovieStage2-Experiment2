@@ -1,60 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.android.moviestage2.MainActivity">
+    android:layout_height="wrap_content"
+    android:id="@+id/father_layout"
+    android:gravity="center"
+    android:orientation="horizontal"
+    >
 
 
-    <RelativeLayout
-        android:id="@+id/empty_view2"
+    <TextView
+        android:id="@+id/txtMovieID"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true">
-
-        <ImageView
-            android:id="@+id/empty_shelter_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:src="@drawable/empty_store" />
-
-        <TextView
-            android:id="@+id/empty_title_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/empty_shelter_image"
-            android:layout_centerHorizontal="true"
-            android:fontFamily="sans-serif-medium"
-            android:paddingTop="16dp"
-            android:text="@string/empty_view_title_text"
-            android:textAppearance="?android:textAppearanceMedium" />
-
-        <TextView
-            android:id="@+id/empty_subtitle_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/empty_title_text"
-            android:layout_centerHorizontal="true"
-            android:fontFamily="sans-serif"
-            android:paddingTop="8dp"
-            android:text="@string/empty_view_subtitle_text"
-            android:textAppearance="?android:textAppearanceSmall"
-            android:textColor="#A2AAB0" />
-    </RelativeLayout>
-
-    <GridView
-        android:id="@+id/favoriteGrid"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:numColumns="auto_fit"
-        android:stretchMode="columnWidth"
+        android:layout_height="50dp"
+        android:layout_margin="@dimen/favoritesMargin"
+        android:layout_marginStart="@dimen/favoritesMargin"
+        android:layout_marginLeft="@dimen/favoritesMargin"
+        android:layout_marginTop="@dimen/favoritesMargin"
+        android:layout_marginEnd="@dimen/favoritesMargin"
+        android:layout_marginRight="@dimen/favoritesMargin"
+        android:layout_marginBottom="@dimen/favoritesMargin"
         android:gravity="center"
-        android:horizontalSpacing="0dp"
-        android:verticalSpacing="0dp"
-        android:descendantFocusability="beforeDescendants"
-        android:layout_below="@id/spnPopOrRatedOrFavorite"
-        />
+        android:textSize="16dp"
+        android:background="@color/colorFavoriteList"
+        android:hint="@string/movieId_hint" />
+
+    <TextView
+        android:id="@+id/txtMovieTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_toRightOf="@id/txtMovieID"
+        android:layout_gravity="start"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/favoritesPaddingLeft"
+        android:layout_marginStart="@dimen/favoritesMargin"
+        android:layout_marginLeft="@dimen/favoritesMargin"
+        android:layout_marginTop="@dimen/favoritesMargin"
+        android:layout_marginEnd="@dimen/favoritesMargin"
+        android:layout_marginRight="@dimen/favoritesMargin"
+        android:layout_marginBottom="@dimen/favoritesMargin"
+        android:layout_alignParentRight="true"
+        android:textSize="16dp"
+        android:background="@color/colorFavoriteList"
+        android:hint="@string/movieTitle_hint" />
+
 
 </RelativeLayout>
+

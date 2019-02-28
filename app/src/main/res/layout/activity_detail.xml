@@ -20,13 +20,26 @@
             android:gravity="center"
             android:orientation="horizontal">
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
 
             <Button
-                android:id="@+id/btnTrailer"
+            android:id="@+id/btnTrailer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Play trailer"/>
+
+            <Button
+                android:id="@+id/btnReviews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Play trailer"/>
+                android:text="@string/Review_btn_text"/>
+            </LinearLayout>
 
             <ImageView
                 android:id="@+id/imgPoster"
@@ -60,7 +73,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:hint="show title here"
+                android:hint="@string/movie_title_hint"
                 android:theme="@style/MovieStyle"/>
         </LinearLayout>
 
@@ -75,7 +88,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_weight="1"
-                android:text="Release Date:"
+                android:text="@string/release_date_lable"
                 android:textAlignment="viewEnd"
                 android:theme="@style/MovieStyle"
                 />
@@ -86,7 +99,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:hint="show date here"
+                android:hint="@string/release_date_hint"
                 android:theme="@style/MovieStyle"/>
         </LinearLayout>
 
@@ -112,9 +125,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_weight="1"
-                android:text="Vote Average:"
+                android:text="@string/vote_average_label"
                 android:textAlignment="viewEnd"
-                android:theme="@style/MovieStyle"/>
+                android:theme="@style/MovieStyle" />
 
             <TextView
                 android:id="@+id/txtVoteAverage"
@@ -122,15 +135,15 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:hint="show vote here"
-                android:theme="@style/MovieStyle"/>
+                android:hint="@string/vote_average_hint"
+                android:theme="@style/MovieStyle" />
         </LinearLayout>
 
         <TextView
             android:id="@+id/txtSynopsisLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Synopsis"
+            android:text="@string/synopsis_lable"
             android:textAlignment="center"
             android:theme="@style/MovieStyle"
             />
@@ -139,7 +152,7 @@
             android:id="@+id/txtSynopsis"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="show synopsis here"
+            android:hint="@string/synopsis_hint"
             android:theme="@style/MovieStyle"/>
 
     </LinearLayout>

@@ -3,4 +3,7 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="colorFavoriteList">#A4FFAF</color>
+    <color name="subtitle_text_color">#A2AAB0</color>
+    <color name="reviews_background_color">#ffffff</color>
 </resources>

@@ -1,20 +1,34 @@
 package com.example.android.moviestage2;
 
 import android.app.LoaderManager;
-import android.content.Context;
-import android.content.Intent;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
+import android.content.AsyncTaskLoader;
 import android.content.Loader;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.GridView;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.example.android.moviestage2.RoomData.AppExecutors;
+import com.example.android.moviestage2.RoomData.MainViewModel;
+import com.example.android.moviestage2.RoomData.MovieRecords;
+import com.example.android.moviestage2.RoomData.MoviesDatabase;
+import com.example.android.moviestage2.FavoritesAdapter;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,41 +37,41 @@ import static com.example.android.moviestage2.Utils.movies;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<MovieList>> {
 
+    // Constant for logging
+    private static final String TAG = MainActivity.class.getSimpleName();
     private static final int MOVIELIST_LOADER_ID = 1;
 
-    /** Adapter for the gridview of movies */
-    private MovieAdapter mAdapter;
-
-    private static final String TAG = MainActivity.class.getSimpleName();
+    /** Adapter for the gridview of movies from the JSON data */
+    private MoviesAdapter mAdapter;
+    /** Adapter for the gridview of personal favorite movies from the Room database */
+    private FavoritesAdapter dAdapter;
 
     public final static String POPULARSTRING = "https://api.themoviedb.org/3/movie/popular?api_key=02ff7187d940e5bd15cd5acd2b41b63e";
     public final static String TOPRATEDSTRING = "https://api.themoviedb.org/3/movie/top_rated?api_key=02ff7187d940e5bd15cd5acd2b41b63e";
     public String urlPosterString = POPULARSTRING;
-    private boolean firstTimeRunFlag = true;
-
-    public final static String TRAILERSTRING = "https://api.themoviedb.org/3/movie/335984/videos?api_key=02ff7187d940e5bd15cd5acd2b41b63e";
-    public final static String VIDEOKEY ="dZOaI_Fn5o4";
-    public final static String VIDEOURL ="https://www.youtube.com/watch?v=gCcx85zbxz4";
+    public final static String FAVORITESTRING = "";
 
     // Find a reference to the {@link GridView} in the layout
-    public GridView movieGridView;
-    private String urlImageBaseString = "https://image.tmdb.org/t/p/w185/";
+    private RecyclerView mRecyclerView;
+    private ArrayList<MovieList> mMovieList;
+    /** Query URL */
+    public String mUrl;
+    public  static String spinnerSelection = POPULARSTRING;
+    private MoviesDatabase mDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        movieGridView = (GridView) findViewById(R.id.movieGrid);
-
-        Log.i("LOG 1 MainActivity"," onCreate method");
-
+        mRecyclerView =  findViewById(R.id.recycler_view);
 
         // Create a new adapter that takes an empty list of movies as input
-        mAdapter = new MovieAdapter(this, new ArrayList<MovieList>());
+        mAdapter = new MoviesAdapter(MainActivity.this, mMovieList);
+        mRecyclerView.setHasFixedSize(true);
         // Set the adapter on the {@link GridView} so the list can be populated in the user interface
-        movieGridView.setAdapter(mAdapter);
+        mRecyclerView.setAdapter(mAdapter);
 
-        Spinner mSpinner = (Spinner) findViewById(R.id.spnPopOrRatedOrFavorite);
+        Spinner mSpinner =  findViewById(R.id.spnPopOrRatedOrFavorite);
 
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> spinAdapter = ArrayAdapter.createFromResource(this,
@@ -66,130 +80,200 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         // Specify the layout to use when the list of choices appears
         spinAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinner.setAdapter(spinAdapter);
+        Bundle bundleForLoader = null;
 
-        getLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, this);
-        connectAndLoadMovies();
+        /*
+         * Ensures a loader is initialized and active. If the loader doesn't already exist, one is
+         * created and (if the activity/fragment is currently started) starts the loader. Otherwise
+         * the last created loader is re-used.
+         */
+        getLoaderManager().initLoader(MOVIELIST_LOADER_ID, bundleForLoader, this);
 
         mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selected = parent.getItemAtPosition(position).toString();
 
-                if ( selected.contains("Most Popular")){
-                    urlPosterString = POPULARSTRING;
-                    mAdapter.clear();
-                    movieGridView.setAdapter(mAdapter);
-                    mAdapter.notifyDataSetChanged();
+                if (selected.contains("Most Popular")) {
+                    mUrl = POPULARSTRING;
+                    mRecyclerView.setHasFixedSize(true);
+                    mRecyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
+                    mAdapter = new MoviesAdapter(MainActivity.this, new ArrayList<MovieList>());
+                    mRecyclerView.setAdapter(mAdapter);
                     getLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, MainActivity.this);
+                    Log.i("LOG onItemSelected... ", "POPULARSTRING: " + mUrl);
 
-                    Log.i("LOG onItemSelected... ","POPULARSTRING: " + urlPosterString);
-                    Log.i("LOG onItemSelected... ","movies: " + movies);
-
-
-
-                } else if (selected.contains("Highest Rated")){
-                    firstTimeRunFlag = false;
-                    urlPosterString = TOPRATEDSTRING;
-                    mAdapter.clear();
-                    movieGridView.setAdapter(mAdapter);
-                    mAdapter.notifyDataSetChanged();
+                } else if (selected.contains("Highest Rated")) {
+                    mUrl = TOPRATEDSTRING;
+                    mRecyclerView.setHasFixedSize(true);
+                    mRecyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
+                    mAdapter = new MoviesAdapter(MainActivity.this, new ArrayList<MovieList>());
+                    mRecyclerView.setAdapter(mAdapter);
                     getLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, MainActivity.this);
-                    Log.i("LOG onItemSelected... ","Highest Rated: " + urlPosterString);
-                    Log.i("LOG onItemSelected... ","movies: " + movies);
+                    Log.i("LOG onItemSelected... ", "Highest Rated: " + mUrl);
 
-
-
-                } else if (selected.contains("Personal Favorites")){
-                    firstTimeRunFlag = false;
-                    //Intent favoriteIntent = new Intent(MainActivity.this, FavoritesActivity.class);
-                    //startActivity(favoriteIntent);
+                } else if (selected.contains("Personal Favorites")) {
+                    Log.i("LOG onItemSelected... ", "Personal Favorites: " + urlPosterString);
                     mAdapter.clear();
-                    movieGridView.setAdapter(mAdapter);
-                    mAdapter.notifyDataSetChanged();
-                   getLoaderManager().restartLoader(MOVIELIST_LOADER_ID, null, MainActivity.this);
-                } else {
-                    Toast.makeText(MainActivity.this,"No spinner choice executed", Toast.LENGTH_SHORT).show();
+                    spinnerSelection = FAVORITESTRING;
+                    mRecyclerView.setAdapter(null);
+                    mRecyclerView.setHasFixedSize(true);
+                    mRecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+                    dAdapter = new FavoritesAdapter(MainActivity.this, new ArrayList<MovieRecords>());
+                    Log.i("LOG Personal Favorites ", "MovieRecords: ");
+                    mRecyclerView.setAdapter(dAdapter);
+                    mDb = MoviesDatabase.getInstance(getApplicationContext());
+                    setupViewModel();
+
+                    new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+                        @Override
+                        public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                            return false;
+                        }
+
+                        // Called when a user swipes left or right on a ViewHolder
+                        @Override
+                        public void onSwiped(final RecyclerView.ViewHolder viewHolder, int direction) {
+                            // Here is where you'll implement swipe to delete
+                            AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                                @Override
+                                public void run() {
+                                    int position = viewHolder.getAdapterPosition();
+                                    List<MovieRecords> favorites = dAdapter.getFavorites();
+                                    mDb.movieDao().deleteItem(favorites.get(position));
+                                }
+                            });
+                        }
+                    }).attachToRecyclerView(mRecyclerView);
+
                 }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {    }
         });
-
-        // Setup the setOnItemClickListener when a movie image is clicked
-        movieGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent mIntent = new Intent(MainActivity.this, DetailActivity.class);
-                Bundle mBundle = new Bundle();
-                mBundle.putString("MBUNDLE_TITLE", movies.get(position).getmMovieTitle());
-                mBundle.putString("MBUNDLE_DATE", movies.get(position).getmReleaseDate());
-                mBundle.putString("MBUNDLE_VOTE", movies.get(position).getmVoteAverage());
-                mBundle.putString("MBUNDLE_SYNOPSIS", movies.get(position).getmSynopsis());
-                mBundle.putString("MBUNDLE_POSTER", movies.get(position).getmPosterPath());
-                mBundle.putString("MBUNDLE_MOVIEID", movies.get(position).getmMovieID());
-                mIntent.putExtras(mBundle);
-                startActivity(mIntent);
-            }
-        });
     }
 
     @Override
-    public Loader<List<MovieList>> onCreateLoader(int id, Bundle args) {
-        // Create a new loader for the given URL
-        mAdapter.clear();
-        mAdapter.notifyDataSetChanged();
-        Log.i("LOG 2 MainActivity"," onCreateLoader");
+    public Loader<List<MovieList>> onCreateLoader(int id, final Bundle args) {
+        return  new AsyncTaskLoader<List<MovieList>>(this) {
+            /* This List will hold and help cache our movie data */
+            List<MovieList> mMovieList = null;
 
-        Log.i("ONCREATELOADER... ","urlPosterString: " + urlPosterString);
-        return new MovieListLoader(this, urlPosterString);
+            @Override
+            protected void onStartLoading() {
+                if (mMovieList != null) {
+                    deliverResult(mMovieList);
+                } else {
+                    forceLoad();
+                }
+            }
+
+            @Override
+            public List<MovieList> loadInBackground() {
+                Log.i("loadInBackground","mUrl is: " + mUrl);
+
+                // Perform the network request, parse the response, and extract a list of movies along with
+                // the associated movie data i.e. title, posterpath, synopsis, etc.. .
+                List<MovieList> movies = Utils.fetchMovieData(mUrl);
+                Log.i("loadInBackground","movies is: " + movies);
+                return movies;
+            }
+
+            /**
+             * Sends the result of the load to the registered listener.
+             *
+             * @param movies The result of the load
+             */
+            public void deliverResult(List<MovieList> movies) {
+                mMovieList = movies;
+                super.deliverResult(movies);
+            }
+        };
     }
 
     @Override
     public void onLoadFinished(Loader<List<MovieList>> loader, List<MovieList> movies) {
         // Clear the adapter of previous movie data
-        mAdapter.clear();
-        Log.i("LOG 3 MainActivity"," onLoadFinished");
-
-        // If there is a valid list of books, then add them to the adapter's
+        //mAdapter.clear();
+        // If there is a valid list of movies, then add them to the adapter's
         // data set. This will trigger the ListView to update.
+        mAdapter.setMovieData(movies);
         if (movies != null && !movies.isEmpty()) {
-            mAdapter.clear();
+            //mAdapter.clear();
             mAdapter.notifyDataSetChanged();
-            mAdapter.UpdateMovies(movies);
-            mAdapter.addAll(movies);
+            mRecyclerView.setVisibility(View.VISIBLE);
             Log.i("LOG onLoadFinished ","movies: " + movies);
-
         }
     }
 
     @Override
     public void onLoaderReset(Loader<List<MovieList>> loader) {
-        Log.i("LOG 4 MainActivity"," onLoaderReset");
-
         // Loader reset, so we can clear out our existing data.
         mAdapter.clear();
     }
 
-    public void connectAndLoadMovies(){
-        Log.i("LOG 5 MainActivity"," connectAndLoadMovies");
+    private void setupViewModel() {
+        final int[] favoritesSize = new int[1];
+        MainViewModel viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        viewModel.getFavorites().observe(this, new Observer<List<MovieRecords>>() {
+            @Override
+            public void onChanged(@Nullable List<MovieRecords> movieEntries) {
+                Log.d(TAG, "Updating list of items from LiveData in ViewModel");
+                dAdapter.setMovieFavorites(movieEntries);
+                favoritesSize[0] = movieEntries.size();
+                RelativeLayout mrelativelayout = findViewById(R.id.empty_view);
+                if (movieEntries.size() > 0) {
+                    mrelativelayout.setVisibility(View.GONE);
+                }
+                else {
+                    mrelativelayout.setVisibility(View.VISIBLE);
 
-        // Get a reference to the ConnectivityManager to check state of network connectivity
-        ConnectivityManager connMgr = (ConnectivityManager)
-                getSystemService(Context.CONNECTIVITY_SERVICE);
+                }
+            }
 
-        // Get details on the currently active default data network
-        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 
-        // If there is a network connection, fetch data
-        if (networkInfo != null && networkInfo.isConnected()) {
-            // Get a reference to the LoaderManager, in order to interact with loaders.
-            LoaderManager loaderManager = getLoaderManager();
-
-            // Initialize the loader. Pass in the int ID constant defined above and pass in null for
-            // the bundle. Pass in this activity for the LoaderCallbacks parameter (which is valid
-            // because this activity implements the LoaderCallbacks interface).
-            loaderManager.initLoader(MOVIELIST_LOADER_ID, null, this);
-        } else {}
+        });
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        /* Use AppCompatActivity's method getMenuInflater to get a handle on the menu inflater */
+        MenuInflater inflater = getMenuInflater();
+        /* Use the inflater's inflate method to inflate our menu layout to this menu */
+        inflater.inflate(R.menu.menu_favorites, menu);
+        /* Return true so that the menu is displayed in the Toolbar */
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected( MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_delete_all_entries) {
+
+
+            deleteAll();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
+
+    public void deleteAll(){
+
+                    AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                @Override
+                public void run() {
+                    //int position = viewHolder.getAdapterPosition();
+                    List<MovieRecords> favorites = dAdapter.getFavorites();
+                    mDb.movieDao().nukeFavorites();
+                }
+            });
+            Toast.makeText(MainActivity.this,"Favorites table nuked", Toast.LENGTH_SHORT).show();
+
+    }
+
+
 }

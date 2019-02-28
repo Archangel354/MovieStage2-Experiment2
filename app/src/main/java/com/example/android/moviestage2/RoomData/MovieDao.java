@@ -16,7 +16,7 @@ public interface MovieDao {
     @Query("SELECT * FROM movierecords")
     LiveData<List<MovieRecords>> loadAllMovies();
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertItem(MovieRecords movieEntry);
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
@@ -24,7 +24,10 @@ public interface MovieDao {
 
     @Delete
     void deleteItem(MovieRecords movieEntry);
-
     @Query("SELECT * FROM movierecords WHERE movieid = :id")
-    LiveData<MovieRecords> loadMovieById(int id);
+    LiveData<List<MovieRecords>> loadMovieById(int id);
+
+    @Query("DELETE FROM movierecords")
+        public void nukeFavorites ();
+
 }
