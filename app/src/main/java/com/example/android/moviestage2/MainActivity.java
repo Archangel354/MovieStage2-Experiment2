@@ -46,8 +46,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     /** Adapter for the gridview of personal favorite movies from the Room database */
     private FavoritesAdapter dAdapter;
 
-    public final static String POPULARSTRING = "https://api.themoviedb.org/3/movie/popular?api_key=02ff7187d940e5bd15cd5acd2b41b63e";
-    public final static String TOPRATEDSTRING = "https://api.themoviedb.org/3/movie/top_rated?api_key=02ff7187d940e5bd15cd5acd2b41b63e";
+    public final static String POPULARSTRING = "https://api.themoviedb.org/3/movie/popular?api_key=YOUR API KEY GOES HERE";
+    public final static String TOPRATEDSTRING = "https://api.themoviedb.org/3/movie/top_rated?api_key=YOUR API KEY GOES HERE";
     public String urlPosterString = POPULARSTRING;
     public final static String FAVORITESTRING = "";
 

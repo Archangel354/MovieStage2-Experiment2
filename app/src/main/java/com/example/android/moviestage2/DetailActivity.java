@@ -48,14 +48,14 @@ import java.util.List;
     private static final int VIDEOLIST_LOADER_ID = 2;
     private final static String TRAILERPREFIX = "https://www.youtube.com/watch?v=";
     private final static String MOVIEPREFIX = "https://api.themoviedb.org/3/movie/";
-    private final static String MOVIESUFFIX = "/videos?api_key=02ff7187d940e5bd15cd5acd2b41b63e";
-    private final static String REVIEWSSUFFIX = "/reviews?api_key=02ff7187d940e5bd15cd5acd2b41b63e";
+    private final static String MOVIESUFFIX = "/videos?api_key=YOUR API KEY GOES HERE";
+    private final static String REVIEWSSUFFIX = "/reviews?api_key=YOUR API KEY GOES HERE";
 
 
        /** Adapter for the list of trailers */
     private VideoAdapter vAdapter;
 
-    public final static String VIDEOSTRING = "https://api.themoviedb.org/3/movie/335984/videos?api_key=02ff7187d940e5bd15cd5acd2b41b63e";
+    public final static String VIDEOSTRING = "https://api.themoviedb.org/3/movie/335984/videos?api_key=YOUR API KEY GOES HERE";
     public String urlTrailerString = VIDEOSTRING;
     public String urlReviewsString = "1111";  // dummy value to debug Reviews code 2-26-19
 
