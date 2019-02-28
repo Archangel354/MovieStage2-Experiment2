@@ -1,4 +1,5 @@
 # MovieStage2-Experiment2
+# You need to add you API KEY to 5 locations.   3 in MainActivity and 2 in DetailActivity.  It is at "YOUR API KEY GOES HERE
 #  this app allows the user to select 3 things in a spinner at the top of the screen: 
 # 1) The 20 most popular movies on imdb website.  2) The 20 highest rated movies on the imdb website.  
 # and you can open your 3) personal favorite movies.   This should start at with no movies in it.
