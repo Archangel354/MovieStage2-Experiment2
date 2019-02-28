@@ -63,6 +63,8 @@ public class ReviewsActivity extends AppCompatActivity implements LoaderManager.
         Bundle reviewsUrlBundle = intent.getExtras();
 
         if (reviewsUrlBundle != null){
+            RelativeLayout rRelativelayout = findViewById(R.id.empty_review);
+            rRelativelayout.setVisibility(View.GONE);
             rUrl = (String) reviewsUrlBundle.get("REVIEWSURL");
             Log.i("LOG ReviewsActivity :" ,rUrl);
         }
@@ -77,6 +79,7 @@ public class ReviewsActivity extends AppCompatActivity implements LoaderManager.
             @Override
             protected void onStartLoading() {
                 if (rReviewList != null) {
+
                     deliverResult(rReviewList);
                 } else {
                     forceLoad();
@@ -94,7 +97,7 @@ public class ReviewsActivity extends AppCompatActivity implements LoaderManager.
                 RelativeLayout rRelativelayout = findViewById(R.id.empty_review);
 
                 if (reviews.size() > 0) {
-                    rRelativelayout.setVisibility(View.GONE);
+                   // rRelativelayout.setVisibility(View.GONE);
                 }
 
                 Log.i("loadInBackground","reviews is: " + reviews);
