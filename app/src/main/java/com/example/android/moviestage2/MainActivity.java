@@ -196,7 +196,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public void onLoadFinished(Loader<List<MovieList>> loader, List<MovieList> movies) {
         // Clear the adapter of previous movie data
         //mAdapter.clear();
-        // If there is a valid list of books, then add them to the adapter's
+        // If there is a valid list of movies, then add them to the adapter's
         // data set. This will trigger the ListView to update.
         mAdapter.setMovieData(movies);
         if (movies != null && !movies.isEmpty()) {
