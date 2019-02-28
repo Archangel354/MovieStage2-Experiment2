@@ -7,3 +7,4 @@
 #  you can also play the trailer for the movie by pressing the Play Trailer button.
 #  You can read the reviews that have been posted on the website by pressing the Show Reviews button.   The author of the review and the
 # contents of the review will be displayed.
+#For each of records in the Room database, the detail activity is available if you click on the particular movie
