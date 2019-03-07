@@ -16,7 +16,7 @@
         <activity android:name=".Reviews.ReviewsActivity"
             android:launchMode="singleTop"
             android:label="Movies Review"
-            android:parentActivityName=".DetailActivity">>
+            android:parentActivityName=".DetailActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".DetailActivity"
